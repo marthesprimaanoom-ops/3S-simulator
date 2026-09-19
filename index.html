@@ -149,6 +149,33 @@
     flex-shrink:0;margin-top:6px;
   }
 
+  .dsdo-grid{display:flex;flex-direction:column;gap:10px;}
+  .dsdo-card{
+    border:1px solid var(--border);background:var(--surface-2);border-radius:12px;
+    padding:12px 14px;display:flex;flex-direction:column;gap:10px;
+  }
+  .dsdo-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .dsdo-text{font-size:13.5px;line-height:1.5;max-width:52ch;}
+  .dsdo-toggle{display:flex;gap:6px;flex-shrink:0;}
+  .dsdo-btn{
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12px;
+    border:1.5px solid var(--border);background:var(--surface);color:var(--ink-muted);
+    border-radius:8px;padding:7px 14px;cursor:pointer;min-width:52px;
+  }
+  .dsdo-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  .dsdo-feedback{
+    display:flex;align-items:center;gap:8px;padding-top:9px;border-top:1px solid var(--border);font-size:12.5px;
+  }
+  .dsdo-feedback .fb-badge{
+    flex-shrink:0;width:20px;height:20px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  }
+  .dsdo-feedback .fb-badge.tepat{background:var(--good-bg);color:var(--good);border:1px solid var(--good-border);}
+  .dsdo-feedback .fb-badge.kurang{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-border);}
+  .dsdo-feedback .fb-text{color:var(--ink-muted);line-height:1.5;}
+  .dsdo-feedback .fb-text b{color:var(--ink);}
+  .dsdo-hint{font-size:12px;color:var(--ink-muted);line-height:1.5;margin-top:2px;padding:10px 12px;background:var(--surface-2);border-radius:10px;}
+
   .dx-intro{font-size:13px;color:var(--ink-muted);line-height:1.55;margin:0 0 14px;max-width:60ch;}
   .dx-grid{display:flex;flex-direction:column;gap:12px;}
   .dx-card{
@@ -331,6 +358,16 @@
   <div class="card" id="caseCard"></div>
 
   <div class="card">
+    <div class="section-title">Pilah Data: Subjektif (DS) vs Objektif (DO) <span class="count" id="dsdoCount"></span></div>
+    <p class="dx-intro">Dari cerita kasus di atas, tentukan tiap data ini termasuk <b>DS</b> (data subjektif &mdash; dirasakan/diungkapkan pasien) atau <b>DO</b> (data objektif &mdash; diukur/diamati langsung oleh perawat).</p>
+    <div class="dsdo-grid" id="dsdoGrid"></div>
+    <p class="dsdo-hint">Catatan: semua tanda vital (suhu, nadi, TD, dst) selalu tergolong <b>DO</b> karena bisa diukur langsung dengan alat.</p>
+    <div class="actions">
+      <button class="primary" id="checkDsdoBtn">Cek Jawaban DS/DO</button>
+    </div>
+  </div>
+
+  <div class="card">
     <div class="section-title">Diagnosa Keperawatan &amp; Prioritas</div>
     <p class="dx-intro">Ini semua diagnosa yang teridentifikasi dari data pasien di atas (urutan acak, bukan urutan prioritas). Tentukan nomor prioritas masing-masing &mdash; <b>1 = paling mendesak</b> ditangani lebih dulu.</p>
     <div class="dx-grid" id="dxGrid"></div>
@@ -383,6 +420,14 @@
           {label:"BAB/24j", val:"6x", flag:true}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"BAB cair 6x dalam 24 jam, feses lembek tanpa ampas", type:"DO", note:"Ini hasil observasi/hitungan langsung terhadap feses anak — bisa dilihat & dihitung, bukan sekadar ucapan."},
+        {id:"dk2", text:"Anak tampak rewel", type:"DO", note:"Kata 'tampak' menandakan ini hasil observasi perawat terhadap perilaku anak, bukan pernyataan anak sendiri."},
+        {id:"dk3", text:"Mata anak sedikit cekung", type:"DO", note:"Ini temuan dari pemeriksaan fisik (inspeksi), bisa dilihat secara objektif."},
+        {id:"dk4", text:"Turgor kulit kembali lambat", type:"DO", note:"Ini hasil pemeriksaan fisik (palpasi) yang dilakukan perawat, bukan keluhan pasien."},
+        {id:"dk5", text:"Ibu mengatakan nafsu makan anak menurun sejak 2 hari", type:"DS", note:"Kata 'mengatakan' menandakan ini laporan/persepsi dari ibu, bukan hasil pengukuran langsung."},
+        {id:"dk6", text:"Ibu mengatakan anak masih mau minum", type:"DS", note:"Ini pernyataan langsung dari ibu tentang kondisi anak — data subjektif."}
+      ],
       // urutan tampil di bawah SENGAJA diacak, bukan urutan prioritas asli
       diagnosaTampil: ["nutrisi","diare","hipovolemia"],
       diagnosa: {
@@ -505,6 +550,15 @@
           {label:"TD", val:"128/82", flag:false}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Pasien mengeluh sesak sejak 2 jam lalu", type:"DS", note:"Kata 'mengeluh' menandakan ini keluhan yang dirasakan & diungkapkan pasien sendiri."},
+        {id:"dk2", text:"Tampak menggunakan otot bantu napas", type:"DO", note:"Ini hasil observasi visual perawat terhadap cara bernapas pasien."},
+        {id:"dk3", text:"Retraksi dinding dada", type:"DO", note:"Temuan pemeriksaan fisik (inspeksi) yang bisa dilihat langsung."},
+        {id:"dk4", text:"Bernapas cepat-dangkal", type:"DO", note:"Pola napas yang diamati & bisa dihitung frekuensinya — data objektif."},
+        {id:"dk5", text:"Riwayat PPOK 3 tahun", type:"DS", note:"Riwayat penyakit umumnya didapat dari penuturan pasien saat wawancara (anamnesis) — termasuk data subjektif."},
+        {id:"dk6", text:"Pasien tampak gelisah", type:"DO", note:"Kata 'tampak' menandakan hasil observasi perawat terhadap perilaku pasien."},
+        {id:"dk7", text:"Pasien mengaku cemas karena sesaknya belum reda", type:"DS", note:"Kata 'mengaku' menandakan ini perasaan yang diungkapkan langsung oleh pasien."}
+      ],
       diagnosaTampil: ["ansietas","aktivitas","polanapas"],
       diagnosa: {
         polanapas: {
@@ -646,6 +700,13 @@
           {label:"Nyeri", val:"6/10", flag:true}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Demam naik turun sejak 5 hari, memburuk saat sore-malam", type:"DS", note:"Pola demam ini adalah hasil penuturan pasien/keluarga tentang apa yang dirasakan di rumah (anamnesis) — data subjektif, meski suhu saat diperiksa nanti adalah data objektif."},
+        {id:"dk2", text:"Mengeluh nyeri perut terutama di ulu hati", type:"DS", note:"Kata 'mengeluh' menandakan nyeri adalah sensasi yang hanya bisa diungkapkan pasien sendiri."},
+        {id:"dk3", text:"Lidah tampak kotor dengan tepi kemerahan", type:"DO", note:"Ini temuan pemeriksaan fisik (inspeksi rongga mulut) yang bisa dilihat langsung."},
+        {id:"dk4", text:"Nafsu makan menurun drastis sejak demam muncul", type:"DS", note:"Ini laporan tentang perubahan nafsu makan yang dirasakan/diamati keluarga, bersifat subjektif."},
+        {id:"dk5", text:"Riwayat sering jajan sembarangan di sekolah", type:"DS", note:"Informasi riwayat ini didapat dari penuturan pasien/keluarga saat anamnesis."}
+      ],
       diagnosaTampil: ["nutrisi","hipertermia","nyeri"],
       diagnosa: {
         hipertermia: {
@@ -770,6 +831,13 @@
           {label:"Nyeri", val:"5/10", flag:true}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Mengeluh nyeri kepala berdenyut sejak pagi, skala 5/10", type:"DS", note:"Skala nyeri adalah penilaian subjektif pasien terhadap rasa sakit yang ia rasakan sendiri."},
+        {id:"dk2", text:"Riwayat hipertensi 5 tahun, jarang kontrol & sering lupa minum obat", type:"DS", note:"Riwayat & kebiasaan ini didapat dari penuturan pasien saat anamnesis."},
+        {id:"dk3", text:"Merokok aktif sejak muda", type:"DS", note:"Kebiasaan ini diketahui dari pengakuan/penuturan pasien sendiri."},
+        {id:"dk4", text:"Pasien tampak tegang", type:"DO", note:"Kata 'tampak' menandakan hasil observasi perawat terhadap ekspresi/perilaku pasien."},
+        {id:"dk5", text:"Sesekali memegangi kepala", type:"DO", note:"Perilaku yang bisa diamati langsung oleh perawat — data objektif."}
+      ],
       diagnosaTampil: ["pengetahuan","perfusi","nyeri"],
       diagnosa: {
         perfusi: {
@@ -891,6 +959,12 @@
           {label:"Leukosit", val:"11.200/µL", flag:true}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Luka robek 6 cm di tungkai kanan bawah, sudah dijahit di IGD", type:"DO", note:"Ukuran & kondisi luka adalah hasil pengukuran/pemeriksaan langsung yang bisa diverifikasi."},
+        {id:"dk2", text:"Luka tampak sedikit kemerahan di tepi", type:"DO", note:"Kata 'tampak' menandakan temuan inspeksi visual perawat."},
+        {id:"dk3", text:"Ada rembesan cairan bening", type:"DO", note:"Temuan objektif dari pemeriksaan langsung terhadap kondisi luka."},
+        {id:"dk4", text:"Pasien mengeluh nyeri berdenyut di area luka skala 4/10", type:"DS", note:"Skala nyeri adalah penilaian subjektif yang hanya bisa diungkapkan oleh pasien sendiri."}
+      ],
       diagnosaTampil: ["nyeri","infeksi","integritas"],
       diagnosa: {
         integritas: {
@@ -1008,6 +1082,13 @@
           {label:"Nadi", val:"92x/mnt", flag:false}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Batuk berdahak >3 minggu, dahak kental sulit dikeluarkan", type:"DS", note:"Ini keluhan & pengalaman yang dirasakan/dilaporkan pasien tentang batuknya sendiri."},
+        {id:"dk2", text:"Disertai keringat malam", type:"DS", note:"Sensasi berkeringat di malam hari hanya bisa dirasakan & dilaporkan pasien sendiri."},
+        {id:"dk3", text:"Penurunan berat badan 5 kg dalam sebulan terakhir", type:"DO", note:"Berat badan bisa diukur dengan timbangan — data objektif yang terukur."},
+        {id:"dk4", text:"Riwayat kontak dekat dengan penderita TB paru", type:"DS", note:"Informasi riwayat kontak didapat dari penuturan pasien saat anamnesis."},
+        {id:"dk5", text:"Terdengar ronki saat auskultasi", type:"DO", note:"Ini hasil pemeriksaan fisik (auskultasi) yang dilakukan langsung oleh perawat/dokter."}
+      ],
       diagnosaTampil: ["pengetahuan","jalan_napas","nutrisi"],
       diagnosa: {
         jalan_napas: {
@@ -1128,6 +1209,12 @@
           {label:"TD", val:"150/95", flag:true}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Sesak napas saat aktivitas ringan bahkan saat berbaring (ortopnea)", type:"DS", note:"Sensasi sesak adalah sesuatu yang dirasakan & dilaporkan langsung oleh pasien."},
+        {id:"dk2", text:"Harus tidur dengan 2-3 bantal agar tidak sesak", type:"DS", note:"Ini kebiasaan yang diungkapkan pasien terkait cara ia mengatasi sesaknya sendiri."},
+        {id:"dk3", text:"Tungkai bengkak di kedua sisi", type:"DO", note:"Edema tungkai adalah temuan yang bisa dilihat & diperiksa langsung (inspeksi/palpasi)."},
+        {id:"dk4", text:"Riwayat hipertensi & penyakit jantung koroner sejak 5 tahun lalu", type:"DS", note:"Riwayat penyakit ini didapat dari penuturan pasien saat anamnesis."}
+      ],
       diagnosaTampil: ["aktivitas","hipervolemia","curah"],
       diagnosa: {
         curah: {
@@ -1253,6 +1340,14 @@
           {label:"Involusi Uterus", val:"Baik", flag:false}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"ASI belum lancar keluar sejak melahirkan 2 hari lalu", type:"DS", note:"Ini laporan dari ibu tentang kondisi produksi ASI-nya sendiri."},
+        {id:"dk2", text:"Bayi tampak rewel dan sulit menyusu", type:"DO", note:"Kata 'tampak' menandakan hasil observasi langsung perawat/bidan terhadap perilaku bayi."},
+        {id:"dk3", text:"Pelekatan mulut bayi ke payudara belum tepat", type:"DO", note:"Ini penilaian teknis yang diamati & dinilai langsung oleh perawat/bidan."},
+        {id:"dk4", text:"Ibu mengeluh puting terasa nyeri", type:"DS", note:"Kata 'mengeluh' menandakan sensasi nyeri yang hanya bisa dirasakan & diungkapkan ibu sendiri."},
+        {id:"dk5", text:"Puting tampak sedikit lecet", type:"DO", note:"Kata 'tampak' menandakan temuan inspeksi visual perawat terhadap kondisi puting."},
+        {id:"dk6", text:"Ibu mengatakan khawatir ASI-nya tidak cukup", type:"DS", note:"Ini kekhawatiran yang diungkapkan langsung oleh ibu — data subjektif."}
+      ],
       diagnosaTampil: ["pengetahuan","nyeri","menyusui"],
       diagnosa: {
         menyusui: {
@@ -1374,6 +1469,12 @@
           {label:"Riwayat Jatuh", val:"1x minggu lalu", flag:true}
         ]
       },
+      dataKlinis: [
+        {id:"dk1", text:"Kekuatan otot sisi kanan menurun (3/5) sejak stroke minggu lalu", type:"DO", note:"Kekuatan otot bisa diperiksa & diukur langsung dengan skala — tergolong data objektif."},
+        {id:"dk2", text:"Berjalan menggunakan tongkat namun kadang lupa memakainya", type:"DO", note:"Ini perilaku yang bisa diamati langsung oleh perawat."},
+        {id:"dk3", text:"Riwayat hampir jatuh di kamar mandi minggu lalu", type:"DS", note:"Kejadian ini diketahui dari penuturan pasien/keluarga, bukan hasil pengamatan langsung perawat saat ini."},
+        {id:"dk4", text:"Membutuhkan bantuan sebagian untuk mandi dan berpakaian", type:"DO", note:"Tingkat kemandirian ini bisa dinilai & diamati langsung oleh perawat saat pasien beraktivitas."}
+      ],
       diagnosaTampil: ["perawatan_diri","mobilitas","jatuh"],
       diagnosa: {
         jatuh: {
@@ -1485,11 +1586,14 @@
   };
 
   // ---------- STATE ----------
-  var state = { caseId: "diare", selected: {}, prio: {}, prioChecked: false };
-  // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3"
+  var state = { caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false };
+  // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3" | dsdo[itemId] = "DS"/"DO"
 
   var tabsEl = document.getElementById("tabs");
   var caseCardEl = document.getElementById("caseCard");
+  var dsdoGridEl = document.getElementById("dsdoGrid");
+  var dsdoCountEl = document.getElementById("dsdoCount");
+  var checkDsdoBtn = document.getElementById("checkDsdoBtn");
   var dxGridEl = document.getElementById("dxGrid");
   var checkPrioBtn = document.getElementById("checkPrioBtn");
   var toolBankEl = document.getElementById("toolBank");
@@ -1526,6 +1630,8 @@
         state.selected = {};
         state.prio = {};
         state.prioChecked = false;
+        state.dsdo = {};
+        state.dsdoChecked = false;
         renderAll();
       });
       tabsEl.appendChild(btn);
@@ -1549,6 +1655,69 @@
       '<p class="keluhan">'+c.keluhan+'</p>'+
       '<div class="vitals">'+vitalsHtml+'</div>';
   }
+
+  function renderDsDo(){
+    var cs = CASES[state.caseId];
+    var items = cs.dataKlinis || [];
+    dsdoCountEl.textContent = items.length + " data";
+    dsdoGridEl.innerHTML = "";
+    items.forEach(function(item){
+      var card = document.createElement("div");
+      card.className = "dsdo-card";
+
+      var picked = state.dsdo[item.id];
+      var row = document.createElement("div");
+      row.className = "dsdo-row";
+      var textEl = document.createElement("div");
+      textEl.className = "dsdo-text";
+      textEl.textContent = item.text;
+      var toggle = document.createElement("div");
+      toggle.className = "dsdo-toggle";
+      ["DS","DO"].forEach(function(opt){
+        var b = document.createElement("button");
+        b.className = "dsdo-btn";
+        b.type = "button";
+        b.textContent = opt;
+        b.setAttribute("aria-pressed", picked===opt ? "true":"false");
+        b.addEventListener("click", function(){
+          state.dsdo[item.id] = opt;
+          state.dsdoChecked = false;
+          renderDsDo();
+        });
+        toggle.appendChild(b);
+      });
+      row.appendChild(textEl);
+      row.appendChild(toggle);
+      card.appendChild(row);
+
+      if(state.dsdoChecked && picked){
+        var correct = picked === item.type;
+        var fb = document.createElement("div");
+        fb.className = "dsdo-feedback";
+        fb.innerHTML =
+          '<div class="fb-badge '+(correct?"tepat":"kurang")+'">'+(correct?"✓":"!")+'</div>'+
+          '<div class="fb-text">'+
+            (correct ? '<b>Tepat, ini '+item.type+'.</b> ' : '<b>Kurang tepat — ini '+item.type+'.</b> ')+
+            item.note+
+          '</div>';
+        card.appendChild(fb);
+      }
+
+      dsdoGridEl.appendChild(card);
+    });
+  }
+
+  checkDsdoBtn.addEventListener("click", function(){
+    var cs = CASES[state.caseId];
+    var items = cs.dataKlinis || [];
+    var missing = items.some(function(it){ return !state.dsdo[it.id]; });
+    if(missing){
+      alert("Pilah dulu semua data jadi DS atau DO sebelum dicek ya.");
+      return;
+    }
+    state.dsdoChecked = true;
+    renderDsDo();
+  });
 
   var LETTERS = ["A","B","C","D","E"];
 
@@ -1848,6 +2017,7 @@
   function renderAll(){
     renderTabs();
     renderCase();
+    renderDsDo();
     renderDxGrid();
     renderToolBank();
     renderTray();
