@@ -361,7 +361,7 @@
 
   <footer>
     Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
-    Prototipe pembelajaran &middot; 5 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
+    Prototipe pembelajaran &middot; 9 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
   </footer>
 </div>
 
@@ -990,6 +990,493 @@
             {
               id:"oralit2", label:"Anjurkan minum oralit",
               evaluate:function(){return {status:"tidak", note:"Tidak relevan — kasus ini bukan tentang gangguan cairan akibat diare.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    tbparu: {
+      label: "TB Paru",
+      patient: {
+        name: "Tn. K", age: "45 tahun",
+        keluhan: "Batuk berdahak sejak lebih dari 3 minggu, dahak kental sulit dikeluarkan, disertai keringat malam dan penurunan berat badan 5 kg dalam sebulan terakhir. Ada riwayat kontak dekat dengan penderita TB paru. Terdengar ronki saat auskultasi.",
+        vitals: [
+          {label:"Suhu", val:"37.8°C", flag:true},
+          {label:"RR", val:"26x/mnt", flag:true},
+          {label:"BB", val:"−5kg/bulan", flag:true},
+          {label:"Nadi", val:"92x/mnt", flag:false}
+        ]
+      },
+      diagnosaTampil: ["pengetahuan","jalan_napas","nutrisi"],
+      diagnosa: {
+        jalan_napas: {
+          kode:"D.0001", label:"Bersihan Jalan Napas Tidak Efektif", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Dahak kental yang sulit dikeluarkan menyumbat jalan napas dan terdengar ronki — jalan napas pasien saat ini tidak sepenuhnya paten.",
+          rasionalPrioritas:"Jalan napas yang tersumbat mengancam pertukaran oksigen secara langsung — selalu ditangani lebih dulu dari masalah lain.",
+          luaran:{ kode:"L.01002", label:"Bersihan Jalan Napas", kriteria:[
+            "Kemampuan batuk efektif meningkat",
+            "Produksi sputum menurun",
+            "Ronki kering menurun"
+          ]}
+        },
+        nutrisi: {
+          kode:"D.0019", label:"Defisit Nutrisi", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Penurunan berat badan 5 kg dalam sebulan menunjukkan kebutuhan nutrisi pasien belum tercukupi akibat proses penyakit kronis.",
+          rasionalPrioritas:"Sudah menjadi masalah aktual yang memengaruhi kondisi tubuh, namun tidak semendesak sumbatan jalan napas — ditangani setelah jalan napas mulai membaik.",
+          luaran:{ kode:"L.03030", label:"Status Nutrisi", kriteria:[
+            "Porsi makan yang dihabiskan meningkat",
+            "Berat badan membaik"
+          ]}
+        },
+        pengetahuan: {
+          kode:"D.0111", label:"Defisit Pengetahuan", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Pasien & keluarga perlu memahami pentingnya kepatuhan minum Obat Anti Tuberkulosis (OAT) selama 6 bulan penuh agar tidak resisten.",
+          rasionalPrioritas:"Edukasi penting untuk keberhasilan pengobatan jangka panjang, tapi baru relevan disampaikan setelah kondisi akut (jalan napas & nutrisi) mulai stabil.",
+          luaran:{ kode:"L.12111", label:"Tingkat Pengetahuan", kriteria:[
+            "Perilaku sesuai anjuran meningkat",
+            "Verbalisasi minat belajar meningkat",
+            "Persepsi yang keliru menurun"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Bersihan Jalan Napas Tidak Efektif", dxId:"jalan_napas",
+          tools: [
+            {
+              id:"kajidahak", label:"Kaji jumlah, warna, dan konsistensi sputum",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian sputum membantu menilai perkembangan kondisi jalan napas pasien.", ref:"SLKI L.01002 · Bersihan Jalan Napas"};}
+            },
+            {
+              id:"batukefektif", label:"Ajarkan teknik batuk efektif",
+              evaluate:function(){return {status:"tepat", note:"Batuk efektif membantu mengeluarkan dahak kental yang menyumbat jalan napas.", ref:"SIKI · Latihan Batuk Efektif"};}
+            },
+            {
+              id:"nebulizer", label:"Kolaborasi pemberian nebulizer/ekspektoran sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Nebulizer & ekspektoran membantu mengencerkan dahak agar lebih mudah dikeluarkan.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+            },
+            {
+              id:"posisi_paru", label:"Posisikan semi-fowler untuk memaksimalkan ekspansi paru",
+              evaluate:function(){return {status:"tepat", note:"Posisi semi-fowler membantu pengembangan paru dan memudahkan pengeluaran dahak.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+            },
+            {
+              id:"gerak_berat", label:"Anjurkan aktivitas fisik berat setiap hari",
+              evaluate:function(){return {status:"tidak", note:"Aktivitas berat justru menguras energi pasien yang sedang lemah & batuk, bukan membantu jalan napas.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Nutrisi", dxId:"nutrisi",
+          tools: [
+            {
+              id:"porsi_kecil_tb", label:"Beri makan tinggi kalori & tinggi protein porsi kecil tapi sering",
+              evaluate:function(){return {status:"tepat", note:"Kebutuhan kalori & protein meningkat pada TB paru untuk mendukung pemulihan jaringan.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            },
+            {
+              id:"bb_harian_tb", label:"Timbang berat badan secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Penimbangan berkala membantu memantau apakah status nutrisi pasien membaik.", ref:"SLKI L.03030 · Status Nutrisi"};}
+            },
+            {
+              id:"suplemen_tb", label:"Kolaborasi pemberian suplemen nutrisi sesuai indikasi",
+              evaluate:function(){return {status:"tepat", note:"Suplemen membantu memenuhi kebutuhan kalori tambahan selama masa pengobatan.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Pengetahuan", dxId:"pengetahuan",
+          tools: [
+            {
+              id:"edukasi_oat", label:"Jelaskan pentingnya minum OAT rutin selama 6 bulan tanpa putus",
+              evaluate:function(){return {status:"tepat", note:"Kepatuhan OAT penuh mencegah resistensi obat dan memastikan kesembuhan total.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"edukasi_penularan", label:"Edukasi cara mencegah penularan ke anggota keluarga lain",
+              evaluate:function(){return {status:"tepat", note:"Edukasi etika batuk & penggunaan masker membantu memutus rantai penularan di rumah.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"cek_pemahaman_tb", label:"Evaluasi pemahaman pasien dengan teknik teach-back",
+              evaluate:function(){return {status:"tepat", note:"Teach-back memastikan edukasi benar-benar dipahami, bukan sekadar disampaikan.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"ivfd_tb", label:"Pasang IVFD RL",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan cairan pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"luka_tb", label:"Lakukan perawatan luka",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — tidak ada luka terbuka pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    jantung: {
+      label: "Gagal Jantung",
+      patient: {
+        name: "Ny. L", age: "62 tahun",
+        keluhan: "Sesak napas saat beraktivitas ringan bahkan saat berbaring (ortopnea), harus tidur dengan 2-3 bantal agar tidak sesak. Tungkai bengkak di kedua sisi. Riwayat hipertensi & penyakit jantung koroner sejak 5 tahun lalu.",
+        vitals: [
+          {label:"RR", val:"26x/mnt", flag:true},
+          {label:"Edema", val:"+2 bilateral", flag:true},
+          {label:"Nadi", val:"104x/mnt", flag:true},
+          {label:"TD", val:"150/95", flag:true}
+        ]
+      },
+      diagnosaTampil: ["aktivitas","hipervolemia","curah"],
+      diagnosa: {
+        curah: {
+          kode:"D.0008", label:"Penurunan Curah Jantung", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Ortopnea, edema, dan nadi cepat menunjukkan jantung tidak mampu memompa darah secara adekuat ke seluruh tubuh saat ini.",
+          rasionalPrioritas:"Gangguan pompa jantung memengaruhi suplai darah ke seluruh organ tubuh secara langsung — ancaman fisiologis paling mendasar, jadi diprioritaskan pertama.",
+          luaran:{ kode:"L.02008", label:"Curah Jantung", kriteria:[
+            "Ortopnea menurun",
+            "Edema menurun",
+            "Tekanan darah membaik"
+          ]}
+        },
+        hipervolemia: {
+          kode:"D.0022", label:"Hipervolemia", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Edema tungkai bilateral menunjukkan kelebihan volume cairan di jaringan tubuh akibat gangguan pompa jantung.",
+          rasionalPrioritas:"Kelebihan cairan adalah konsekuensi langsung dari curah jantung yang menurun — ditangani sejalan, tepat setelah stabilisasi fungsi jantung dimulai.",
+          luaran:{ kode:"L.03028", label:"Status Cairan", kriteria:[
+            "Edema perifer menurun",
+            "Ortopnea menurun",
+            "Tekanan darah membaik"
+          ]}
+        },
+        aktivitas: {
+          kode:"D.0056", label:"Intoleransi Aktivitas", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Sesak yang muncul bahkan saat aktivitas ringan menunjukkan keterbatasan toleransi tubuh terhadap aktivitas fisik.",
+          rasionalPrioritas:"Penting untuk kualitas hidup pasien, tapi realistis ditangani setelah fungsi jantung & kelebihan cairan mulai terkendali.",
+          luaran:{ kode:"L.05047", label:"Toleransi Aktivitas", kriteria:[
+            "Keluhan lelah menurun",
+            "Dispnea saat aktivitas menurun",
+            "Frekuensi nadi membaik"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Penurunan Curah Jantung", dxId:"curah",
+          tools: [
+            {
+              id:"monitor_ekg", label:"Monitor tanda vital & irama jantung secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan rutin membantu deteksi dini perburukan fungsi jantung.", ref:"SLKI L.02008 · Curah Jantung"};}
+            },
+            {
+              id:"posisi_jantung", label:"Posisikan semi-fowler/fowler untuk mengurangi kerja jantung",
+              evaluate:function(){return {status:"tepat", note:"Posisi ini menurunkan beban kerja jantung dan memudahkan pernapasan.", ref:"SIKI · Perawatan Jantung"};}
+            },
+            {
+              id:"batasi_aktivitas", label:"Batasi aktivitas sesuai toleransi pasien",
+              evaluate:function(){return {status:"tepat", note:"Membatasi aktivitas mencegah beban berlebih pada jantung yang fungsinya sedang menurun.", ref:"SIKI · Perawatan Jantung"};}
+            },
+            {
+              id:"obat_jantung", label:"Kolaborasi pemberian obat jantung sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Terapi farmakologis membantu memperkuat kontraksi jantung dan menstabilkan kondisi.", ref:"SIKI · Perawatan Jantung"};}
+            },
+            {
+              id:"olahraga_jantung", label:"Anjurkan olahraga berat setiap pagi",
+              evaluate:function(){return {status:"tidak", note:"Olahraga berat berisiko memperberat kerja jantung yang fungsinya sedang menurun.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Hipervolemia", dxId:"hipervolemia",
+          tools: [
+            {
+              id:"batasi_cairan", label:"Batasi asupan cairan & garam sesuai anjuran",
+              evaluate:function(){return {status:"tepat", note:"Pembatasan cairan & garam membantu mengurangi beban volume yang harus dipompa jantung.", ref:"SLKI L.03028 · Status Cairan"};}
+            },
+            {
+              id:"timbang_bb_jantung", label:"Timbang berat badan setiap hari di jam yang sama",
+              evaluate:function(){return {status:"tepat", note:"Kenaikan BB harian yang cepat bisa jadi tanda penumpukan cairan.", ref:"SLKI L.03028 · Status Cairan"};}
+            },
+            {
+              id:"diuretik", label:"Kolaborasi pemberian diuretik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Diuretik membantu mengeluarkan kelebihan cairan tubuh lewat urin.", ref:"SLKI L.03028 · Status Cairan"};}
+            },
+            {
+              id:"elevasi_kaki", label:"Elevasi tungkai yang edema saat istirahat",
+              evaluate:function(){return {status:"tepat", note:"Elevasi membantu aliran balik vena dan mengurangi edema di tungkai.", ref:"SLKI L.03028 · Status Cairan"};}
+            }
+          ]
+        },
+        {
+          nama: "Intoleransi Aktivitas", dxId:"aktivitas",
+          tools: [
+            {
+              id:"istirahat_jantung", label:"Anjurkan istirahat cukup di antara aktivitas",
+              evaluate:function(){return {status:"tepat", note:"Jeda istirahat mencegah kelelahan berlebih yang memperberat kerja jantung.", ref:"SLKI L.05047 · Toleransi Aktivitas"};}
+            },
+            {
+              id:"bertahap_jantung", label:"Bantu aktivitas secara bertahap sesuai toleransi",
+              evaluate:function(){return {status:"tepat", note:"Aktivitas bertahap melatih toleransi tanpa membebani jantung secara mendadak.", ref:"SIKI I.05178 · Manajemen Energi"};}
+            },
+            {
+              id:"monitor_respon", label:"Monitor respon jantung terhadap aktivitas (nadi, sesak)",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan respon membantu menentukan kapan aktivitas boleh ditingkatkan.", ref:"SIKI I.05178 · Manajemen Energi"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"oralit_jantung", label:"Anjurkan minum oralit",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — kasus ini bukan tentang gangguan cairan akibat diare.", ref:"—"};}
+            },
+            {
+              id:"luka_jantung", label:"Lakukan perawatan luka",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — tidak ada luka terbuka pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    menyusui: {
+      label: "Ibu Menyusui",
+      patient: {
+        name: "Ny. F", age: "24 tahun (Post partum hari ke-2)",
+        keluhan: "ASI belum lancar keluar sejak melahirkan 2 hari lalu. Bayi tampak rewel dan sulit menyusu, pelekatan mulut bayi ke payudara belum tepat. Ibu mengeluh puting terasa nyeri dan sedikit lecet. Ibu terlihat cemas karena khawatir ASI-nya tidak cukup.",
+        vitals: [
+          {label:"Suhu", val:"37.0°C", flag:false},
+          {label:"Nadi", val:"88x/mnt", flag:false},
+          {label:"Nyeri Puting", val:"4/10", flag:true},
+          {label:"Involusi Uterus", val:"Baik", flag:false}
+        ]
+      },
+      diagnosaTampil: ["pengetahuan","nyeri","menyusui"],
+      diagnosa: {
+        menyusui: {
+          kode:"D.0029", label:"Menyusui Tidak Efektif", tipe:"Aktual", prioritasBenar:1,
+          rasional:"ASI belum lancar dan pelekatan bayi ke payudara belum tepat — proses menyusui saat ini belum berjalan efektif.",
+          rasionalPrioritas:"Kebutuhan nutrisi bayi bergantung langsung pada keberhasilan menyusui — masalah ini paling mendesak karena memengaruhi bayi secara langsung.",
+          luaran:{ kode:"L.03029", label:"Status Menyusui", kriteria:[
+            "Perlekatan bayi pada payudara meningkat",
+            "Kemampuan ibu memposisikan bayi meningkat",
+            "Suplai ASI adekuat meningkat"
+          ]}
+        },
+        nyeri: {
+          kode:"D.0077", label:"Nyeri Akut", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Puting terasa nyeri dan sedikit lecet skala 4/10 akibat pelekatan menyusui yang belum tepat.",
+          rasionalPrioritas:"Nyeri sudah nyata dirasakan ibu dan bisa membuatnya enggan menyusui, ditangani seiring perbaikan teknik menyusui.",
+          luaran:{ kode:"L.08066", label:"Tingkat Nyeri", kriteria:[
+            "Keluhan nyeri menurun",
+            "Lecet pada puting menurun",
+            "Kenyamanan ibu meningkat"
+          ]}
+        },
+        pengetahuan: {
+          kode:"D.0111", label:"Defisit Pengetahuan", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Ibu baru pertama kali menyusui dan tampak cemas karena khawatir ASI-nya tidak cukup — menunjukkan kurangnya pemahaman tentang proses laktasi.",
+          rasionalPrioritas:"Edukasi penting agar ibu percaya diri menyusui jangka panjang, tapi paling pas disampaikan setelah teknik & kenyamanan menyusui mulai membaik.",
+          luaran:{ kode:"L.12111", label:"Tingkat Pengetahuan", kriteria:[
+            "Verbalisasi minat belajar meningkat",
+            "Kepercayaan diri ibu meningkat",
+            "Persepsi yang keliru menurun"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Menyusui Tidak Efektif", dxId:"menyusui",
+          tools: [
+            {
+              id:"ajarkan_pelekatan", label:"Ajarkan teknik pelekatan (attachment) & posisi menyusui yang benar",
+              evaluate:function(){return {status:"tepat", note:"Pelekatan yang tepat adalah kunci utama keberhasilan menyusui dan mencegah puting lecet.", ref:"SLKI L.03029 · Status Menyusui"};}
+            },
+            {
+              id:"susui_sering", label:"Anjurkan menyusui sesering mungkin (on demand)",
+              evaluate:function(){return {status:"tepat", note:"Menyusui sesering mungkin merangsang produksi ASI lebih optimal.", ref:"SLKI L.03029 · Status Menyusui"};}
+            },
+            {
+              id:"monitor_miksi", label:"Monitor tanda kecukupan ASI (frekuensi BAK bayi, berat badan)",
+              evaluate:function(){return {status:"tepat", note:"Indikator ini membantu menilai apakah asupan ASI bayi sudah cukup.", ref:"SLKI L.03029 · Status Menyusui"};}
+            },
+            {
+              id:"pijat_payudara", label:"Ajarkan teknik pijat payudara untuk merangsang produksi ASI",
+              evaluate:function(){return {status:"tepat", note:"Pijat payudara membantu melancarkan aliran ASI sebelum & saat menyusui.", ref:"SIKI · Edukasi Menyusui"};}
+            },
+            {
+              id:"susu_formula", label:"Anjurkan langsung mengganti dengan susu formula",
+              evaluate:function(){return {status:"tidak", note:"Mengganti dengan formula tanpa upaya memperbaiki teknik menyusui menghambat keberhasilan ASI eksklusif — bukan solusi pertama.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Nyeri Akut", dxId:"nyeri",
+          tools: [
+            {
+              id:"kaji_puting", label:"Kaji kondisi puting (lecet, kemerahan) sebelum & sesudah menyusui",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian rutin membantu memantau proses penyembuhan puting.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"olesi_asi", label:"Anjurkan mengoleskan sedikit ASI ke puting setelah menyusui",
+              evaluate:function(){return {status:"tepat", note:"ASI memiliki sifat antibakteri alami yang membantu penyembuhan puting lecet.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"posisi_ganti", label:"Anjurkan variasi posisi menyusui untuk mengurangi tekanan di titik yang sama",
+              evaluate:function(){return {status:"tepat", note:"Variasi posisi mencegah tekanan berulang di area puting yang sama.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Pengetahuan", dxId:"pengetahuan",
+          tools: [
+            {
+              id:"edukasi_asi", label:"Jelaskan manfaat & cara kerja ASI eksklusif",
+              evaluate:function(){return {status:"tepat", note:"Pemahaman tentang ASI eksklusif meningkatkan motivasi ibu untuk terus menyusui.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"dukungan_psikologis", label:"Berikan dukungan emosional & validasi kekhawatiran ibu",
+              evaluate:function(){return {status:"tepat", note:"Dukungan emosional membantu menurunkan kecemasan yang bisa menghambat produksi ASI.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"cek_pemahaman_asi", label:"Evaluasi pemahaman ibu dengan teknik teach-back",
+              evaluate:function(){return {status:"tepat", note:"Teach-back memastikan edukasi benar-benar dipahami, bukan sekadar disampaikan.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2_ibu", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"ivfd_ibu", label:"Pasang IVFD RL",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan cairan pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    lansia: {
+      label: "Lansia Pasca Stroke",
+      patient: {
+        name: "Ny. T", age: "70 tahun",
+        keluhan: "Pasca stroke ringan 1 minggu lalu dengan kelemahan pada sisi kanan tubuh. Berjalan menggunakan tongkat namun kadang lupa memakainya. Riwayat hampir jatuh di kamar mandi minggu lalu. Membutuhkan bantuan sebagian untuk mandi dan berpakaian.",
+        vitals: [
+          {label:"TD", val:"138/86", flag:false},
+          {label:"Nadi", val:"80x/mnt", flag:false},
+          {label:"Kekuatan Otot D", val:"3/5", flag:true},
+          {label:"Riwayat Jatuh", val:"1x minggu lalu", flag:true}
+        ]
+      },
+      diagnosaTampil: ["perawatan_diri","mobilitas","jatuh"],
+      diagnosa: {
+        jatuh: {
+          kode:"D.0143", label:"Risiko Jatuh", tipe:"Risiko", prioritasBenar:1,
+          rasional:"Kelemahan sisi kanan tubuh & riwayat hampir jatuh minggu lalu menunjukkan pasien sangat rentan mengalami jatuh berulang.",
+          rasionalPrioritas:"Jatuh pada lansia pasca stroke berisiko fatal (cedera kepala, fraktur) — ancaman keselamatan langsung yang harus dicegah lebih dulu dari masalah lain.",
+          luaran:{ kode:"L.14138", label:"Tingkat Jatuh", kriteria:[
+            "Jatuh saat berjalan menurun",
+            "Jatuh saat berdiri menurun",
+            "Kewaspadaan terhadap risiko meningkat"
+          ]}
+        },
+        mobilitas: {
+          kode:"D.0054", label:"Gangguan Mobilitas Fisik", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Kekuatan otot sisi kanan menurun (3/5) sejak stroke minggu lalu membuat pasien kesulitan bergerak secara mandiri.",
+          rasionalPrioritas:"Keterbatasan gerak sudah nyata terjadi dan berkaitan erat dengan risiko jatuh di atas — ditangani sejalan dengan upaya pencegahan jatuh.",
+          luaran:{ kode:"L.05042", label:"Mobilitas Fisik", kriteria:[
+            "Pergerakan ekstremitas meningkat",
+            "Kekuatan otot meningkat",
+            "Rentang gerak (ROM) meningkat"
+          ]}
+        },
+        perawatan_diri: {
+          kode:"D.0109", label:"Defisit Perawatan Diri", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Pasien membutuhkan bantuan sebagian untuk mandi dan berpakaian akibat kelemahan fisik yang dialami.",
+          rasionalPrioritas:"Penting untuk kualitas hidup & kemandirian pasien, tapi ditangani setelah keselamatan (jatuh) & mobilitas dasar mulai membaik.",
+          luaran:{ kode:"L.11103", label:"Perawatan Diri", kriteria:[
+            "Kemampuan mandi meningkat",
+            "Kemampuan mengenakan pakaian meningkat",
+            "Minat melakukan perawatan diri meningkat"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Risiko Jatuh", dxId:"jatuh",
+          tools: [
+            {
+              id:"lingkungan_aman", label:"Pastikan lingkungan bebas hambatan & lantai tidak licin",
+              evaluate:function(){return {status:"tepat", note:"Lingkungan yang aman mengurangi faktor pemicu jatuh dari luar tubuh pasien.", ref:"SLKI L.14138 · Tingkat Jatuh"};}
+            },
+            {
+              id:"alat_bantu", label:"Pastikan pasien selalu menggunakan tongkat saat berjalan",
+              evaluate:function(){return {status:"tepat", note:"Alat bantu jalan membantu menstabilkan tubuh pasien yang mengalami kelemahan sebelah.", ref:"SLKI L.14138 · Tingkat Jatuh"};}
+            },
+            {
+              id:"bel_pemanggil", label:"Dekatkan bel pemanggil & barang penting dalam jangkauan",
+              evaluate:function(){return {status:"tepat", note:"Mengurangi kebutuhan pasien bergerak sendiri mengambil barang yang jauh.", ref:"SLKI L.14138 · Tingkat Jatuh"};}
+            },
+            {
+              id:"dampingi", label:"Dampingi/awasi saat pasien ke kamar mandi",
+              evaluate:function(){return {status:"tepat", note:"Kamar mandi adalah area berisiko tinggi jatuh karena permukaan licin.", ref:"SLKI L.14138 · Tingkat Jatuh"};}
+            },
+            {
+              id:"biarkan_sendiri", label:"Biarkan pasien berjalan sendiri tanpa pengawasan untuk melatih kemandirian",
+              evaluate:function(){return {status:"tidak", note:"Membiarkan pasien berjalan sendiri tanpa pengawasan justru meningkatkan risiko jatuh berulang, bertentangan dengan tujuan keselamatan.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Gangguan Mobilitas Fisik", dxId:"mobilitas",
+          tools: [
+            {
+              id:"rom", label:"Latih rentang gerak (ROM) pada sisi yang lemah",
+              evaluate:function(){return {status:"tepat", note:"Latihan ROM rutin mencegah kekakuan sendi dan melatih kekuatan otot yang lemah.", ref:"SLKI L.05042 · Mobilitas Fisik"};}
+            },
+            {
+              id:"mobilisasi_bertahap", label:"Bantu mobilisasi bertahap (duduk → berdiri → berjalan)",
+              evaluate:function(){return {status:"tepat", note:"Mobilisasi bertahap melatih kekuatan & keseimbangan tanpa membebani pasien berlebihan.", ref:"SLKI L.05042 · Mobilitas Fisik"};}
+            },
+            {
+              id:"fisioterapi", label:"Kolaborasi dengan fisioterapis untuk latihan rutin",
+              evaluate:function(){return {status:"tepat", note:"Fisioterapi profesional membantu mempercepat pemulihan fungsi motorik pasien.", ref:"SLKI L.05042 · Mobilitas Fisik"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Perawatan Diri", dxId:"perawatan_diri",
+          tools: [
+            {
+              id:"bantu_mandi", label:"Bantu sebagian aktivitas mandi & berpakaian sesuai kebutuhan",
+              evaluate:function(){return {status:"tepat", note:"Bantuan sebagian (bukan total) tetap melibatkan kemampuan pasien yang masih ada.", ref:"SLKI L.11103 · Perawatan Diri"};}
+            },
+            {
+              id:"libatkan_mandiri", label:"Libatkan pasien semaksimal mungkin sesuai kemampuannya",
+              evaluate:function(){return {status:"tepat", note:"Melibatkan pasien menjaga rasa percaya diri dan mencegah ketergantungan berlebih.", ref:"SLKI L.11103 · Perawatan Diri"};}
+            },
+            {
+              id:"modifikasi_alat", label:"Sediakan alat bantu adaptif (mis. sikat gigi bergagang besar)",
+              evaluate:function(){return {status:"tepat", note:"Alat adaptif memudahkan pasien melakukan perawatan diri secara lebih mandiri.", ref:"SLKI L.11103 · Perawatan Diri"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2_lansia", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"ivfd_lansia", label:"Pasang IVFD RL",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan cairan pada kasus ini.", ref:"—"};}
             }
           ]
         }
