@@ -361,7 +361,7 @@
 
   <footer>
     Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
-    Prototipe pembelajaran &middot; 2 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
+    Prototipe pembelajaran &middot; 5 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
   </footer>
 </div>
 
@@ -628,6 +628,368 @@
             {
               id:"bab", label:"Pantau frekuensi BAB",
               evaluate:function(){return {status:"tidak", note:"Tidak relevan — kasus ini berfokus pada masalah pola napas, aktivitas, dan ansietas, bukan eliminasi fekal.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    tifoid: {
+      label: "Demam Tifoid",
+      patient: {
+        name: "An. S", age: "10 tahun",
+        keluhan: "Demam naik turun sejak 5 hari, memburuk saat sore-malam. Mengeluh nyeri perut terutama di ulu hati, lidah tampak kotor dengan tepi kemerahan. Nafsu makan menurun drastis sejak demam muncul. Riwayat sering jajan sembarangan di sekolah.",
+        vitals: [
+          {label:"Suhu", val:"39.3°C", flag:true},
+          {label:"Nadi", val:"108x/mnt", flag:true},
+          {label:"RR", val:"22x/mnt", flag:false},
+          {label:"Nyeri", val:"6/10", flag:true}
+        ]
+      },
+      diagnosaTampil: ["nutrisi","hipertermia","nyeri"],
+      diagnosa: {
+        hipertermia: {
+          kode:"D.0130", label:"Hipertermia", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Suhu tubuh 39.3°C yang naik turun sejak 5 hari — proses infeksi aktif sedang meningkatkan suhu tubuh anak saat ini.",
+          rasionalPrioritas:"Suhu tinggi aktual berisiko memicu kejang demam dan mempercepat metabolisme tubuh anak — mengancam langsung, sehingga diturunkan lebih dulu dari masalah lain.",
+          luaran:{ kode:"L.14134", label:"Termoregulasi", kriteria:[
+            "Suhu tubuh membaik ke rentang normal (36,5–37,5°C)",
+            "Menggigil menurun",
+            "Kulit merah menurun"
+          ]}
+        },
+        nyeri: {
+          kode:"D.0077", label:"Nyeri Akut", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Nyeri perut skala 6/10 di area ulu hati mengganggu kenyamanan dan membuat anak enggan bergerak atau makan.",
+          rasionalPrioritas:"Nyeri sudah nyata dirasakan dan mengganggu kenyamanan pasien, ditangani setelah suhu tubuh mulai terkendali.",
+          luaran:{ kode:"L.08066", label:"Tingkat Nyeri", kriteria:[
+            "Keluhan nyeri menurun",
+            "Meringis menurun",
+            "Gelisah menurun"
+          ]}
+        },
+        nutrisi: {
+          kode:"D.0032", label:"Risiko Defisit Nutrisi", tipe:"Risiko", prioritasBenar:3,
+          rasional:"Nafsu makan menurun drastis sejak demam & nyeri perut muncul, berisiko mengganggu pemenuhan nutrisi anak selama masa penyembuhan.",
+          rasionalPrioritas:"Dampaknya bertahap dan belum mengancam langsung — ditangani setelah demam & nyeri mereda supaya nafsu makan bisa pulih dengan sendirinya.",
+          luaran:{ kode:"L.03030", label:"Status Nutrisi", kriteria:[
+            "Porsi makan yang dihabiskan meningkat",
+            "Berat badan tidak menurun lebih lanjut"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Hipertermia", dxId:"hipertermia",
+          tools: [
+            {
+              id:"kompres", label:"Lakukan kompres hangat di lipatan tubuh (leher, ketiak, lipat paha)",
+              evaluate:function(){return {status:"tepat", note:"Kompres di area lipatan tubuh membantu penurunan suhu lewat pembuluh darah besar yang dekat permukaan kulit.", ref:"SIKI I.15506 · Manajemen Hipertermia"};}
+            },
+            {
+              id:"minum", label:"Anjurkan banyak minum air putih",
+              evaluate:function(){return {status:"tepat", note:"Asupan cairan membantu mengganti cairan tubuh yang hilang lewat penguapan akibat demam.", ref:"SIKI I.15506 · Manajemen Hipertermia"};}
+            },
+            {
+              id:"suhu", label:"Monitor suhu tubuh secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan suhu rutin penting untuk menilai efektivitas tindakan penurun panas.", ref:"SLKI L.14134 · Termoregulasi"};}
+            },
+            {
+              id:"antipiretik", label:"Kolaborasi pemberian antipiretik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Antipiretik membantu menurunkan set point suhu tubuh di hipotalamus.", ref:"SIKI I.15506 · Manajemen Hipertermia"};}
+            },
+            {
+              id:"selimut", label:"Selimuti pasien dengan selimut tebal",
+              evaluate:function(){return {status:"tidak", note:"Menyelimuti dengan selimut tebal justru menghambat pelepasan panas tubuh — bertentangan dengan tujuan menurunkan suhu.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Nyeri Akut", dxId:"nyeri",
+          tools: [
+            {
+              id:"kajinyeri", label:"Kaji skala & karakteristik nyeri (PQRST)",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian nyeri yang lengkap jadi dasar untuk menentukan intervensi selanjutnya.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"distraksi", label:"Ajarkan teknik distraksi/relaksasi",
+              evaluate:function(){return {status:"tepat", note:"Teknik distraksi membantu mengalihkan fokus pasien dari sensasi nyeri yang dirasakan.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"posisi_nyaman", label:"Atur posisi senyaman mungkin",
+              evaluate:function(){return {status:"tepat", note:"Posisi nyaman membantu mengurangi tekanan pada area yang nyeri.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"analgetik", label:"Kolaborasi pemberian analgetik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Kolaborasi farmakologis membantu meredakan nyeri yang tidak cukup ditangani non-farmakologis saja.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Defisit Nutrisi", dxId:"nutrisi",
+          tools: [
+            {
+              id:"porsi_kecil", label:"Beri makan porsi kecil tapi sering",
+              evaluate:function(){return {status:"tepat", note:"Porsi kecil lebih mudah diterima saat nafsu makan menurun akibat demam & nyeri.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            },
+            {
+              id:"sajian_menarik", label:"Sajikan makanan hangat & menarik selagi nafsu makan rendah",
+              evaluate:function(){return {status:"tepat", note:"Tampilan & suhu makanan yang menarik dapat merangsang nafsu makan anak yang sedang sakit.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            },
+            {
+              id:"monitor_asupan", label:"Monitor asupan makan harian",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan asupan membantu menilai apakah kebutuhan nutrisi anak sudah tercukupi.", ref:"SLKI L.03030 · Status Nutrisi"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini — tidak ada tanda sesak.", ref:"—"};}
+            },
+            {
+              id:"gantibalut", label:"Lakukan perawatan luka / ganti balutan",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — tidak ada luka terbuka pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    hipertensi: {
+      label: "Hipertensi",
+      patient: {
+        name: "Tn. H", age: "55 tahun",
+        keluhan: "Mengeluh nyeri kepala berdenyut sejak pagi, skala 5/10. Riwayat hipertensi sejak 5 tahun lalu namun jarang kontrol dan sering lupa minum obat. Merokok aktif sejak muda. Saat diperiksa, pasien tampak tegang dan sesekali memegangi kepala.",
+        vitals: [
+          {label:"TD", val:"170/100", flag:true},
+          {label:"Nadi", val:"88x/mnt", flag:false},
+          {label:"RR", val:"20x/mnt", flag:false},
+          {label:"Nyeri", val:"5/10", flag:true}
+        ]
+      },
+      diagnosaTampil: ["pengetahuan","perfusi","nyeri"],
+      diagnosa: {
+        perfusi: {
+          kode:"D.0017", label:"Risiko Perfusi Serebral Tidak Efektif", tipe:"Risiko", prioritasBenar:1,
+          rasional:"TD 170/100 mmHg meningkatkan risiko gangguan aliran darah ke otak yang bisa berujung stroke bila tidak segera dikendalikan.",
+          rasionalPrioritas:"Risiko gangguan aliran darah ke otak bisa berujung stroke dalam waktu singkat — ancaman fisiologis paling berat, jadi harus diprioritaskan pertama meski baru berupa risiko.",
+          luaran:{ kode:"L.02014", label:"Perfusi Serebral", kriteria:[
+            "Sakit kepala menurun",
+            "Gelisah menurun",
+            "Tekanan darah membaik ke rentang target"
+          ]}
+        },
+        nyeri: {
+          kode:"D.0077", label:"Nyeri Akut", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Nyeri kepala berdenyut skala 5/10 dirasakan nyata akibat tekanan darah yang belum terkontrol.",
+          rasionalPrioritas:"Nyeri sudah nyata dan mengganggu kenyamanan pasien, namun bukan ancaman nyawa langsung seperti risiko gangguan aliran darah otak di atas.",
+          luaran:{ kode:"L.08066", label:"Tingkat Nyeri", kriteria:[
+            "Keluhan nyeri menurun",
+            "Meringis menurun",
+            "Frekuensi nadi membaik"
+          ]}
+        },
+        pengetahuan: {
+          kode:"D.0111", label:"Defisit Pengetahuan", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Pasien jarang kontrol & sering lupa minum obat — menunjukkan kurangnya pemahaman tentang pentingnya manajemen hipertensi jangka panjang.",
+          rasionalPrioritas:"Edukasi penting untuk mencegah kekambuhan jangka panjang, tapi tidak mendesak secara fisik saat ini — paling pas ditangani setelah kondisi akut mereda.",
+          luaran:{ kode:"L.12111", label:"Tingkat Pengetahuan", kriteria:[
+            "Perilaku sesuai anjuran meningkat",
+            "Verbalisasi minat belajar meningkat",
+            "Persepsi yang keliru menurun"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Risiko Perfusi Serebral Tidak Efektif", dxId:"perfusi",
+          tools: [
+            {
+              id:"monitorTD", label:"Monitor tekanan darah secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan TD rutin penting untuk deteksi dini perburukan menuju krisis hipertensi.", ref:"SLKI L.02014 · Perfusi Serebral"};}
+            },
+            {
+              id:"elevasi", label:"Posisikan kepala sedikit elevasi (semi-fowler)",
+              evaluate:function(){return {status:"tepat", note:"Elevasi kepala membantu menurunkan tekanan pada pembuluh darah otak.", ref:"SIKI · Manajemen Peningkatan Tekanan Intrakranial"};}
+            },
+            {
+              id:"hindari_valsava", label:"Anjurkan hindari mengejan / aktivitas berat mendadak",
+              evaluate:function(){return {status:"tepat", note:"Aktivitas berat mendadak bisa memicu lonjakan tekanan darah lebih lanjut.", ref:"SIKI · Manajemen Peningkatan Tekanan Intrakranial"};}
+            },
+            {
+              id:"obat_hipertensi", label:"Kolaborasi pemberian obat antihipertensi sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Terapi farmakologis diperlukan untuk menurunkan TD ke rentang aman.", ref:"SLKI L.02014 · Perfusi Serebral"};}
+            },
+            {
+              id:"olahraga_berat", label:"Anjurkan olahraga berat segera hari ini",
+              evaluate:function(){return {status:"tidak", note:"Olahraga berat saat TD masih 170/100 justru berisiko memicu lonjakan tekanan darah lebih tinggi.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Nyeri Akut", dxId:"nyeri",
+          tools: [
+            {
+              id:"kajinyeri2", label:"Kaji skala & karakteristik nyeri kepala",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian nyeri membantu memastikan nyeri kepala bukan tanda perburukan (mis. gejala neurologis lain).", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"lingkungan_tenang", label:"Ciptakan lingkungan tenang & minim cahaya",
+              evaluate:function(){return {status:"tepat", note:"Lingkungan yang tenang membantu mengurangi rangsangan yang memperberat nyeri kepala.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"analgetik2", label:"Kolaborasi pemberian analgetik ringan sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Analgetik membantu meredakan nyeri kepala yang dirasakan pasien.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Pengetahuan", dxId:"pengetahuan",
+          tools: [
+            {
+              id:"edukasi_hipertensi", label:"Jelaskan pentingnya kepatuhan minum obat & kontrol rutin",
+              evaluate:function(){return {status:"tepat", note:"Edukasi kepatuhan membantu mencegah komplikasi jangka panjang akibat hipertensi tidak terkontrol.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"edukasi_gaya_hidup", label:"Edukasi modifikasi gaya hidup (kurangi garam, berhenti merokok)",
+              evaluate:function(){return {status:"tepat", note:"Perubahan gaya hidup adalah bagian penting manajemen hipertensi selain obat.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"cek_pemahaman", label:"Evaluasi pemahaman pasien dengan meminta mengulang penjelasan",
+              evaluate:function(){return {status:"tepat", note:"Teach-back memastikan edukasi benar-benar dipahami, bukan sekadar disampaikan.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"ivfd2", label:"Pasang IVFD RL",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan cairan pada kasus ini — bukan masalah utama yang perlu ditangani sekarang.", ref:"—"};}
+            },
+            {
+              id:"lukaperawatan", label:"Lakukan perawatan luka",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — tidak ada luka terbuka pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    luka: {
+      label: "Perawatan Luka",
+      patient: {
+        name: "Tn. D", age: "34 tahun",
+        keluhan: "Mengalami luka robek sepanjang 6 cm di tungkai kanan bawah akibat kecelakaan motor 2 hari lalu, sudah dijahit di IGD. Luka tampak sedikit kemerahan di tepi, ada rembesan cairan bening, pasien mengeluh nyeri berdenyut di area luka skala 4/10.",
+        vitals: [
+          {label:"Suhu", val:"37.6°C", flag:true},
+          {label:"Nadi", val:"84x/mnt", flag:false},
+          {label:"Nyeri", val:"4/10", flag:true},
+          {label:"Leukosit", val:"11.200/µL", flag:true}
+        ]
+      },
+      diagnosaTampil: ["nyeri","infeksi","integritas"],
+      diagnosa: {
+        integritas: {
+          kode:"D.0129", label:"Gangguan Integritas Kulit/Jaringan", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Luka robek 6 cm di tungkai kanan bawah, sudah dijahit namun masih dalam proses penyembuhan aktif — kerusakan jaringan sedang terjadi saat ini.",
+          rasionalPrioritas:"Kerusakan jaringan sudah nyata terjadi dan menjadi sumber risiko lain (termasuk infeksi) — perawatan luka langsung jadi prioritas utama.",
+          luaran:{ kode:"L.14125", label:"Integritas Kulit dan Jaringan", kriteria:[
+            "Kerusakan lapisan kulit menurun",
+            "Perdarahan menurun",
+            "Nyeri pada area luka menurun"
+          ]}
+        },
+        infeksi: {
+          kode:"D.0142", label:"Risiko Infeksi", tipe:"Risiko", prioritasBenar:2,
+          rasional:"Kemerahan di tepi luka, rembesan cairan bening, dan leukosit sedikit meningkat (11.200/µL) menunjukkan tubuh sedang waspada terhadap kemungkinan infeksi.",
+          rasionalPrioritas:"Masih berupa risiko, tapi konsekuensi langsung dari luka terbuka yang belum sepenuhnya tertutup — perlu diantisipasi segera setelah perawatan luka dilakukan.",
+          luaran:{ kode:"L.14137", label:"Tingkat Infeksi", kriteria:[
+            "Kemerahan menurun",
+            "Bengkak menurun",
+            "Kadar sel darah putih membaik"
+          ]}
+        },
+        nyeri: {
+          kode:"D.0077", label:"Nyeri Akut", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Nyeri berdenyut skala 4/10 di area luka dirasakan pasien, terutama saat luka disentuh atau bergerak.",
+          rasionalPrioritas:"Nyeri penting untuk kenyamanan pasien, tapi levelnya masih ringan-sedang dan bukan ancaman fisik langsung dibanding kerusakan jaringan & risiko infeksi di atas.",
+          luaran:{ kode:"L.08066", label:"Tingkat Nyeri", kriteria:[
+            "Keluhan nyeri menurun",
+            "Meringis menurun",
+            "Sikap protektif menurun"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Gangguan Integritas Kulit/Jaringan", dxId:"integritas",
+          tools: [
+            {
+              id:"gantibalut2", label:"Lakukan perawatan luka & ganti balutan dengan teknik steril",
+              evaluate:function(){return {status:"tepat", note:"Perawatan luka steril mempercepat penyembuhan dan mencegah kontaminasi lebih lanjut.", ref:"SIKI I.14564 · Perawatan Luka"};}
+            },
+            {
+              id:"kajiluka", label:"Kaji kondisi luka (warna, ukuran, tepi, cairan)",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian rutin membantu memantau proses penyembuhan & deteksi dini tanda infeksi.", ref:"SIKI I.14564 · Perawatan Luka"};}
+            },
+            {
+              id:"posisi_luka", label:"Hindari tekanan langsung pada area luka",
+              evaluate:function(){return {status:"tepat", note:"Mengurangi tekanan pada luka membantu proses penyembuhan jaringan.", ref:"SLKI L.14125 · Integritas Kulit dan Jaringan"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Infeksi", dxId:"infeksi",
+          tools: [
+            {
+              id:"cucitangan", label:"Terapkan teknik aseptik sebelum & sesudah kontak dengan luka",
+              evaluate:function(){return {status:"tepat", note:"Teknik aseptik adalah langkah dasar paling efektif mencegah kontaminasi mikroorganisme ke luka.", ref:"SIKI I.14539 · Pencegahan Infeksi"};}
+            },
+            {
+              id:"monitor_tanda_infeksi", label:"Monitor tanda infeksi (kemerahan, bengkak, cairan, suhu)",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan tanda infeksi membantu deteksi dini sebelum kondisi memburuk.", ref:"SLKI L.14137 · Tingkat Infeksi"};}
+            },
+            {
+              id:"antibiotik", label:"Kolaborasi pemberian antibiotik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Antibiotik membantu mencegah/mengatasi infeksi pada luka berisiko.", ref:"SIKI I.14539 · Pencegahan Infeksi"};}
+            },
+            {
+              id:"distractor_buka", label:"Biarkan luka terbuka tanpa balutan agar cepat kering",
+              evaluate:function(){return {status:"tidak", note:"Membiarkan luka terbuka tanpa balutan justru meningkatkan risiko kontaminasi dan infeksi, bukan mempercepat penyembuhan.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Nyeri Akut", dxId:"nyeri",
+          tools: [
+            {
+              id:"kajinyeri3", label:"Kaji skala nyeri sebelum & sesudah perawatan luka",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian sebelum-sesudah membantu menilai efektivitas manajemen nyeri saat perawatan luka.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"analgetik3", label:"Kolaborasi pemberian analgetik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Analgetik membantu mengurangi nyeri terutama saat prosedur ganti balutan.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"distraksi3", label:"Ajarkan teknik napas dalam saat luka dibersihkan",
+              evaluate:function(){return {status:"tepat", note:"Teknik napas dalam membantu pasien rileks dan mengurangi persepsi nyeri saat prosedur.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2b", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"oralit2", label:"Anjurkan minum oralit",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — kasus ini bukan tentang gangguan cairan akibat diare.", ref:"—"};}
             }
           ]
         }
