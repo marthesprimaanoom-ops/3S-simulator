@@ -1,0 +1,1011 @@
+<title>Simulator Askep</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F8F6;
+    --surface:#FFFFFF;
+    --surface-2:#EAF1EE;
+    --ink:#122622;
+    --ink-muted:#556B65;
+    --border:#DCE7E2;
+    --accent:#0E7A69;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DEF0EA;
+    --good:#1E8A57;
+    --good-bg:#E3F6EA;
+    --good-border:#B8E4C7;
+    --warn:#A96A0A;
+    --warn-bg:#FBF0D9;
+    --warn-border:#F0D69E;
+    --bad:#AD4530;
+    --bad-bg:#FAE8E2;
+    --bad-border:#EFC5B6;
+    --shadow: 0 1px 2px rgba(18,38,34,.06), 0 8px 24px -12px rgba(18,38,34,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1714;
+      --surface:#16211D;
+      --surface-2:#1C2A25;
+      --ink:#E7F2EC;
+      --ink-muted:#93A9A1;
+      --border:#28382F;
+      --accent:#3FBFA0;
+      --accent-ink:#08201A;
+      --accent-soft:#1B3A31;
+      --good:#57C98B;
+      --good-bg:#163524;
+      --good-border:#245A3E;
+      --warn:#E0AA47;
+      --warn-bg:#3A2E12;
+      --warn-border:#63501F;
+      --bad:#E08469;
+      --bad-bg:#3A2119;
+      --bad-border:#63382A;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1714;
+    --surface:#16211D;
+    --surface-2:#1C2A25;
+    --ink:#E7F2EC;
+    --ink-muted:#93A9A1;
+    --border:#28382F;
+    --accent:#3FBFA0;
+    --accent-ink:#08201A;
+    --accent-soft:#1B3A31;
+    --good:#57C98B;
+    --good-bg:#163524;
+    --good-border:#245A3E;
+    --warn:#E0AA47;
+    --warn-bg:#3A2E12;
+    --warn-border:#63501F;
+    --bad:#E08469;
+    --bad-bg:#3A2119;
+    --bad-border:#63382A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    padding-inline:16px;
+    padding-block:20px 40px;
+    display:flex;
+    justify-content:center;
+  }
+  .app{width:100%;max-width:980px;display:flex;flex-direction:column;gap:18px;}
+
+  header.top{display:flex;flex-direction:column;gap:4px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;
+  }
+  h1{
+    font-family:'Lexend',sans-serif;font-weight:700;
+    font-size:clamp(22px,4vw,30px);margin:0;letter-spacing:-.01em;text-wrap:balance;
+  }
+  .sub{color:var(--ink-muted);font-size:14px;max-width:62ch;line-height:1.5;margin:0;}
+
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .tab{
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:13px;
+    padding:9px 16px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface);color:var(--ink-muted);cursor:pointer;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  .tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    box-shadow:var(--shadow);padding:18px 20px;
+  }
+
+  .case-head{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-start;}
+  .patient h2{font-family:'Lexend',sans-serif;font-size:18px;margin:0 0 2px;}
+  .patient .meta{color:var(--ink-muted);font-size:13px;}
+  .keluhan{font-size:14px;line-height:1.55;margin-top:10px;max-width:56ch;}
+  .keluhan b{color:var(--ink);}
+
+  .dx-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+    background:var(--accent-soft);color:var(--accent);border-radius:8px;
+    padding:6px 10px;white-space:nowrap;
+  }
+
+  .luaran-box{
+    margin-top:12px;background:var(--surface);border:1px solid var(--border);
+    border-radius:10px;padding:11px 13px;
+  }
+  .luaran-head{
+    display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;
+  }
+  .luaran-head .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+    background:var(--accent);color:var(--accent-ink);border-radius:6px;
+    padding:3px 7px;letter-spacing:.03em;
+  }
+  .luaran-head .lbl{font-family:'Lexend',sans-serif;font-weight:600;font-size:13px;}
+  .luaran-head .kode{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-muted);
+  }
+  .kriteria-list{
+    display:flex;flex-direction:column;gap:5px;margin:0;padding:0;list-style:none;
+  }
+  .kriteria-list li{
+    display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.5;color:var(--ink-muted);
+  }
+  .kriteria-list li::before{
+    content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);
+    flex-shrink:0;margin-top:6px;
+  }
+
+  .dx-intro{font-size:13px;color:var(--ink-muted);line-height:1.55;margin:0 0 14px;max-width:60ch;}
+  .dx-grid{display:flex;flex-direction:column;gap:12px;}
+  .dx-card{
+    border:1px solid var(--border);background:var(--surface-2);border-radius:13px;
+    padding:14px 16px;
+  }
+  .dx-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+  .dx-letter{
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:11px;
+    color:var(--ink-muted);letter-spacing:.05em;margin-bottom:3px;
+  }
+  .dx-name{font-family:'Lexend',sans-serif;font-weight:600;font-size:15px;}
+  .dx-meta{display:flex;gap:8px;align-items:center;margin-top:3px;flex-wrap:wrap;}
+  .dx-kode{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-muted);}
+  .dx-tipe{
+    font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+    padding:2px 7px;border-radius:6px;
+  }
+  .dx-tipe.aktual{background:var(--bad-bg);color:var(--bad);}
+  .dx-tipe.risiko{background:var(--warn-bg);color:var(--warn);}
+  .dx-rasional{font-size:12.5px;color:var(--ink-muted);line-height:1.55;margin-top:8px;max-width:56ch;}
+
+  .prio-picker{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+  .prio-picker label{font-size:11.5px;color:var(--ink-muted);font-weight:600;white-space:nowrap;}
+  select.prio{
+    font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;
+    background:var(--surface);color:var(--ink);border:1.5px solid var(--border);
+    border-radius:8px;padding:6px 10px;width:56px;text-align:center;
+  }
+
+  .prio-feedback{
+    display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;
+    border-top:1px solid var(--border);font-size:12.5px;
+  }
+  .prio-feedback .fb-badge{
+    flex-shrink:0;width:20px;height:20px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  }
+  .prio-feedback .fb-badge.tepat{background:var(--good-bg);color:var(--good);border:1px solid var(--good-border);}
+  .prio-feedback .fb-badge.kurang{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-border);}
+  .prio-feedback .fb-text{color:var(--ink-muted);line-height:1.5;}
+  .prio-feedback .fb-text b{color:var(--ink);}
+
+  .dx-group-head{
+    display:flex;align-items:center;gap:8px;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;
+  }
+  .dx-group-head .name{font-family:'Lexend',sans-serif;font-weight:600;font-size:13.5px;}
+  .dx-group-head .kode{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-muted);}
+  .eval-dx-heading{
+    font-family:'Lexend',sans-serif;font-weight:700;font-size:13.5px;
+    margin:18px 0 4px;padding-top:14px;border-top:1px solid var(--border);
+    display:flex;align-items:center;gap:8px;
+  }
+  .eval-dx-heading:first-child{margin-top:0;padding-top:0;border-top:none;}
+  .eval-dx-heading .kode{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--ink-muted);}
+
+  .vitals{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+  .vital{
+    background:var(--surface-2);border-radius:10px;padding:8px 12px;min-width:84px;
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .vital .v-label{font-size:10.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;}
+  .vital .v-val{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;}
+  .vital.flag .v-val{color:var(--bad);}
+
+  .section-title{
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;
+    display:flex;align-items:center;gap:8px;margin:0 0 10px;color:var(--ink);
+  }
+  .section-title .count{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-muted);font-weight:500;
+  }
+
+  .kategori-group{margin-bottom:16px;}
+  .kategori-group:last-child{margin-bottom:0;}
+  .kategori-label{
+    font-size:11.5px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;
+    letter-spacing:.06em;margin-bottom:8px;
+  }
+  .tool-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .tool{
+    border:1px solid var(--border);background:var(--surface-2);color:var(--ink);
+    border-radius:11px;padding:9px 13px;font-size:13.5px;font-weight:500;cursor:pointer;
+    display:flex;align-items:center;gap:8px;transition:background .15s,border-color .15s,transform .1s;
+  }
+  .tool:hover{border-color:var(--accent);}
+  .tool:active{transform:scale(.98);}
+  .tool[aria-pressed="true"]{
+    background:var(--accent);color:var(--accent-ink);border-color:var(--accent);
+  }
+  .tool .plus{font-family:'IBM Plex Mono',monospace;font-weight:600;opacity:.7;}
+
+  .param-row{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    background:var(--surface-2);border:1px dashed var(--border);border-radius:11px;
+    padding:9px 13px;font-size:13px;
+  }
+  .param-row label{color:var(--ink-muted);font-weight:500;}
+  select.param{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+    background:var(--surface);color:var(--ink);border:1px solid var(--border);
+    border-radius:7px;padding:5px 8px;
+  }
+
+  .tray{
+    display:flex;flex-direction:column;gap:8px;min-height:40px;
+  }
+  .tray-empty{color:var(--ink-muted);font-size:13px;font-style:italic;}
+  .tray-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:var(--surface-2);border:1px solid var(--border);border-radius:10px;
+    padding:8px 12px;font-size:13.5px;
+  }
+  .tray-item .remove{
+    background:none;border:none;color:var(--ink-muted);cursor:pointer;font-size:16px;
+    line-height:1;padding:2px 6px;border-radius:6px;
+  }
+  .tray-item .remove:hover{color:var(--bad);background:var(--bad-bg);}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  button.primary{
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;
+    background:var(--accent);color:var(--accent-ink);border:none;border-radius:11px;
+    padding:11px 20px;cursor:pointer;
+  }
+  button.primary:disabled{opacity:.45;cursor:not-allowed;}
+  button.ghost{
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;
+    background:transparent;color:var(--ink-muted);border:1px solid var(--border);border-radius:11px;
+    padding:11px 18px;cursor:pointer;
+  }
+  button.ghost:hover{border-color:var(--ink-muted);}
+
+  .status-banner{
+    display:flex;align-items:center;gap:12px;border-radius:14px;padding:14px 18px;
+    border:1px solid var(--border);margin-bottom:14px;
+  }
+  .status-banner .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+  .status-banner .t{font-family:'Lexend',sans-serif;font-weight:700;font-size:15px;}
+  .status-banner .d{font-size:13px;color:var(--ink-muted);}
+  .status-banner.ok{background:var(--good-bg);border-color:var(--good-border);}
+  .status-banner.ok .dot{background:var(--good);}
+  .status-banner.ok .t{color:var(--good);}
+  .status-banner.warn{background:var(--warn-bg);border-color:var(--warn-border);}
+  .status-banner.warn .dot{background:var(--warn);}
+  .status-banner.warn .t{color:var(--warn);}
+
+  .eval-item{
+    display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border);
+  }
+  .eval-item:first-child{border-top:none;padding-top:0;}
+  .eval-badge{
+    flex-shrink:0;width:24px;height:24px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;margin-top:1px;
+  }
+  .eval-badge.tepat{background:var(--good-bg);color:var(--good);border:1px solid var(--good-border);}
+  .eval-badge.kurang{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-border);}
+  .eval-badge.tidak{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad-border);}
+  .eval-body .eval-title{font-weight:600;font-size:13.5px;margin-bottom:2px;}
+  .eval-body .eval-note{font-size:13px;color:var(--ink-muted);line-height:1.5;}
+  .eval-body .eval-ref{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);
+    margin-top:4px;display:inline-block;
+  }
+
+  footer{color:var(--ink-muted);font-size:12px;line-height:1.6;text-align:center;padding-top:6px;}
+  footer b{color:var(--ink);}
+</style>
+
+<div class="app">
+  <header class="top">
+    <span class="eyebrow">Prototipe &middot; Lab Keperawatan SMK</span>
+    <h1>Simulator Kasus Askep</h1>
+    <p class="sub">Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.</p>
+  </header>
+
+  <div class="tabs" id="tabs" role="tablist"></div>
+
+  <div class="card" id="caseCard"></div>
+
+  <div class="card">
+    <div class="section-title">Diagnosa Keperawatan &amp; Prioritas</div>
+    <p class="dx-intro">Ini semua diagnosa yang teridentifikasi dari data pasien di atas (urutan acak, bukan urutan prioritas). Tentukan nomor prioritas masing-masing &mdash; <b>1 = paling mendesak</b> ditangani lebih dulu.</p>
+    <div class="dx-grid" id="dxGrid"></div>
+    <div class="actions">
+      <button class="primary" id="checkPrioBtn">Cek Urutan Prioritas</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Bank Tindakan <span class="count" id="toolCount"></span></div>
+    <div id="toolBank"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Rencana Tindakan Saya <span class="count" id="trayCount">0 dipilih</span></div>
+    <div class="tray" id="tray"></div>
+    <div class="actions">
+      <button class="primary" id="checkBtn" disabled>Cek Tindakan</button>
+      <button class="ghost" id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <div class="card" id="resultCard" hidden>
+    <div class="section-title">Hasil Evaluasi</div>
+    <div id="statusBanner"></div>
+    <div id="evalList"></div>
+  </div>
+
+  <footer>
+    Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
+    Prototipe pembelajaran &middot; 2 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
+  </footer>
+</div>
+
+<script>
+(function(){
+
+  // ---------- DATA KASUS ----------
+  var CASES = {
+
+    diare: {
+      label: "Diare",
+      patient: {
+        name: "An. R", age: "6 tahun",
+        keluhan: "BAB cair <b>6x</b> dalam 24 jam, konsistensi lembek tanpa ampas. Anak tampak rewel, mata sedikit cekung, turgor kulit kembali lambat, nafsu makan menurun sejak 2 hari. Ibu mengatakan anak masih mau minum.",
+        vitals: [
+          {label:"Suhu", val:"38.2°C", flag:true},
+          {label:"Nadi", val:"112x/mnt", flag:true},
+          {label:"RR", val:"24x/mnt", flag:false},
+          {label:"BAB/24j", val:"6x", flag:true}
+        ]
+      },
+      // urutan tampil di bawah SENGAJA diacak, bukan urutan prioritas asli
+      diagnosaTampil: ["nutrisi","diare","hipovolemia"],
+      diagnosa: {
+        diare: {
+          kode:"D.0020", label:"Diare", tipe:"Aktual", prioritasBenar:1,
+          rasional:"BAB cair 6x/24 jam yang sedang berlangsung aktif — kehilangan cairan tubuh sedang terjadi saat ini.",
+          rasionalPrioritas:"Diare bersifat aktual dan sedang menyebabkan kehilangan cairan tubuh secara langsung — masalah yang sedang terjadi selalu diatasi lebih dulu daripada yang baru berisiko terjadi.",
+          luaran:{ kode:"L.04033", label:"Eliminasi Fekal", kriteria:[
+            "Konsistensi feses membaik (tidak cair)",
+            "Frekuensi defekasi membaik, turun ke &lt;3x/24 jam",
+            "Kontrol pengeluaran feses membaik"
+          ]}
+        },
+        hipovolemia: {
+          kode:"D.0034", label:"Risiko Hipovolemia", tipe:"Risiko", prioritasBenar:2,
+          rasional:"Kehilangan cairan yang terus berlangsung akibat diare membuat anak berisiko jatuh ke kondisi kekurangan volume cairan tubuh.",
+          rasionalPrioritas:"Masih berupa risiko, tapi konsekuensi langsung dari diare yang sedang berjalan — harus diantisipasi segera setelah masalah aktual utama ditangani.",
+          luaran:{ kode:"L.03028", label:"Status Cairan", kriteria:[
+            "Turgor kulit membaik",
+            "Membran mukosa lembap",
+            "Kekuatan nadi & tekanan darah membaik"
+          ]}
+        },
+        nutrisi: {
+          kode:"D.0019", label:"Defisit Nutrisi", tipe:"Risiko", prioritasBenar:3,
+          rasional:"Nafsu makan menurun sejak 2 hari akibat gejala diare berkepanjangan, berisiko mengganggu pemenuhan nutrisi anak.",
+          rasionalPrioritas:"Dampaknya bersifat jangka lebih panjang dan belum mengancam secara langsung dibanding kehilangan cairan — ditangani setelah dua masalah di atas mulai terkendali.",
+          luaran:{ kode:"L.03030", label:"Status Nutrisi", kriteria:[
+            "Porsi makan yang dihabiskan meningkat",
+            "Berat badan membaik / tidak menurun lebih lanjut"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Diare", dxId:"diare",
+          tools: [
+            {
+              id:"oralit", label:"Anjurkan minum oralit / cairan oral tambahan",
+              evaluate:function(){return {status:"tepat", note:"Edukasi asupan cairan oral membantu mencegah perburukan dehidrasi selagi terapi berjalan.", ref:"SIKI I.03101 · Manajemen Diare"};}
+            },
+            {
+              id:"bab", label:"Pantau frekuensi & konsistensi BAB",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan pola BAB adalah indikator utama luaran eliminasi fekal membaik.", ref:"SLKI L.04033 · Eliminasi Fekal"};}
+            },
+            {
+              id:"zink", label:"Kolaborasi pemberian zink/antidiare sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Kolaborasi farmakologis sesuai anjuran tenaga medis mendukung penyembuhan diare.", ref:"SIKI I.03101 · Manajemen Diare"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Hipovolemia", dxId:"hipovolemia",
+          tools: [
+            {
+              id:"ivfd", label:"Pasang IVFD", needsParam:true, paramLabel:"Jenis cairan",
+              paramOptions:[
+                {v:"RL", t:"Ringer Laktat (RL)"},
+                {v:"NACL", t:"NaCl 0.9%"},
+                {v:"D5", t:"Dekstrosa 5%"}
+              ],
+              evaluate:function(v){
+                if(v==="RL") return {status:"tepat", note:"RL tepat untuk mengganti cairan & elektrolit yang hilang akibat diare (kehilangan cairan isotonik).", ref:"SLKI L.03028 · Status Cairan"};
+                if(v==="NACL") return {status:"kurang", note:"NaCl 0.9% masih bisa dipakai, tapi RL lebih disarankan karena juga mengandung elektrolit (K, Ca, laktat) yang ikut hilang saat diare.", ref:"SLKI L.03028 · Status Cairan"};
+                return {status:"tidak", note:"Dekstrosa 5% tidak tepat sebagai cairan resusitasi awal diare — tidak mengandung elektrolit pengganti yang memadai.", ref:"SLKI L.03028 · Status Cairan"};
+              }
+            },
+            {
+              id:"turgor", label:"Monitor tanda dehidrasi (turgor, mata cekung, mukosa)",
+              evaluate:function(){return {status:"tepat", note:"Observasi tanda dehidrasi wajib dilakukan berkala untuk menilai perkembangan status cairan.", ref:"SLKI L.03028 · Status Cairan"};}
+            },
+            {
+              id:"vitalcair", label:"Monitor tekanan darah & kekuatan nadi",
+              evaluate:function(){return {status:"tepat", note:"TD & nadi adalah indikator status cairan yang membantu deteksi dini perburukan ke arah hipovolemia.", ref:"SLKI L.03028 · Status Cairan"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Nutrisi", dxId:"nutrisi",
+          tools: [
+            {
+              id:"bb", label:"Timbang berat badan harian",
+              evaluate:function(){return {status:"tepat", note:"Penimbangan BB harian membantu memantau apakah status nutrisi anak membaik atau memburuk.", ref:"SLKI L.03030 · Status Nutrisi"};}
+            },
+            {
+              id:"porsi", label:"Anjurkan makan porsi kecil tapi sering",
+              evaluate:function(){return {status:"tepat", note:"Porsi kecil lebih mudah diterima saat nafsu makan menurun, membantu memenuhi kebutuhan kalori harian.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            },
+            {
+              id:"suplemen", label:"Kolaborasi pemberian vitamin/suplemen sesuai indikasi",
+              evaluate:function(){return {status:"tepat", note:"Kolaborasi farmakologis membantu memenuhi kebutuhan nutrisi selama nafsu makan belum pulih.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini — tidak ada tanda sesak, oksigen tidak diperlukan.", ref:"—"};}
+            },
+            {
+              id:"fowler", label:"Posisikan semi-fowler",
+              evaluate:function(){return {status:"tidak", note:"Posisi semi-fowler ditujukan untuk masalah pola napas, bukan untuk diare/eliminasi fekal.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    napas: {
+      label: "Sesak Napas",
+      patient: {
+        name: "Tn. B", age: "58 tahun",
+        keluhan: "Mengeluh sesak sejak 2 jam lalu, tampak menggunakan otot bantu napas, retraksi dinding dada, dan bernapas cepat-dangkal. Riwayat PPOK 3 tahun. Pasien tampak gelisah dan mengaku cemas karena sesaknya belum reda.",
+        vitals: [
+          {label:"RR", val:"28x/mnt", flag:true},
+          {label:"SpO2", val:"90%", flag:true},
+          {label:"Nadi", val:"98x/mnt", flag:false},
+          {label:"TD", val:"128/82", flag:false}
+        ]
+      },
+      diagnosaTampil: ["ansietas","aktivitas","polanapas"],
+      diagnosa: {
+        polanapas: {
+          kode:"D.0005", label:"Pola Napas Tidak Efektif", tipe:"Aktual", prioritasBenar:1,
+          rasional:"RR 28x/menit, SpO2 90%, retraksi dinding dada — ventilasi pasien saat ini tidak adekuat dan sedang berlangsung.",
+          rasionalPrioritas:"Gangguan oksigenasi bisa mengancam nyawa dalam hitungan menit — sesuai prinsip ABC (Airway–Breathing–Circulation), masalah pernapasan selalu diatasi lebih dulu dari apa pun.",
+          luaran:{ kode:"L.01004", label:"Pola Napas", kriteria:[
+            "Dispnea menurun",
+            "Penggunaan otot bantu napas menurun",
+            "Frekuensi & kedalaman napas membaik"
+          ]}
+        },
+        aktivitas: {
+          kode:"D.0056", label:"Intoleransi Aktivitas", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Sesak napas membuat pasien kesulitan dan cepat lelah saat beraktivitas ringan sekalipun.",
+          rasionalPrioritas:"Penting untuk kualitas hidup pasien, tapi baru realistis ditangani setelah jalan napas & pola napas mulai stabil — mengejar aktivitas sebelum napas stabil justru berisiko.",
+          luaran:{ kode:"L.05047", label:"Toleransi Aktivitas", kriteria:[
+            "Keluhan lelah menurun",
+            "Dispnea saat & setelah aktivitas menurun",
+            "Frekuensi nadi membaik"
+          ]}
+        },
+        ansietas: {
+          kode:"D.0080", label:"Ansietas", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Pasien tampak gelisah dan mengungkapkan cemas karena sesaknya belum reda.",
+          rasionalPrioritas:"Kecemasan adalah kebutuhan psikososial (Hierarki Maslow) — penting untuk kenyamanan pasien, tapi bukan ancaman fisiologis langsung sehingga jadi prioritas terakhir dari tiga ini.",
+          luaran:{ kode:"L.09093", label:"Tingkat Ansietas", kriteria:[
+            "Perilaku gelisah & tegang menurun",
+            "Verbalisasi khawatir menurun",
+            "Pola tidur membaik"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Pola Napas Tidak Efektif", dxId:"polanapas",
+          tools: [
+            {
+              id:"o2", label:"Pasang oksigen nasal kanul", needsParam:true, paramLabel:"Flow rate",
+              paramOptions:[
+                {v:"1.5", t:"1,5 L/menit"},
+                {v:"2", t:"2 L/menit"},
+                {v:"3", t:"3 L/menit"},
+                {v:"4", t:"4 L/menit"},
+                {v:"6", t:"6 L/menit"}
+              ],
+              evaluate:function(v){
+                var n = parseFloat(v);
+                if(n>=3 && n<=4) return {status:"tepat", note:"Flow rate 3–4 L/menit sesuai untuk menaikkan SpO2 90% ke rentang target tanpa berisiko retensi CO2 pada riwayat PPOK.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};
+                if(n<3) return {status:"kurang", note:n+" L/menit terlalu rendah — SpO2 masih 90%, kebutuhan oksigen pasien belum tercukupi. Perlu dinaikkan bertahap sambil dipantau.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};
+                return {status:"kurang", note:n+" L/menit berisiko berlebih pada pasien dengan riwayat PPOK — bisa menekan drive napas & memicu retensi CO2. Sesuaikan bertahap sambil pantau SpO2.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};
+              }
+            },
+            {
+              id:"fowler", label:"Posisikan semi-fowler / fowler",
+              evaluate:function(){return {status:"tepat", note:"Posisi semi-fowler membantu ekspansi paru maksimal dan menurunkan kerja otot bantu napas.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+            },
+            {
+              id:"monitor", label:"Monitor frekuensi napas & saturasi oksigen",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan rutin RR & SpO2 penting untuk menilai efektivitas intervensi.", ref:"SLKI L.01004 · Pola Napas"};}
+            },
+            {
+              id:"pursed", label:"Ajarkan teknik pursed-lip breathing",
+              evaluate:function(){return {status:"tepat", note:"Teknik ini membantu memperlambat ekspirasi dan mencegah kolaps jalan napas kecil, cocok untuk pasien PPOK.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+            },
+            {
+              id:"bronko", label:"Kolaborasi pemberian bronkodilator",
+              evaluate:function(){return {status:"tepat", note:"Bronkodilator membantu melebarkan jalan napas dan mengurangi sesak pada eksaserbasi PPOK.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+            }
+          ]
+        },
+        {
+          nama: "Intoleransi Aktivitas", dxId:"aktivitas",
+          tools: [
+            {
+              id:"istirahat", label:"Anjurkan istirahat cukup di antara aktivitas",
+              evaluate:function(){return {status:"tepat", note:"Jeda istirahat mencegah kelelahan berlebih yang memperberat sesak.", ref:"SLKI L.05047 · Toleransi Aktivitas"};}
+            },
+            {
+              id:"bertahap", label:"Bantu aktivitas sehari-hari secara bertahap",
+              evaluate:function(){return {status:"tepat", note:"Aktivitas bertahap (mis. duduk dulu sebelum berdiri) melatih toleransi tanpa membebani sistem pernapasan.", ref:"SIKI I.05178 · Manajemen Energi"};}
+            },
+            {
+              id:"kelelahan", label:"Monitor kelelahan fisik & respon terhadap aktivitas",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan respon aktivitas membantu menentukan kapan aktivitas boleh ditingkatkan.", ref:"SIKI I.05178 · Manajemen Energi"};}
+            },
+            {
+              id:"olahraga", label:"Anjurkan olahraga berat secara rutin",
+              evaluate:function(){return {status:"tidak", note:"Olahraga berat kontraindikasi saat pola napas belum stabil — berisiko memperberat sesak, bukan mengurangi.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Ansietas", dxId:"ansietas",
+          tools: [
+            {
+              id:"dengar", label:"Dengarkan keluhan pasien dengan penuh perhatian",
+              evaluate:function(){return {status:"tepat", note:"Active listening membantu pasien merasa didengar dan menurunkan kecemasan yang dirasakan.", ref:"SIKI I.09314 · Reduksi Ansietas"};}
+            },
+            {
+              id:"relaksasi", label:"Ajarkan teknik relaksasi napas dalam",
+              evaluate:function(){return {status:"tepat", note:"Relaksasi napas dalam membantu menurunkan respon fisik kecemasan sekaligus mendukung pola napas.", ref:"SIKI I.09314 · Reduksi Ansietas"};}
+            },
+            {
+              id:"jelaskan", label:"Jelaskan kondisi & prosedur yang akan dihadapi pasien",
+              evaluate:function(){return {status:"tepat", note:"Informasi yang jelas mengurangi ketidakpastian, salah satu pemicu utama kecemasan pasien.", ref:"SIKI I.09314 · Reduksi Ansietas"};}
+            },
+            {
+              id:"batasi", label:"Batasi kunjungan keluarga/pendamping",
+              evaluate:function(){return {status:"tidak", note:"Membatasi keluarga justru berisiko meningkatkan kecemasan — dukungan orang terdekat umumnya menenangkan pasien, bukan sebaliknya.", ref:"—"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"ivfd", label:"Pasang IVFD RL",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan cairan/elektrolit pada kasus ini — bukan masalah utama yang perlu ditangani sekarang.", ref:"—"};}
+            },
+            {
+              id:"bab", label:"Pantau frekuensi BAB",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — kasus ini berfokus pada masalah pola napas, aktivitas, dan ansietas, bukan eliminasi fekal.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    }
+  };
+
+  // ---------- STATE ----------
+  var state = { caseId: "diare", selected: {}, prio: {}, prioChecked: false };
+  // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3"
+
+  var tabsEl = document.getElementById("tabs");
+  var caseCardEl = document.getElementById("caseCard");
+  var dxGridEl = document.getElementById("dxGrid");
+  var checkPrioBtn = document.getElementById("checkPrioBtn");
+  var toolBankEl = document.getElementById("toolBank");
+  var toolCountEl = document.getElementById("toolCount");
+  var trayEl = document.getElementById("tray");
+  var trayCountEl = document.getElementById("trayCount");
+  var checkBtn = document.getElementById("checkBtn");
+  var resetBtn = document.getElementById("resetBtn");
+  var resultCard = document.getElementById("resultCard");
+  var statusBanner = document.getElementById("statusBanner");
+  var evalList = document.getElementById("evalList");
+
+  function esc(s){ return String(s).replace(/[&<>]/g, function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];}); }
+
+  function allTools(caseId){
+    var out = [];
+    CASES[caseId].kategori.forEach(function(k){
+      k.tools.forEach(function(t){ t.dxId = k.dxId; out.push(t); });
+    });
+    return out;
+  }
+
+  function renderTabs(){
+    tabsEl.innerHTML = "";
+    Object.keys(CASES).forEach(function(id){
+      var btn = document.createElement("button");
+      btn.className = "tab";
+      btn.setAttribute("role","tab");
+      btn.setAttribute("aria-selected", id===state.caseId ? "true":"false");
+      btn.textContent = CASES[id].label;
+      btn.addEventListener("click", function(){
+        if(state.caseId === id) return;
+        state.caseId = id;
+        state.selected = {};
+        state.prio = {};
+        state.prioChecked = false;
+        renderAll();
+      });
+      tabsEl.appendChild(btn);
+    });
+  }
+
+  function renderCase(){
+    var c = CASES[state.caseId].patient;
+    var nDx = CASES[state.caseId].diagnosaTampil.length;
+    var vitalsHtml = c.vitals.map(function(v){
+      return '<div class="vital'+(v.flag?' flag':'')+'"><span class="v-label">'+esc(v.label)+'</span><span class="v-val">'+esc(v.val)+'</span></div>';
+    }).join("");
+    caseCardEl.innerHTML =
+      '<div class="case-head">'+
+        '<div class="patient">'+
+          '<h2>'+esc(c.name)+'</h2>'+
+          '<div class="meta">'+esc(c.age)+'</div>'+
+        '</div>'+
+        '<span class="dx-pill">'+nDx+' diagnosa teridentifikasi</span>'+
+      '</div>'+
+      '<p class="keluhan">'+c.keluhan+'</p>'+
+      '<div class="vitals">'+vitalsHtml+'</div>';
+  }
+
+  var LETTERS = ["A","B","C","D","E"];
+
+  function renderDxGrid(){
+    var cs = CASES[state.caseId];
+    var n = cs.diagnosaTampil.length;
+    dxGridEl.innerHTML = "";
+    cs.diagnosaTampil.forEach(function(dxKey, idx){
+      var dx = cs.diagnosa[dxKey];
+      var kriteriaHtml = dx.luaran.kriteria.map(function(k){ return "<li>"+k+"</li>"; }).join("");
+      var card = document.createElement("div");
+      card.className = "dx-card";
+
+      var opts = "";
+      for(var i=1;i<=n;i++){
+        var sel = state.prio[dxKey]===String(i) ? " selected" : "";
+        opts += '<option value="'+i+'"'+sel+'>'+i+'</option>';
+      }
+
+      var fbHtml = "";
+      if(state.prioChecked){
+        var picked = parseInt(state.prio[dxKey],10);
+        var correct = picked === dx.prioritasBenar;
+        fbHtml = '<div class="prio-feedback">'+
+          '<div class="fb-badge '+(correct?"tepat":"kurang")+'">'+(correct?"✓":"!")+'</div>'+
+          '<div class="fb-text">'+
+            (correct
+              ? '<b>Tepat.</b> '
+              : '<b>Seharusnya prioritas ke-'+dx.prioritasBenar+'.</b> ') +
+            dx.rasionalPrioritas +
+          '</div>'+
+        '</div>';
+      }
+
+      card.innerHTML =
+        '<div class="dx-card-top">'+
+          '<div>'+
+            '<div class="dx-letter">Diagnosa '+LETTERS[idx]+'</div>'+
+            '<div class="dx-name">'+esc(dx.label)+'</div>'+
+            '<div class="dx-meta"><span class="dx-kode">'+esc(dx.kode)+'</span><span class="dx-tipe '+dx.tipe.toLowerCase()+'">'+esc(dx.tipe)+'</span></div>'+
+            '<p class="dx-rasional">'+dx.rasional+'</p>'+
+          '</div>'+
+          '<div class="prio-picker">'+
+            '<label for="prio-'+dxKey+'">Prioritas</label>'+
+            '<select class="prio" id="prio-'+dxKey+'" data-dx="'+dxKey+'">'+
+              '<option value="">–</option>'+opts+
+            '</select>'+
+          '</div>'+
+        '</div>'+
+        fbHtml+
+        '<div class="luaran-box">'+
+          '<div class="luaran-head">'+
+            '<span class="tag">Target Luaran</span>'+
+            '<span class="lbl">'+esc(dx.luaran.label)+'</span>'+
+            '<span class="kode">'+esc(dx.luaran.kode)+'</span>'+
+          '</div>'+
+          '<ul class="kriteria-list">'+kriteriaHtml+'</ul>'+
+        '</div>';
+
+      dxGridEl.appendChild(card);
+    });
+
+    dxGridEl.querySelectorAll("select.prio").forEach(function(sel){
+      sel.addEventListener("change", function(){
+        state.prio[sel.getAttribute("data-dx")] = sel.value;
+        state.prioChecked = false;
+        renderDxGrid();
+      });
+    });
+  }
+
+  checkPrioBtn.addEventListener("click", function(){
+    var cs = CASES[state.caseId];
+    var vals = cs.diagnosaTampil.map(function(k){ return state.prio[k]; });
+    if(vals.some(function(v){ return !v; })){
+      alert("Isi dulu nomor prioritas untuk semua diagnosa ya.");
+      return;
+    }
+    var unique = {};
+    var dup = false;
+    vals.forEach(function(v){ if(unique[v]) dup = true; unique[v]=true; });
+    if(dup){
+      alert("Setiap diagnosa harus punya nomor prioritas yang berbeda (nggak boleh ada yang sama).");
+      return;
+    }
+    state.prioChecked = true;
+    renderDxGrid();
+  });
+
+  function renderToolBank(){
+    var kategori = CASES[state.caseId].kategori;
+    var total = allTools(state.caseId).length;
+    toolCountEl.textContent = total + " tersedia";
+    toolBankEl.innerHTML = "";
+    kategori.forEach(function(k){
+      var group = document.createElement("div");
+      group.className = "kategori-group";
+      var lab = document.createElement("div");
+      lab.className = "kategori-label";
+      lab.textContent = k.nama;
+      group.appendChild(lab);
+      var grid = document.createElement("div");
+      grid.className = "tool-grid";
+      k.tools.forEach(function(t){
+        var isSel = !!state.selected[t.id];
+        var btn = document.createElement("button");
+        btn.className = "tool";
+        btn.type = "button";
+        btn.setAttribute("aria-pressed", isSel ? "true":"false");
+        btn.innerHTML = '<span class="plus">'+(isSel?"−":"+")+'</span><span>'+esc(t.label)+'</span>';
+        btn.addEventListener("click", function(){ toggleTool(t); });
+        grid.appendChild(btn);
+      });
+      group.appendChild(grid);
+      toolBankEl.appendChild(group);
+    });
+  }
+
+  function toggleTool(t){
+    if(state.selected[t.id]){
+      delete state.selected[t.id];
+    } else {
+      state.selected[t.id] = { tool: t, paramValue: t.needsParam ? t.paramOptions[0].v : null };
+    }
+    resultCard.hidden = true;
+    renderToolBank();
+    renderTray();
+  }
+
+  function renderTray(){
+    var ids = Object.keys(state.selected);
+    trayCountEl.textContent = ids.length + " dipilih";
+    checkBtn.disabled = ids.length === 0;
+    if(ids.length === 0){
+      trayEl.innerHTML = '<div class="tray-empty">Belum ada tindakan dipilih. Klik tool di bank tindakan untuk menambahkan.</div>';
+      return;
+    }
+    trayEl.innerHTML = "";
+    ids.forEach(function(id){
+      var entry = state.selected[id];
+      var t = entry.tool;
+      var row = document.createElement("div");
+      row.className = "tray-item";
+
+      var left = document.createElement("div");
+      left.style.display = "flex";
+      left.style.flexDirection = "column";
+      left.style.gap = "6px";
+      left.style.flex = "1";
+
+      var titleRow = document.createElement("div");
+      titleRow.textContent = t.label;
+      left.appendChild(titleRow);
+
+      if(t.needsParam){
+        var pr = document.createElement("div");
+        pr.className = "param-row";
+        var lbl = document.createElement("label");
+        lbl.textContent = t.paramLabel + ":";
+        lbl.setAttribute("for","sel-"+id);
+        var sel = document.createElement("select");
+        sel.className = "param";
+        sel.id = "sel-"+id;
+        t.paramOptions.forEach(function(o){
+          var opt = document.createElement("option");
+          opt.value = o.v;
+          opt.textContent = o.t;
+          if(o.v === entry.paramValue) opt.selected = true;
+          sel.appendChild(opt);
+        });
+        sel.addEventListener("change", function(){
+          state.selected[id].paramValue = sel.value;
+          resultCard.hidden = true;
+        });
+        pr.appendChild(lbl);
+        pr.appendChild(sel);
+        left.appendChild(pr);
+      }
+
+      row.appendChild(left);
+
+      var rm = document.createElement("button");
+      rm.className = "remove";
+      rm.setAttribute("aria-label","Hapus tindakan");
+      rm.textContent = "✕";
+      rm.addEventListener("click", function(){ toggleTool(t); });
+      row.appendChild(rm);
+
+      trayEl.appendChild(row);
+    });
+  }
+
+  function evaluatePlan(){
+    allTools(state.caseId); // pastikan tiap tool sudah ditandai dxId
+    var cs = CASES[state.caseId];
+    var ids = Object.keys(state.selected);
+    var results = ids.map(function(id){
+      var entry = state.selected[id];
+      var r = entry.tool.evaluate(entry.paramValue);
+      r.label = entry.tool.label;
+      r.dxId = entry.tool.dxId;
+      if(entry.tool.needsParam){
+        var chosen = entry.tool.paramOptions.filter(function(o){return o.v===entry.paramValue;})[0];
+        if(chosen) r.label += " — " + chosen.t;
+      }
+      return r;
+    });
+
+    var nTepat = results.filter(function(r){return r.status==="tepat";}).length;
+    var nKurang = results.filter(function(r){return r.status==="kurang";}).length;
+    var nTidak = results.filter(function(r){return r.status==="tidak";}).length;
+
+    var allGood = nKurang===0 && nTidak===0;
+
+    statusBanner.innerHTML = "";
+    var banner = document.createElement("div");
+    banner.className = "status-banner " + (allGood ? "ok" : "warn");
+    var dot = document.createElement("span"); dot.className="dot";
+    var textWrap = document.createElement("div");
+    var t = document.createElement("div"); t.className="t";
+    var d = document.createElement("div"); d.className="d";
+    if(allGood){
+      t.textContent = "Status Pasien: STABIL";
+      d.textContent = "Semua tindakan yang dipilih sudah sesuai standar SDKI–SLKI–SIKI untuk kasus ini.";
+    } else {
+      t.textContent = "Status Pasien: PERLU DITINJAU";
+      d.textContent = nKurang + " tindakan kurang tepat, " + nTidak + " tindakan tidak relevan dari " + ids.length + " tindakan yang dipilih.";
+    }
+    textWrap.appendChild(t); textWrap.appendChild(d);
+    banner.appendChild(dot); banner.appendChild(textWrap);
+    statusBanner.appendChild(banner);
+
+    // kelompokkan hasil per diagnosa, urutan sesuai prioritas yang benar
+    var order = {tidak:0, kurang:1, tepat:2};
+    var groupOrder = cs.diagnosaTampil.slice().sort(function(a,b){
+      return cs.diagnosa[a].prioritasBenar - cs.diagnosa[b].prioritasBenar;
+    });
+    groupOrder.push(null); // tidak relevan di paling akhir
+
+    evalList.innerHTML = "";
+    var iconMap = {tepat:"✓", kurang:"!", tidak:"✕"};
+    groupOrder.forEach(function(dxKey){
+      var group = results.filter(function(r){ return r.dxId === dxKey; });
+      if(group.length === 0) return;
+      group.sort(function(a,b){ return order[a.status]-order[b.status]; });
+
+      var heading = document.createElement("div");
+      heading.className = "eval-dx-heading";
+      if(dxKey){
+        var dx = cs.diagnosa[dxKey];
+        heading.innerHTML = esc(dx.label) + ' <span class="kode">' + esc(dx.kode) + '</span>';
+      } else {
+        heading.innerHTML = 'Tidak Relevan / Di Luar Kasus';
+      }
+      evalList.appendChild(heading);
+
+      group.forEach(function(r){
+        var item = document.createElement("div");
+        item.className = "eval-item";
+        var badge = document.createElement("div");
+        badge.className = "eval-badge " + r.status;
+        badge.textContent = iconMap[r.status];
+        var body = document.createElement("div");
+        body.className = "eval-body";
+        var title = document.createElement("div");
+        title.className = "eval-title";
+        title.textContent = r.label;
+        var note = document.createElement("div");
+        note.className = "eval-note";
+        note.textContent = r.note;
+        body.appendChild(title);
+        body.appendChild(note);
+        if(r.ref && r.ref !== "—"){
+          var ref = document.createElement("span");
+          ref.className = "eval-ref";
+          ref.textContent = r.ref;
+          body.appendChild(ref);
+        }
+        item.appendChild(badge);
+        item.appendChild(body);
+        evalList.appendChild(item);
+      });
+    });
+
+    resultCard.hidden = false;
+    resultCard.scrollIntoView({behavior:"smooth", block:"nearest"});
+  }
+
+  checkBtn.addEventListener("click", evaluatePlan);
+  resetBtn.addEventListener("click", function(){
+    state.selected = {};
+    resultCard.hidden = true;
+    renderToolBank();
+    renderTray();
+  });
+
+  function renderAll(){
+    renderTabs();
+    renderCase();
+    renderDxGrid();
+    renderToolBank();
+    renderTray();
+    resultCard.hidden = true;
+  }
+
+  renderAll();
+
+})();
+</script>
