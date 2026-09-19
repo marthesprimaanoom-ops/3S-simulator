@@ -398,7 +398,7 @@
 
   <footer>
     Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
-    Prototipe pembelajaran &middot; 9 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
+    Prototipe pembelajaran &middot; 15 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
   </footer>
 </div>
 
@@ -445,7 +445,7 @@
           kode:"D.0034", label:"Risiko Hipovolemia", tipe:"Risiko", prioritasBenar:2,
           rasional:"Kehilangan cairan yang terus berlangsung akibat diare membuat anak berisiko jatuh ke kondisi kekurangan volume cairan tubuh.",
           rasionalPrioritas:"Masih berupa risiko, tapi konsekuensi langsung dari diare yang sedang berjalan — harus diantisipasi segera setelah masalah aktual utama ditangani.",
-          luaran:{ kode:"L.03028", label:"Status Cairan", kriteria:[
+          luaran:{ kode:"L.03025", label:"Status Cairan", kriteria:[
             "Turgor kulit membaik",
             "Membran mukosa lembap",
             "Kekuatan nadi & tekanan darah membaik"
@@ -455,7 +455,7 @@
           kode:"D.0019", label:"Defisit Nutrisi", tipe:"Risiko", prioritasBenar:3,
           rasional:"Nafsu makan menurun sejak 2 hari akibat gejala diare berkepanjangan, berisiko mengganggu pemenuhan nutrisi anak.",
           rasionalPrioritas:"Dampaknya bersifat jangka lebih panjang dan belum mengancam secara langsung dibanding kehilangan cairan — ditangani setelah dua masalah di atas mulai terkendali.",
-          luaran:{ kode:"L.03030", label:"Status Nutrisi", kriteria:[
+          luaran:{ kode:"L.03027", label:"Status Nutrisi", kriteria:[
             "Porsi makan yang dihabiskan meningkat",
             "Berat badan membaik / tidak menurun lebih lanjut"
           ]}
@@ -467,7 +467,7 @@
           tools: [
             {
               id:"oralit", label:"Anjurkan minum oralit / cairan oral tambahan",
-              evaluate:function(){return {status:"tepat", note:"Edukasi asupan cairan oral membantu mencegah perburukan dehidrasi selagi terapi berjalan.", ref:"SIKI I.03101 · Manajemen Diare"};}
+              evaluate:function(){return {status:"tepat", note:"Edukasi asupan cairan oral membantu mencegah perburukan dehidrasi selagi terapi berjalan.", ref:"SIKI I.03087 · Manajemen Diare"};}
             },
             {
               id:"bab", label:"Pantau frekuensi & konsistensi BAB",
@@ -475,7 +475,7 @@
             },
             {
               id:"zink", label:"Kolaborasi pemberian zink/antidiare sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Kolaborasi farmakologis sesuai anjuran tenaga medis mendukung penyembuhan diare.", ref:"SIKI I.03101 · Manajemen Diare"};}
+              evaluate:function(){return {status:"tepat", note:"Kolaborasi farmakologis sesuai anjuran tenaga medis mendukung penyembuhan diare.", ref:"SIKI I.03087 · Manajemen Diare"};}
             }
           ]
         },
@@ -490,18 +490,18 @@
                 {v:"D5", t:"Dekstrosa 5%"}
               ],
               evaluate:function(v){
-                if(v==="RL") return {status:"tepat", note:"RL tepat untuk mengganti cairan & elektrolit yang hilang akibat diare (kehilangan cairan isotonik).", ref:"SLKI L.03028 · Status Cairan"};
-                if(v==="NACL") return {status:"kurang", note:"NaCl 0.9% masih bisa dipakai, tapi RL lebih disarankan karena juga mengandung elektrolit (K, Ca, laktat) yang ikut hilang saat diare.", ref:"SLKI L.03028 · Status Cairan"};
-                return {status:"tidak", note:"Dekstrosa 5% tidak tepat sebagai cairan resusitasi awal diare — tidak mengandung elektrolit pengganti yang memadai.", ref:"SLKI L.03028 · Status Cairan"};
+                if(v==="RL") return {status:"tepat", note:"RL tepat untuk mengganti cairan & elektrolit yang hilang akibat diare (kehilangan cairan isotonik).", ref:"SLKI L.03025 · Status Cairan"};
+                if(v==="NACL") return {status:"kurang", note:"NaCl 0.9% masih bisa dipakai, tapi RL lebih disarankan karena juga mengandung elektrolit (K, Ca, laktat) yang ikut hilang saat diare.", ref:"SLKI L.03025 · Status Cairan"};
+                return {status:"tidak", note:"Dekstrosa 5% tidak tepat sebagai cairan resusitasi awal diare — tidak mengandung elektrolit pengganti yang memadai.", ref:"SLKI L.03025 · Status Cairan"};
               }
             },
             {
               id:"turgor", label:"Monitor tanda dehidrasi (turgor, mata cekung, mukosa)",
-              evaluate:function(){return {status:"tepat", note:"Observasi tanda dehidrasi wajib dilakukan berkala untuk menilai perkembangan status cairan.", ref:"SLKI L.03028 · Status Cairan"};}
+              evaluate:function(){return {status:"tepat", note:"Observasi tanda dehidrasi wajib dilakukan berkala untuk menilai perkembangan status cairan.", ref:"SLKI L.03025 · Status Cairan"};}
             },
             {
               id:"vitalcair", label:"Monitor tekanan darah & kekuatan nadi",
-              evaluate:function(){return {status:"tepat", note:"TD & nadi adalah indikator status cairan yang membantu deteksi dini perburukan ke arah hipovolemia.", ref:"SLKI L.03028 · Status Cairan"};}
+              evaluate:function(){return {status:"tepat", note:"TD & nadi adalah indikator status cairan yang membantu deteksi dini perburukan ke arah hipovolemia.", ref:"SLKI L.03025 · Status Cairan"};}
             }
           ]
         },
@@ -510,7 +510,7 @@
           tools: [
             {
               id:"bb", label:"Timbang berat badan harian",
-              evaluate:function(){return {status:"tepat", note:"Penimbangan BB harian membantu memantau apakah status nutrisi anak membaik atau memburuk.", ref:"SLKI L.03030 · Status Nutrisi"};}
+              evaluate:function(){return {status:"tepat", note:"Penimbangan BB harian membantu memantau apakah status nutrisi anak membaik atau memburuk.", ref:"SLKI L.03027 · Status Nutrisi"};}
             },
             {
               id:"porsi", label:"Anjurkan makan porsi kecil tapi sering",
@@ -575,7 +575,7 @@
           kode:"D.0056", label:"Intoleransi Aktivitas", tipe:"Aktual", prioritasBenar:2,
           rasional:"Sesak napas membuat pasien kesulitan dan cepat lelah saat beraktivitas ringan sekalipun.",
           rasionalPrioritas:"Penting untuk kualitas hidup pasien, tapi baru realistis ditangani setelah jalan napas & pola napas mulai stabil — mengejar aktivitas sebelum napas stabil justru berisiko.",
-          luaran:{ kode:"L.05047", label:"Toleransi Aktivitas", kriteria:[
+          luaran:{ kode:"L.05044", label:"Toleransi Aktivitas", kriteria:[
             "Keluhan lelah menurun",
             "Dispnea saat & setelah aktivitas menurun",
             "Frekuensi nadi membaik"
@@ -607,14 +607,14 @@
               ],
               evaluate:function(v){
                 var n = parseFloat(v);
-                if(n>=3 && n<=4) return {status:"tepat", note:"Flow rate 3–4 L/menit sesuai untuk menaikkan SpO2 90% ke rentang target tanpa berisiko retensi CO2 pada riwayat PPOK.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};
-                if(n<3) return {status:"kurang", note:n+" L/menit terlalu rendah — SpO2 masih 90%, kebutuhan oksigen pasien belum tercukupi. Perlu dinaikkan bertahap sambil dipantau.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};
-                return {status:"kurang", note:n+" L/menit berisiko berlebih pada pasien dengan riwayat PPOK — bisa menekan drive napas & memicu retensi CO2. Sesuaikan bertahap sambil pantau SpO2.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};
+                if(n>=3 && n<=4) return {status:"tepat", note:"Flow rate 3–4 L/menit sesuai untuk menaikkan SpO2 90% ke rentang target tanpa berisiko retensi CO2 pada riwayat PPOK.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};
+                if(n<3) return {status:"kurang", note:n+" L/menit terlalu rendah — SpO2 masih 90%, kebutuhan oksigen pasien belum tercukupi. Perlu dinaikkan bertahap sambil dipantau.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};
+                return {status:"kurang", note:n+" L/menit berisiko berlebih pada pasien dengan riwayat PPOK — bisa menekan drive napas & memicu retensi CO2. Sesuaikan bertahap sambil pantau SpO2.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};
               }
             },
             {
               id:"fowler", label:"Posisikan semi-fowler / fowler",
-              evaluate:function(){return {status:"tepat", note:"Posisi semi-fowler membantu ekspansi paru maksimal dan menurunkan kerja otot bantu napas.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+              evaluate:function(){return {status:"tepat", note:"Posisi semi-fowler membantu ekspansi paru maksimal dan menurunkan kerja otot bantu napas.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};}
             },
             {
               id:"monitor", label:"Monitor frekuensi napas & saturasi oksigen",
@@ -622,11 +622,11 @@
             },
             {
               id:"pursed", label:"Ajarkan teknik pursed-lip breathing",
-              evaluate:function(){return {status:"tepat", note:"Teknik ini membantu memperlambat ekspirasi dan mencegah kolaps jalan napas kecil, cocok untuk pasien PPOK.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+              evaluate:function(){return {status:"tepat", note:"Teknik ini membantu memperlambat ekspirasi dan mencegah kolaps jalan napas kecil, cocok untuk pasien PPOK.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};}
             },
             {
               id:"bronko", label:"Kolaborasi pemberian bronkodilator",
-              evaluate:function(){return {status:"tepat", note:"Bronkodilator membantu melebarkan jalan napas dan mengurangi sesak pada eksaserbasi PPOK.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+              evaluate:function(){return {status:"tepat", note:"Bronkodilator membantu melebarkan jalan napas dan mengurangi sesak pada eksaserbasi PPOK.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};}
             }
           ]
         },
@@ -635,7 +635,7 @@
           tools: [
             {
               id:"istirahat", label:"Anjurkan istirahat cukup di antara aktivitas",
-              evaluate:function(){return {status:"tepat", note:"Jeda istirahat mencegah kelelahan berlebih yang memperberat sesak.", ref:"SLKI L.05047 · Toleransi Aktivitas"};}
+              evaluate:function(){return {status:"tepat", note:"Jeda istirahat mencegah kelelahan berlebih yang memperberat sesak.", ref:"SLKI L.05044 · Toleransi Aktivitas"};}
             },
             {
               id:"bertahap", label:"Bantu aktivitas sehari-hari secara bertahap",
@@ -733,7 +733,7 @@
           kode:"D.0032", label:"Risiko Defisit Nutrisi", tipe:"Risiko", prioritasBenar:3,
           rasional:"Nafsu makan menurun drastis sejak demam & nyeri perut muncul, berisiko mengganggu pemenuhan nutrisi anak selama masa penyembuhan.",
           rasionalPrioritas:"Dampaknya bertahap dan belum mengancam langsung — ditangani setelah demam & nyeri mereda supaya nafsu makan bisa pulih dengan sendirinya.",
-          luaran:{ kode:"L.03030", label:"Status Nutrisi", kriteria:[
+          luaran:{ kode:"L.03027", label:"Status Nutrisi", kriteria:[
             "Porsi makan yang dihabiskan meningkat",
             "Berat badan tidak menurun lebih lanjut"
           ]}
@@ -745,11 +745,11 @@
           tools: [
             {
               id:"kompres", label:"Lakukan kompres hangat di lipatan tubuh (leher, ketiak, lipat paha)",
-              evaluate:function(){return {status:"tepat", note:"Kompres di area lipatan tubuh membantu penurunan suhu lewat pembuluh darah besar yang dekat permukaan kulit.", ref:"SIKI I.15506 · Manajemen Hipertermia"};}
+              evaluate:function(){return {status:"tepat", note:"Kompres di area lipatan tubuh membantu penurunan suhu lewat pembuluh darah besar yang dekat permukaan kulit.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
             },
             {
               id:"minum", label:"Anjurkan banyak minum air putih",
-              evaluate:function(){return {status:"tepat", note:"Asupan cairan membantu mengganti cairan tubuh yang hilang lewat penguapan akibat demam.", ref:"SIKI I.15506 · Manajemen Hipertermia"};}
+              evaluate:function(){return {status:"tepat", note:"Asupan cairan membantu mengganti cairan tubuh yang hilang lewat penguapan akibat demam.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
             },
             {
               id:"suhu", label:"Monitor suhu tubuh secara berkala",
@@ -757,7 +757,7 @@
             },
             {
               id:"antipiretik", label:"Kolaborasi pemberian antipiretik sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Antipiretik membantu menurunkan set point suhu tubuh di hipotalamus.", ref:"SIKI I.15506 · Manajemen Hipertermia"};}
+              evaluate:function(){return {status:"tepat", note:"Antipiretik membantu menurunkan set point suhu tubuh di hipotalamus.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
             },
             {
               id:"selimut", label:"Selimuti pasien dengan selimut tebal",
@@ -799,7 +799,7 @@
             },
             {
               id:"monitor_asupan", label:"Monitor asupan makan harian",
-              evaluate:function(){return {status:"tepat", note:"Pemantauan asupan membantu menilai apakah kebutuhan nutrisi anak sudah tercukupi.", ref:"SLKI L.03030 · Status Nutrisi"};}
+              evaluate:function(){return {status:"tepat", note:"Pemantauan asupan membantu menilai apakah kebutuhan nutrisi anak sudah tercukupi.", ref:"SLKI L.03027 · Status Nutrisi"};}
             }
           ]
         },
@@ -844,7 +844,7 @@
           kode:"D.0017", label:"Risiko Perfusi Serebral Tidak Efektif", tipe:"Risiko", prioritasBenar:1,
           rasional:"TD 170/100 mmHg meningkatkan risiko gangguan aliran darah ke otak yang bisa berujung stroke bila tidak segera dikendalikan.",
           rasionalPrioritas:"Risiko gangguan aliran darah ke otak bisa berujung stroke dalam waktu singkat — ancaman fisiologis paling berat, jadi harus diprioritaskan pertama meski baru berupa risiko.",
-          luaran:{ kode:"L.02014", label:"Perfusi Serebral", kriteria:[
+          luaran:{ kode:"L.02013", label:"Perfusi Serebral", kriteria:[
             "Sakit kepala menurun",
             "Gelisah menurun",
             "Tekanan darah membaik ke rentang target"
@@ -877,19 +877,19 @@
           tools: [
             {
               id:"monitorTD", label:"Monitor tekanan darah secara berkala",
-              evaluate:function(){return {status:"tepat", note:"Pemantauan TD rutin penting untuk deteksi dini perburukan menuju krisis hipertensi.", ref:"SLKI L.02014 · Perfusi Serebral"};}
+              evaluate:function(){return {status:"tepat", note:"Pemantauan TD rutin penting untuk deteksi dini perburukan menuju krisis hipertensi.", ref:"SLKI L.02013 · Perfusi Serebral"};}
             },
             {
               id:"elevasi", label:"Posisikan kepala sedikit elevasi (semi-fowler)",
-              evaluate:function(){return {status:"tepat", note:"Elevasi kepala membantu menurunkan tekanan pada pembuluh darah otak.", ref:"SIKI · Manajemen Peningkatan Tekanan Intrakranial"};}
+              evaluate:function(){return {status:"tepat", note:"Elevasi kepala membantu menurunkan tekanan pada pembuluh darah otak.", ref:"SIKI I.06197 · Manajemen Peningkatan Tekanan Intrakranial"};}
             },
             {
               id:"hindari_valsava", label:"Anjurkan hindari mengejan / aktivitas berat mendadak",
-              evaluate:function(){return {status:"tepat", note:"Aktivitas berat mendadak bisa memicu lonjakan tekanan darah lebih lanjut.", ref:"SIKI · Manajemen Peningkatan Tekanan Intrakranial"};}
+              evaluate:function(){return {status:"tepat", note:"Aktivitas berat mendadak bisa memicu lonjakan tekanan darah lebih lanjut.", ref:"SIKI I.06197 · Manajemen Peningkatan Tekanan Intrakranial"};}
             },
             {
               id:"obat_hipertensi", label:"Kolaborasi pemberian obat antihipertensi sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Terapi farmakologis diperlukan untuk menurunkan TD ke rentang aman.", ref:"SLKI L.02014 · Perfusi Serebral"};}
+              evaluate:function(){return {status:"tepat", note:"Terapi farmakologis diperlukan untuk menurunkan TD ke rentang aman.", ref:"SLKI L.02013 · Perfusi Serebral"};}
             },
             {
               id:"olahraga_berat", label:"Anjurkan olahraga berat segera hari ini",
@@ -1021,7 +1021,7 @@
           tools: [
             {
               id:"cucitangan", label:"Terapkan teknik aseptik sebelum & sesudah kontak dengan luka",
-              evaluate:function(){return {status:"tepat", note:"Teknik aseptik adalah langkah dasar paling efektif mencegah kontaminasi mikroorganisme ke luka.", ref:"SIKI I.14539 · Pencegahan Infeksi"};}
+              evaluate:function(){return {status:"tepat", note:"Teknik aseptik adalah langkah dasar paling efektif mencegah kontaminasi mikroorganisme ke luka.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
             },
             {
               id:"monitor_tanda_infeksi", label:"Monitor tanda infeksi (kemerahan, bengkak, cairan, suhu)",
@@ -1029,7 +1029,7 @@
             },
             {
               id:"antibiotik", label:"Kolaborasi pemberian antibiotik sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Antibiotik membantu mencegah/mengatasi infeksi pada luka berisiko.", ref:"SIKI I.14539 · Pencegahan Infeksi"};}
+              evaluate:function(){return {status:"tepat", note:"Antibiotik membantu mencegah/mengatasi infeksi pada luka berisiko.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
             },
             {
               id:"distractor_buka", label:"Biarkan luka terbuka tanpa balutan agar cepat kering",
@@ -1095,7 +1095,7 @@
           kode:"D.0001", label:"Bersihan Jalan Napas Tidak Efektif", tipe:"Aktual", prioritasBenar:1,
           rasional:"Dahak kental yang sulit dikeluarkan menyumbat jalan napas dan terdengar ronki — jalan napas pasien saat ini tidak sepenuhnya paten.",
           rasionalPrioritas:"Jalan napas yang tersumbat mengancam pertukaran oksigen secara langsung — selalu ditangani lebih dulu dari masalah lain.",
-          luaran:{ kode:"L.01002", label:"Bersihan Jalan Napas", kriteria:[
+          luaran:{ kode:"L.01001", label:"Bersihan Jalan Napas", kriteria:[
             "Kemampuan batuk efektif meningkat",
             "Produksi sputum menurun",
             "Ronki kering menurun"
@@ -1105,7 +1105,7 @@
           kode:"D.0019", label:"Defisit Nutrisi", tipe:"Aktual", prioritasBenar:2,
           rasional:"Penurunan berat badan 5 kg dalam sebulan menunjukkan kebutuhan nutrisi pasien belum tercukupi akibat proses penyakit kronis.",
           rasionalPrioritas:"Sudah menjadi masalah aktual yang memengaruhi kondisi tubuh, namun tidak semendesak sumbatan jalan napas — ditangani setelah jalan napas mulai membaik.",
-          luaran:{ kode:"L.03030", label:"Status Nutrisi", kriteria:[
+          luaran:{ kode:"L.03027", label:"Status Nutrisi", kriteria:[
             "Porsi makan yang dihabiskan meningkat",
             "Berat badan membaik"
           ]}
@@ -1127,7 +1127,7 @@
           tools: [
             {
               id:"kajidahak", label:"Kaji jumlah, warna, dan konsistensi sputum",
-              evaluate:function(){return {status:"tepat", note:"Pengkajian sputum membantu menilai perkembangan kondisi jalan napas pasien.", ref:"SLKI L.01002 · Bersihan Jalan Napas"};}
+              evaluate:function(){return {status:"tepat", note:"Pengkajian sputum membantu menilai perkembangan kondisi jalan napas pasien.", ref:"SLKI L.01001 · Bersihan Jalan Napas"};}
             },
             {
               id:"batukefektif", label:"Ajarkan teknik batuk efektif",
@@ -1135,11 +1135,11 @@
             },
             {
               id:"nebulizer", label:"Kolaborasi pemberian nebulizer/ekspektoran sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Nebulizer & ekspektoran membantu mengencerkan dahak agar lebih mudah dikeluarkan.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+              evaluate:function(){return {status:"tepat", note:"Nebulizer & ekspektoran membantu mengencerkan dahak agar lebih mudah dikeluarkan.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};}
             },
             {
               id:"posisi_paru", label:"Posisikan semi-fowler untuk memaksimalkan ekspansi paru",
-              evaluate:function(){return {status:"tepat", note:"Posisi semi-fowler membantu pengembangan paru dan memudahkan pengeluaran dahak.", ref:"SIKI I.01011 · Manajemen Jalan Napas"};}
+              evaluate:function(){return {status:"tepat", note:"Posisi semi-fowler membantu pengembangan paru dan memudahkan pengeluaran dahak.", ref:"SIKI I.01006 · Manajemen Jalan Napas"};}
             },
             {
               id:"gerak_berat", label:"Anjurkan aktivitas fisik berat setiap hari",
@@ -1156,7 +1156,7 @@
             },
             {
               id:"bb_harian_tb", label:"Timbang berat badan secara berkala",
-              evaluate:function(){return {status:"tepat", note:"Penimbangan berkala membantu memantau apakah status nutrisi pasien membaik.", ref:"SLKI L.03030 · Status Nutrisi"};}
+              evaluate:function(){return {status:"tepat", note:"Penimbangan berkala membantu memantau apakah status nutrisi pasien membaik.", ref:"SLKI L.03027 · Status Nutrisi"};}
             },
             {
               id:"suplemen_tb", label:"Kolaborasi pemberian suplemen nutrisi sesuai indikasi",
@@ -1231,7 +1231,7 @@
           kode:"D.0022", label:"Hipervolemia", tipe:"Aktual", prioritasBenar:2,
           rasional:"Edema tungkai bilateral menunjukkan kelebihan volume cairan di jaringan tubuh akibat gangguan pompa jantung.",
           rasionalPrioritas:"Kelebihan cairan adalah konsekuensi langsung dari curah jantung yang menurun — ditangani sejalan, tepat setelah stabilisasi fungsi jantung dimulai.",
-          luaran:{ kode:"L.03028", label:"Status Cairan", kriteria:[
+          luaran:{ kode:"L.03025", label:"Status Cairan", kriteria:[
             "Edema perifer menurun",
             "Ortopnea menurun",
             "Tekanan darah membaik"
@@ -1241,7 +1241,7 @@
           kode:"D.0056", label:"Intoleransi Aktivitas", tipe:"Aktual", prioritasBenar:3,
           rasional:"Sesak yang muncul bahkan saat aktivitas ringan menunjukkan keterbatasan toleransi tubuh terhadap aktivitas fisik.",
           rasionalPrioritas:"Penting untuk kualitas hidup pasien, tapi realistis ditangani setelah fungsi jantung & kelebihan cairan mulai terkendali.",
-          luaran:{ kode:"L.05047", label:"Toleransi Aktivitas", kriteria:[
+          luaran:{ kode:"L.05044", label:"Toleransi Aktivitas", kriteria:[
             "Keluhan lelah menurun",
             "Dispnea saat aktivitas menurun",
             "Frekuensi nadi membaik"
@@ -1258,15 +1258,15 @@
             },
             {
               id:"posisi_jantung", label:"Posisikan semi-fowler/fowler untuk mengurangi kerja jantung",
-              evaluate:function(){return {status:"tepat", note:"Posisi ini menurunkan beban kerja jantung dan memudahkan pernapasan.", ref:"SIKI · Perawatan Jantung"};}
+              evaluate:function(){return {status:"tepat", note:"Posisi ini menurunkan beban kerja jantung dan memudahkan pernapasan.", ref:"SIKI I.02060 · Perawatan Jantung"};}
             },
             {
               id:"batasi_aktivitas", label:"Batasi aktivitas sesuai toleransi pasien",
-              evaluate:function(){return {status:"tepat", note:"Membatasi aktivitas mencegah beban berlebih pada jantung yang fungsinya sedang menurun.", ref:"SIKI · Perawatan Jantung"};}
+              evaluate:function(){return {status:"tepat", note:"Membatasi aktivitas mencegah beban berlebih pada jantung yang fungsinya sedang menurun.", ref:"SIKI I.02060 · Perawatan Jantung"};}
             },
             {
               id:"obat_jantung", label:"Kolaborasi pemberian obat jantung sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Terapi farmakologis membantu memperkuat kontraksi jantung dan menstabilkan kondisi.", ref:"SIKI · Perawatan Jantung"};}
+              evaluate:function(){return {status:"tepat", note:"Terapi farmakologis membantu memperkuat kontraksi jantung dan menstabilkan kondisi.", ref:"SIKI I.02060 · Perawatan Jantung"};}
             },
             {
               id:"olahraga_jantung", label:"Anjurkan olahraga berat setiap pagi",
@@ -1279,19 +1279,19 @@
           tools: [
             {
               id:"batasi_cairan", label:"Batasi asupan cairan & garam sesuai anjuran",
-              evaluate:function(){return {status:"tepat", note:"Pembatasan cairan & garam membantu mengurangi beban volume yang harus dipompa jantung.", ref:"SLKI L.03028 · Status Cairan"};}
+              evaluate:function(){return {status:"tepat", note:"Pembatasan cairan & garam membantu mengurangi beban volume yang harus dipompa jantung.", ref:"SLKI L.03025 · Status Cairan"};}
             },
             {
               id:"timbang_bb_jantung", label:"Timbang berat badan setiap hari di jam yang sama",
-              evaluate:function(){return {status:"tepat", note:"Kenaikan BB harian yang cepat bisa jadi tanda penumpukan cairan.", ref:"SLKI L.03028 · Status Cairan"};}
+              evaluate:function(){return {status:"tepat", note:"Kenaikan BB harian yang cepat bisa jadi tanda penumpukan cairan.", ref:"SLKI L.03025 · Status Cairan"};}
             },
             {
               id:"diuretik", label:"Kolaborasi pemberian diuretik sesuai program",
-              evaluate:function(){return {status:"tepat", note:"Diuretik membantu mengeluarkan kelebihan cairan tubuh lewat urin.", ref:"SLKI L.03028 · Status Cairan"};}
+              evaluate:function(){return {status:"tepat", note:"Diuretik membantu mengeluarkan kelebihan cairan tubuh lewat urin.", ref:"SLKI L.03025 · Status Cairan"};}
             },
             {
               id:"elevasi_kaki", label:"Elevasi tungkai yang edema saat istirahat",
-              evaluate:function(){return {status:"tepat", note:"Elevasi membantu aliran balik vena dan mengurangi edema di tungkai.", ref:"SLKI L.03028 · Status Cairan"};}
+              evaluate:function(){return {status:"tepat", note:"Elevasi membantu aliran balik vena dan mengurangi edema di tungkai.", ref:"SLKI L.03025 · Status Cairan"};}
             }
           ]
         },
@@ -1300,7 +1300,7 @@
           tools: [
             {
               id:"istirahat_jantung", label:"Anjurkan istirahat cukup di antara aktivitas",
-              evaluate:function(){return {status:"tepat", note:"Jeda istirahat mencegah kelelahan berlebih yang memperberat kerja jantung.", ref:"SLKI L.05047 · Toleransi Aktivitas"};}
+              evaluate:function(){return {status:"tepat", note:"Jeda istirahat mencegah kelelahan berlebih yang memperberat kerja jantung.", ref:"SLKI L.05044 · Toleransi Aktivitas"};}
             },
             {
               id:"bertahap_jantung", label:"Bantu aktivitas secara bertahap sesuai toleransi",
@@ -1354,7 +1354,7 @@
           kode:"D.0029", label:"Menyusui Tidak Efektif", tipe:"Aktual", prioritasBenar:1,
           rasional:"ASI belum lancar dan pelekatan bayi ke payudara belum tepat — proses menyusui saat ini belum berjalan efektif.",
           rasionalPrioritas:"Kebutuhan nutrisi bayi bergantung langsung pada keberhasilan menyusui — masalah ini paling mendesak karena memengaruhi bayi secara langsung.",
-          luaran:{ kode:"L.03029", label:"Status Menyusui", kriteria:[
+          luaran:{ kode:"L.03026", label:"Status Menyusui", kriteria:[
             "Perlekatan bayi pada payudara meningkat",
             "Kemampuan ibu memposisikan bayi meningkat",
             "Suplai ASI adekuat meningkat"
@@ -1387,15 +1387,15 @@
           tools: [
             {
               id:"ajarkan_pelekatan", label:"Ajarkan teknik pelekatan (attachment) & posisi menyusui yang benar",
-              evaluate:function(){return {status:"tepat", note:"Pelekatan yang tepat adalah kunci utama keberhasilan menyusui dan mencegah puting lecet.", ref:"SLKI L.03029 · Status Menyusui"};}
+              evaluate:function(){return {status:"tepat", note:"Pelekatan yang tepat adalah kunci utama keberhasilan menyusui dan mencegah puting lecet.", ref:"SLKI L.03026 · Status Menyusui"};}
             },
             {
               id:"susui_sering", label:"Anjurkan menyusui sesering mungkin (on demand)",
-              evaluate:function(){return {status:"tepat", note:"Menyusui sesering mungkin merangsang produksi ASI lebih optimal.", ref:"SLKI L.03029 · Status Menyusui"};}
+              evaluate:function(){return {status:"tepat", note:"Menyusui sesering mungkin merangsang produksi ASI lebih optimal.", ref:"SLKI L.03026 · Status Menyusui"};}
             },
             {
               id:"monitor_miksi", label:"Monitor tanda kecukupan ASI (frekuensi BAK bayi, berat badan)",
-              evaluate:function(){return {status:"tepat", note:"Indikator ini membantu menilai apakah asupan ASI bayi sudah cukup.", ref:"SLKI L.03029 · Status Menyusui"};}
+              evaluate:function(){return {status:"tepat", note:"Indikator ini membantu menilai apakah asupan ASI bayi sudah cukup.", ref:"SLKI L.03026 · Status Menyusui"};}
             },
             {
               id:"pijat_payudara", label:"Ajarkan teknik pijat payudara untuk merangsang produksi ASI",
@@ -1491,7 +1491,7 @@
           kode:"D.0054", label:"Gangguan Mobilitas Fisik", tipe:"Aktual", prioritasBenar:2,
           rasional:"Kekuatan otot sisi kanan menurun (3/5) sejak stroke minggu lalu membuat pasien kesulitan bergerak secara mandiri.",
           rasionalPrioritas:"Keterbatasan gerak sudah nyata terjadi dan berkaitan erat dengan risiko jatuh di atas — ditangani sejalan dengan upaya pencegahan jatuh.",
-          luaran:{ kode:"L.05042", label:"Mobilitas Fisik", kriteria:[
+          luaran:{ kode:"L.05040", label:"Mobilitas Fisik", kriteria:[
             "Pergerakan ekstremitas meningkat",
             "Kekuatan otot meningkat",
             "Rentang gerak (ROM) meningkat"
@@ -1539,15 +1539,15 @@
           tools: [
             {
               id:"rom", label:"Latih rentang gerak (ROM) pada sisi yang lemah",
-              evaluate:function(){return {status:"tepat", note:"Latihan ROM rutin mencegah kekakuan sendi dan melatih kekuatan otot yang lemah.", ref:"SLKI L.05042 · Mobilitas Fisik"};}
+              evaluate:function(){return {status:"tepat", note:"Latihan ROM rutin mencegah kekakuan sendi dan melatih kekuatan otot yang lemah.", ref:"SLKI L.05040 · Mobilitas Fisik"};}
             },
             {
               id:"mobilisasi_bertahap", label:"Bantu mobilisasi bertahap (duduk → berdiri → berjalan)",
-              evaluate:function(){return {status:"tepat", note:"Mobilisasi bertahap melatih kekuatan & keseimbangan tanpa membebani pasien berlebihan.", ref:"SLKI L.05042 · Mobilitas Fisik"};}
+              evaluate:function(){return {status:"tepat", note:"Mobilisasi bertahap melatih kekuatan & keseimbangan tanpa membebani pasien berlebihan.", ref:"SLKI L.05040 · Mobilitas Fisik"};}
             },
             {
               id:"fisioterapi", label:"Kolaborasi dengan fisioterapis untuk latihan rutin",
-              evaluate:function(){return {status:"tepat", note:"Fisioterapi profesional membantu mempercepat pemulihan fungsi motorik pasien.", ref:"SLKI L.05042 · Mobilitas Fisik"};}
+              evaluate:function(){return {status:"tepat", note:"Fisioterapi profesional membantu mempercepat pemulihan fungsi motorik pasien.", ref:"SLKI L.05040 · Mobilitas Fisik"};}
             }
           ]
         },
@@ -1578,6 +1578,758 @@
             {
               id:"ivfd_lansia", label:"Pasang IVFD RL",
               evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan cairan pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    gea: {
+      label: "GEA (Anak)",
+      patient: {
+        name: "An. F", age: "4 tahun",
+        keluhan: "Dibawa ke IGD karena BAB cair <b>&gt;10x</b> dalam 24 jam disertai muntah 5x. Anak tampak lemas, mata sangat cekung, turgor kulit kembali sangat lambat (&gt;2 detik), akral teraba dingin. Ibu mengatakan anak tidak mau minum sejak tadi pagi dan rewel terus sejak semalam.",
+        vitals: [
+          {label:"Suhu", val:"37.8°C", flag:false},
+          {label:"Nadi", val:"132x/mnt", flag:true},
+          {label:"RR", val:"28x/mnt", flag:true},
+          {label:"TD", val:"90/60 mmHg", flag:true}
+        ]
+      },
+      dataKlinis: [
+        {id:"dk1", text:"BAB cair >10x/24 jam disertai muntah 5x", type:"DO", note:"Ini hasil observasi/hitungan langsung frekuensi BAB & muntah — bukan sekadar ucapan ibu."},
+        {id:"dk2", text:"Turgor kulit kembali sangat lambat (>2 detik)", type:"DO", note:"Hasil pemeriksaan fisik (palpasi) oleh perawat — data objektif."},
+        {id:"dk3", text:"Akral teraba dingin", type:"DO", note:"Temuan palpasi langsung, tanda dini gangguan sirkulasi/syok — objektif."},
+        {id:"dk4", text:"Anak tampak lemas dan mata sangat cekung", type:"DO", note:"Kata 'tampak' menandakan hasil observasi visual perawat, bukan pernyataan pasien/keluarga."},
+        {id:"dk5", text:"Ibu mengatakan anak tidak mau minum sejak tadi pagi", type:"DS", note:"Kata 'mengatakan' menandakan laporan dari ibu — data subjektif."},
+        {id:"dk6", text:"Ibu mengatakan anak rewel terus sejak semalam", type:"DS", note:"Pernyataan langsung dari ibu tentang perilaku anak — data subjektif."}
+      ],
+      diagnosaTampil: ["nausea","hipovolemia","syok"],
+      diagnosa: {
+        hipovolemia: {
+          kode:"D.0023", label:"Hipovolemia", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Turgor sangat lambat, akral dingin, dan mata cekung menunjukkan kehilangan cairan tubuh sedang berlangsung aktif saat ini, bukan lagi sekadar risiko.",
+          rasionalPrioritas:"Masalah aktual yang mengancam sirkulasi harus diatasi paling dulu — kehilangan cairan besar-besaran sedang terjadi dan butuh penggantian segera.",
+          luaran:{ kode:"L.03025", label:"Status Cairan", kriteria:[
+            "Turgor kulit membaik",
+            "Akral teraba hangat",
+            "Produksi urin membaik"
+          ]}
+        },
+        syok: {
+          kode:"D.0039", label:"Risiko Syok", tipe:"Risiko", prioritasBenar:2,
+          rasional:"Dehidrasi berat pada anak dapat berlanjut cepat ke kondisi syok hipovolemik bila tidak segera diatasi.",
+          rasionalPrioritas:"Konsekuensi langsung bila hipovolemia tidak tertangani — harus diantisipasi segera setelah penggantian cairan dimulai.",
+          luaran:{ kode:"L.02017", label:"Tingkat Syok", kriteria:[
+            "Kesadaran tetap composmentis",
+            "Nadi & tekanan darah dalam batas normal",
+            "Akral hangat, CRT &lt;2 detik"
+          ]}
+        },
+        nausea: {
+          kode:"D.0076", label:"Nausea", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Muntah berulang menyertai diare, mengganggu upaya rehidrasi oral bila tidak dikendalikan.",
+          rasionalPrioritas:"Berdampak pada kenyamanan & asupan cairan/nutrisi, tapi tidak semengancam jiwa dibanding dua masalah sirkulasi di atas — ditangani setelah kondisi stabil.",
+          luaran:{ kode:"L.08065", label:"Tingkat Nausea", kriteria:[
+            "Keluhan mual menurun",
+            "Tidak ada muntah",
+            "Nafsu makan/minum membaik"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Hipovolemia", dxId:"hipovolemia",
+          tools: [
+            {
+              id:"ivfd_gea", label:"Pasang IVFD", needsParam:true, paramLabel:"Jenis cairan",
+              paramOptions:[
+                {v:"RL", t:"Ringer Laktat (RL)"},
+                {v:"NACL", t:"NaCl 0.9%"},
+                {v:"D5", t:"Dekstrosa 5%"}
+              ],
+              evaluate:function(v){
+                if(v==="RL") return {status:"tepat", note:"RL tepat sebagai cairan resusitasi awal pada dehidrasi berat akibat GEA — mengganti cairan & elektrolit isotonik yang hilang.", ref:"SLKI L.03025 · Status Cairan"};
+                if(v==="NACL") return {status:"kurang", note:"NaCl 0.9% masih bisa dipakai, tapi RL lebih disarankan karena juga mengandung elektrolit yang ikut hilang saat diare berat.", ref:"SLKI L.03025 · Status Cairan"};
+                return {status:"tidak", note:"Dekstrosa 5% tidak tepat sebagai cairan resusitasi dehidrasi berat — tidak mengandung elektrolit pengganti yang memadai.", ref:"SLKI L.03025 · Status Cairan"};
+              }
+            },
+            {
+              id:"turgor_gea", label:"Monitor tanda dehidrasi (turgor, akral, mata cekung)",
+              evaluate:function(){return {status:"tepat", note:"Observasi tanda dehidrasi berkala wajib untuk menilai perkembangan status cairan pada dehidrasi berat.", ref:"SIKI I.03091 · Manajemen Hipovolemia"};}
+            },
+            {
+              id:"balance_gea", label:"Hitung balance cairan (intake-output)",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan intake-output membantu menilai keseimbangan cairan & efektivitas rehidrasi.", ref:"SIKI I.02048 · Pemantauan Cairan"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Syok", dxId:"syok",
+          tools: [
+            {
+              id:"ttv_gea", label:"Monitor tanda vital tiap 15–30 menit",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan ketat tanda vital penting untuk deteksi dini perburukan ke arah syok pada dehidrasi berat.", ref:"SIKI I.02038 · Manajemen Syok"};}
+            },
+            {
+              id:"resusitasi_gea", label:"Kolaborasi pemberian cairan resusitasi cepat sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Kolaborasi resusitasi cairan cepat sesuai instruksi medis mencegah progresi ke syok hipovolemik.", ref:"SIKI I.02038 · Manajemen Syok"};}
+            },
+            {
+              id:"kesadaran_gea", label:"Pantau tingkat kesadaran anak",
+              evaluate:function(){return {status:"tepat", note:"Penurunan kesadaran adalah tanda lanjut syok — pemantauan rutin penting sebagai deteksi dini.", ref:"SLKI L.02017 · Tingkat Syok"};}
+            }
+          ]
+        },
+        {
+          nama: "Nausea", dxId:"nausea",
+          tools: [
+            {
+              id:"antiemetik_gea", label:"Kolaborasi pemberian antiemetik sesuai indikasi",
+              evaluate:function(){return {status:"tepat", note:"Antiemetik membantu mengendalikan mual/muntah sehingga rehidrasi oral bisa berjalan lebih efektif.", ref:"SIKI I.08239 · Manajemen Nausea"};}
+            },
+            {
+              id:"porsi_gea", label:"Anjurkan minum sedikit tapi sering setelah mual reda",
+              evaluate:function(){return {status:"tepat", note:"Pemberian cairan sedikit-sedikit mengurangi risiko muntah berulang dibanding minum langsung banyak.", ref:"SIKI I.08239 · Manajemen Nausea"};}
+            },
+            {
+              id:"pemicu_gea", label:"Identifikasi faktor pemicu mual",
+              evaluate:function(){return {status:"tepat", note:"Mengenali pemicu mual membantu menyusun strategi pemberian cairan/makanan yang lebih efektif.", ref:"SIKI I.08239 · Manajemen Nausea"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2_gea", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"rom_gea", label:"Ajarkan latihan rentang gerak (ROM)",
+              evaluate:function(){return {status:"tidak", note:"Latihan ROM ditujukan untuk masalah mobilitas fisik, tidak relevan dengan kasus dehidrasi akut ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    dbd: {
+      label: "DBD (Anak)",
+      patient: {
+        name: "An. K", age: "8 tahun",
+        keluhan: "Demam tinggi mendadak sejak 3 hari, naik turun. Anak mengeluh nyeri kepala dan nyeri sendi. Tampak bintik-bintik merah (petekie) di kedua lengan, disertai mimisan tadi pagi. Anak tampak lemas.",
+        vitals: [
+          {label:"Suhu", val:"39.5°C", flag:true},
+          {label:"Nadi", val:"104x/mnt", flag:true},
+          {label:"RR", val:"22x/mnt", flag:false},
+          {label:"Trombosit", val:"80.000/µL", flag:true}
+        ]
+      },
+      dataKlinis: [
+        {id:"dk1", text:"Suhu tubuh 39.5°C, demam naik turun 3 hari", type:"DO", note:"Suhu adalah hasil pengukuran langsung — data objektif, meski polanya diceritakan ibu."},
+        {id:"dk2", text:"Tampak petekie (bintik merah) di kedua lengan", type:"DO", note:"Kata 'tampak' menandakan temuan inspeksi langsung oleh perawat — objektif."},
+        {id:"dk3", text:"Hasil lab: trombosit 80.000/µL", type:"DO", note:"Hasil pemeriksaan laboratorium adalah data objektif yang terukur."},
+        {id:"dk4", text:"Mimisan (epistaksis) tadi pagi", type:"DO", note:"Kejadian perdarahan yang teramati/dilaporkan sebagai kejadian faktual dicatat sebagai data objektif."},
+        {id:"dk5", text:"Anak mengeluh nyeri kepala dan nyeri sendi", type:"DS", note:"Kata 'mengeluh' menandakan ini keluhan yang dirasakan & disampaikan sendiri oleh anak — data subjektif."},
+        {id:"dk6", text:"Ibu mengatakan demam anak naik turun sejak 3 hari", type:"DS", note:"Ini laporan riwayat dari ibu — data subjektif."}
+      ],
+      diagnosaTampil: ["hipertermia","perdarahan","syok"],
+      diagnosa: {
+        syok: {
+          kode:"D.0039", label:"Risiko Syok", tipe:"Risiko", prioritasBenar:1,
+          rasional:"Trombosit rendah & tanda kebocoran plasma pada DBD berisiko tinggi berlanjut ke syok dengue yang mengancam jiwa dalam waktu singkat.",
+          rasionalPrioritas:"Pada kasus DBD, risiko syok selalu menjadi prioritas utama karena perburukannya bisa sangat cepat dan fatal — dipantau paling ketat sejak awal.",
+          luaran:{ kode:"L.02017", label:"Tingkat Syok", kriteria:[
+            "Akral hangat, nadi teraba kuat",
+            "Kesadaran composmentis",
+            "Tekanan darah dalam batas normal"
+          ]}
+        },
+        perdarahan: {
+          kode:"D.0012", label:"Risiko Perdarahan", tipe:"Risiko", prioritasBenar:2,
+          rasional:"Trombosit rendah (80.000/µL) disertai petekie & mimisan menunjukkan gangguan pembekuan darah yang berisiko perdarahan lebih lanjut.",
+          rasionalPrioritas:"Berkaitan erat dengan risiko syok (kehilangan darah memperberat sirkulasi), ditangani segera setelah kewaspadaan syok ditetapkan.",
+          luaran:{ kode:"L.02016", label:"Tingkat Perdarahan", kriteria:[
+            "Tidak ada perdarahan spontan tambahan",
+            "Hasil trombosit membaik",
+            "Tidak ada tanda perdarahan baru (petekie/epistaksis)"
+          ]}
+        },
+        hipertermia: {
+          kode:"D.0130", label:"Hipertermia", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Suhu 39.5°C yang berlangsung sejak 3 hari menunjukkan proses infeksi virus dengue yang masih aktif.",
+          rasionalPrioritas:"Penting dikendalikan untuk kenyamanan & mencegah komplikasi, namun tidak semengancam jiwa dibanding risiko syok & perdarahan.",
+          luaran:{ kode:"L.14134", label:"Termoregulasi", kriteria:[
+            "Suhu tubuh dalam rentang normal (36.5–37.5°C)",
+            "Tidak menggigil",
+            "Anak tampak lebih nyaman"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Risiko Syok", dxId:"syok",
+          tools: [
+            {
+              id:"tandasyok_dbd", label:"Monitor tanda-tanda syok (akral, CRT, nadi, kesadaran)",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan tanda syok berkala adalah tindakan kunci deteksi dini perburukan DBD.", ref:"SIKI I.02038 · Manajemen Syok"};}
+            },
+            {
+              id:"hematokrit_dbd", label:"Monitor hematokrit secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Peningkatan hematokrit adalah indikator kebocoran plasma, penanda utama perburukan ke arah syok dengue.", ref:"SLKI L.02017 · Tingkat Syok"};}
+            },
+            {
+              id:"ivfd_dbd", label:"Kolaborasi pemberian cairan IV sesuai protokol DBD",
+              evaluate:function(){return {status:"tepat", note:"Pemberian cairan IV sesuai protokol mencegah perburukan kebocoran plasma menjadi syok dengue.", ref:"SIKI I.02038 · Manajemen Syok"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Perdarahan", dxId:"perdarahan",
+          tools: [
+            {
+              id:"tandaperdarahan_dbd", label:"Monitor tanda perdarahan (petekie, gusi, mimisan)",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan tanda perdarahan membantu deteksi dini perburukan kondisi hematologis.", ref:"SIKI I.02035 · Manajemen Perdarahan"};}
+            },
+            {
+              id:"invasif_dbd", label:"Hindari tindakan invasif yang tidak perlu (mis. suntikan IM)",
+              evaluate:function(){return {status:"tepat", note:"Tindakan invasif berisiko memicu perdarahan tambahan pada pasien dengan trombosit rendah.", ref:"SIKI I.02035 · Manajemen Perdarahan"};}
+            },
+            {
+              id:"trombosit_dbd", label:"Kolaborasi pemeriksaan trombosit berkala",
+              evaluate:function(){return {status:"tepat", note:"Pemeriksaan trombosit serial penting untuk memantau perjalanan penyakit & risiko perdarahan.", ref:"SLKI L.02016 · Tingkat Perdarahan"};}
+            }
+          ]
+        },
+        {
+          nama: "Hipertermia", dxId:"hipertermia",
+          tools: [
+            {
+              id:"kompres_dbd", label:"Kompres hangat pada dahi/lipatan tubuh",
+              evaluate:function(){return {status:"tepat", note:"Kompres hangat (bukan dingin) membantu menurunkan suhu tubuh secara fisiologis pada demam tinggi.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
+            },
+            {
+              id:"minum_dbd", label:"Anjurkan banyak minum untuk kompensasi cairan yang menguap",
+              evaluate:function(){return {status:"tepat", note:"Asupan cairan cukup membantu mencegah dehidrasi akibat demam tinggi & penguapan cairan tubuh.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
+            },
+            {
+              id:"antipiretik_dbd", label:"Kolaborasi pemberian antipiretik", needsParam:true, paramLabel:"Jenis obat",
+              paramOptions:[
+                {v:"PCT", t:"Paracetamol"},
+                {v:"IBU", t:"Ibuprofen"},
+                {v:"ASA", t:"Asetosal (Aspirin)"}
+              ],
+              evaluate:function(v){
+                if(v==="PCT") return {status:"tepat", note:"Paracetamol adalah antipiretik pilihan pada DBD karena tidak mengganggu fungsi trombosit.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};
+                return {status:"tidak", note:"Ibuprofen/Aspirin (NSAID) berisiko memperberat perdarahan pada pasien DBD karena mengganggu fungsi trombosit — kontraindikasi.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};
+              }
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"kateter_dbd", label:"Pasang kateter urin",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan eliminasi urin pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"napasdalam_dbd", label:"Ajarkan teknik napas dalam untuk nyeri",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada keluhan nyeri akut yang perlu tindakan relaksasi napas dalam pada kasus ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    kejang: {
+      label: "Kejang Demam (Anak)",
+      patient: {
+        name: "An. B", age: "2 tahun",
+        keluhan: "Dibawa ke IGD setelah kejang seluruh tubuh (tonik-klonik) selama ±2 menit saat demam tinggi di rumah. Sesaat setelah kejang anak tampak mengantuk (letargis). Ibu mengatakan ini kejang pertama yang dialami anaknya, terjadi tiba-tiba saat demam tinggi.",
+        vitals: [
+          {label:"Suhu", val:"39.8°C", flag:true},
+          {label:"Nadi", val:"128x/mnt", flag:true},
+          {label:"RR", val:"30x/mnt", flag:true},
+          {label:"Kesadaran", val:"Somnolen", flag:true}
+        ]
+      },
+      dataKlinis: [
+        {id:"dk1", text:"Kejang tonik-klonik seluruh tubuh selama ±2 menit", type:"DO", note:"Kejadian yang diamati/disaksikan langsung dan dapat diukur durasinya — data objektif."},
+        {id:"dk2", text:"Suhu tubuh 39.8°C saat masuk IGD", type:"DO", note:"Hasil pengukuran langsung dengan termometer — data objektif."},
+        {id:"dk3", text:"Anak tampak mengantuk (letargis) pasca kejang", type:"DO", note:"Kata 'tampak' menandakan hasil observasi tingkat kesadaran oleh perawat — objektif."},
+        {id:"dk4", text:"Kesadaran somnolen pada pemeriksaan", type:"DO", note:"Hasil penilaian tingkat kesadaran (GCS) adalah data objektif hasil pemeriksaan."},
+        {id:"dk5", text:"Ibu mengatakan anak kejang tiba-tiba saat demam tinggi di rumah", type:"DS", note:"Kata 'mengatakan' menandakan laporan kejadian dari ibu — data subjektif."},
+        {id:"dk6", text:"Ibu mengatakan ini kejang pertama kali dialami anak", type:"DS", note:"Riwayat yang disampaikan ibu, belum diverifikasi dengan pemeriksaan objektif — data subjektif."}
+      ],
+      diagnosaTampil: ["ansietas","cedera","hipertermia"],
+      diagnosa: {
+        cedera: {
+          kode:"D.0136", label:"Risiko Cedera", tipe:"Risiko", prioritasBenar:1,
+          rasional:"Anak berisiko cedera fisik (jatuh, tergigit lidah, benturan) selama episode kejang berlangsung atau berulang.",
+          rasionalPrioritas:"Keselamatan fisik anak selama & sesudah kejang adalah prioritas tertinggi — mendahului penanganan penyebab (demam) itu sendiri.",
+          luaran:{ kode:"L.14136", label:"Tingkat Cedera", kriteria:[
+            "Tidak ada cedera fisik selama observasi",
+            "Lingkungan sekitar anak aman",
+            "Tidak terjadi kejang berulang tanpa penanganan"
+          ]}
+        },
+        hipertermia: {
+          kode:"D.0130", label:"Hipertermia", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Suhu 39.8°C adalah pencetus utama kejang demam pada anak dan harus segera dikendalikan agar kejang tidak berulang.",
+          rasionalPrioritas:"Mengendalikan demam secara langsung mencegah kejang berulang — ditangani segera setelah keselamatan anak terjamin.",
+          luaran:{ kode:"L.14134", label:"Termoregulasi", kriteria:[
+            "Suhu tubuh turun ke rentang normal",
+            "Tidak terjadi kejang berulang",
+            "Anak tampak lebih nyaman"
+          ]}
+        },
+        ansietas: {
+          kode:"D.0080", label:"Ansietas (Orang Tua)", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Kejang pertama pada anak umumnya memicu kecemasan besar pada orang tua yang menyaksikannya.",
+          rasionalPrioritas:"Penting ditangani untuk mendukung koping keluarga, namun bukan ancaman fisik langsung — ditangani setelah kondisi anak stabil.",
+          luaran:{ kode:"L.09093", label:"Tingkat Ansietas", kriteria:[
+            "Orang tua tampak lebih tenang",
+            "Mampu menjelaskan kembali edukasi yang diberikan",
+            "Mampu mendampingi anak dengan tenang"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Risiko Cedera", dxId:"cedera",
+          tools: [
+            {
+              id:"amankan_kejang", label:"Longgarkan pakaian & singkirkan benda berbahaya di sekitar anak",
+              evaluate:function(){return {status:"tepat", note:"Mengamankan lingkungan sekitar anak mencegah cedera fisik selama episode kejang.", ref:"SIKI I.14525 · Pencegahan Cedera"};}
+            },
+            {
+              id:"posisi_kejang", label:"Miringkan posisi kepala saat kejang (mencegah aspirasi)",
+              evaluate:function(){return {status:"tepat", note:"Posisi miring mencegah aspirasi saliva/muntahan saat kejang berlangsung.", ref:"SIKI I.01015 · Pencegahan Aspirasi"};}
+            },
+            {
+              id:"diazepam_kejang", label:"Kolaborasi pemberian antikonvulsan (diazepam) sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Antikonvulsan diberikan sesuai program medis untuk menghentikan/mencegah kejang berulang.", ref:"SIKI I.06195 · Manajemen Kejang"};}
+            }
+          ]
+        },
+        {
+          nama: "Hipertermia", dxId:"hipertermia",
+          tools: [
+            {
+              id:"kompres_kejang", label:"Kompres hangat / lepas selimut berlebih",
+              evaluate:function(){return {status:"tepat", note:"Kompres hangat & melepas pakaian berlebih membantu menurunkan suhu tubuh secara fisiologis.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
+            },
+            {
+              id:"antipiretik_kejang", label:"Kolaborasi pemberian antipiretik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Antipiretik membantu menurunkan suhu tubuh & mengurangi risiko kejang berulang.", ref:"SIKI I.14586 · Manajemen Termoregulasi"};}
+            },
+            {
+              id:"suhu_kejang", label:"Monitor suhu tubuh secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan suhu berkala penting untuk menilai efektivitas tindakan penurun demam.", ref:"SLKI L.14134 · Termoregulasi"};}
+            }
+          ]
+        },
+        {
+          nama: "Ansietas (Orang Tua)", dxId:"ansietas",
+          tools: [
+            {
+              id:"edukasi_kejang", label:"Jelaskan pada orang tua tentang kejang demam & penanganannya",
+              evaluate:function(){return {status:"tepat", note:"Edukasi mengurangi ketidaktahuan yang menjadi sumber kecemasan orang tua.", ref:"SIKI I.09314 · Reduksi Ansietas"};}
+            },
+            {
+              id:"dukungan_kejang", label:"Dampingi & beri dukungan emosional pada orang tua",
+              evaluate:function(){return {status:"tepat", note:"Pendampingan emosional membantu menurunkan tingkat kecemasan orang tua secara langsung.", ref:"SIKI I.09314 · Reduksi Ansietas"};}
+            },
+            {
+              id:"ungkap_kejang", label:"Anjurkan orang tua mengungkapkan perasaan/kekhawatirannya",
+              evaluate:function(){return {status:"tepat", note:"Memberi ruang mengungkapkan perasaan membantu proses koping orang tua terhadap kejadian yang dialami anak.", ref:"SIKI I.09314 · Reduksi Ansietas"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"ivfd_kejang", label:"Pasang IVFD NaCl 0.9%",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada tanda dehidrasi/gangguan cairan yang perlu tindakan cairan IV segera pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"rom_kejang", label:"Ajarkan latihan rentang gerak (ROM)",
+              evaluate:function(){return {status:"tidak", note:"Latihan ROM tidak relevan dengan kondisi kejang demam akut ini.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    diabetes: {
+      label: "Ketoasidosis Diabetik",
+      patient: {
+        name: "Tn. S", age: "52 tahun",
+        keluhan: "Riwayat DM tipe 2 sejak 5 tahun. Datang dengan keluhan badan lemas dan mual sejak 1 minggu, disertai sering haus dan sering kencing. Napas cepat dan dalam berbau aseton. Mukosa bibir tampak kering dan turgor kulit menurun.",
+        vitals: [
+          {label:"GDS", val:"420 mg/dL", flag:true},
+          {label:"Nadi", val:"112x/mnt", flag:true},
+          {label:"RR", val:"26x/mnt", flag:true},
+          {label:"TD", val:"100/70 mmHg", flag:true}
+        ]
+      },
+      dataKlinis: [
+        {id:"dk1", text:"Hasil GDS 420 mg/dL", type:"DO", note:"Hasil pemeriksaan laboratorium/point-of-care adalah data objektif yang terukur."},
+        {id:"dk2", text:"Napas cepat dan dalam berbau aseton (kussmaul)", type:"DO", note:"Pola napas & bau napas adalah temuan pemeriksaan fisik langsung — objektif."},
+        {id:"dk3", text:"Mukosa bibir tampak kering", type:"DO", note:"Temuan inspeksi langsung oleh perawat — data objektif."},
+        {id:"dk4", text:"Turgor kulit menurun", type:"DO", note:"Hasil pemeriksaan fisik (palpasi) — data objektif."},
+        {id:"dk5", text:"Pasien mengatakan sering haus dan sering kencing sejak 1 minggu", type:"DS", note:"Kata 'mengatakan' menandakan laporan gejala langsung dari pasien — data subjektif."},
+        {id:"dk6", text:"Pasien mengeluh badan lemas dan mual", type:"DS", note:"Keluhan yang dirasakan & disampaikan sendiri oleh pasien — data subjektif."}
+      ],
+      diagnosaTampil: ["infeksi","glukosa","hipovolemia"],
+      diagnosa: {
+        glukosa: {
+          kode:"D.0027", label:"Ketidakstabilan Kadar Glukosa Darah", tipe:"Aktual", prioritasBenar:1,
+          rasional:"GDS 420 mg/dL disertai napas kussmaul menunjukkan hiperglikemia berat yang sedang berlangsung dan mengarah ke ketoasidosis.",
+          rasionalPrioritas:"Ketidakstabilan glukosa adalah akar masalah metabolik yang mengancam jiwa — dikoreksi lebih dulu sebelum masalah turunannya.",
+          luaran:{ kode:"L.03022", label:"Kestabilan Kadar Glukosa Darah", kriteria:[
+            "GDS dalam rentang target",
+            "Tidak ada gejala hiperglikemia (poliuria, polidipsia)",
+            "Kesadaran stabil"
+          ]}
+        },
+        hipovolemia: {
+          kode:"D.0023", label:"Hipovolemia", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Diuresis osmotik akibat hiperglikemia menyebabkan kehilangan cairan tubuh yang sedang berlangsung, ditandai turgor menurun & mukosa kering.",
+          rasionalPrioritas:"Merupakan konsekuensi langsung dari hiperglikemia yang sedang terjadi — dikoreksi bersamaan/setelah stabilisasi glukosa dimulai.",
+          luaran:{ kode:"L.03025", label:"Status Cairan", kriteria:[
+            "Turgor kulit membaik",
+            "Mukosa lembap",
+            "Tekanan darah & nadi dalam batas normal"
+          ]}
+        },
+        infeksi: {
+          kode:"D.0142", label:"Risiko Infeksi", tipe:"Risiko", prioritasBenar:3,
+          rasional:"Pasien DM berisiko lebih tinggi mengalami infeksi akibat gangguan sirkulasi & penurunan daya tahan tubuh.",
+          rasionalPrioritas:"Bersifat risiko jangka menengah, ditangani setelah kondisi metabolik akut (glukosa & cairan) mulai terkendali.",
+          luaran:{ kode:"L.14137", label:"Tingkat Infeksi", kriteria:[
+            "Tidak ada tanda infeksi (kalor, rubor, dolor, tumor)",
+            "Area insersi infus bersih & kering",
+            "Leukosit dalam batas normal"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Ketidakstabilan Kadar Glukosa Darah", dxId:"glukosa",
+          tools: [
+            {
+              id:"gds_dm", label:"Monitor GDS berkala sesuai jadwal",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan GDS berkala penting untuk menilai respons terhadap terapi insulin.", ref:"SLKI L.03022 · Kestabilan Kadar Glukosa Darah"};}
+            },
+            {
+              id:"insulin_dm", label:"Kolaborasi pemberian insulin sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Insulin adalah terapi utama untuk menurunkan kadar glukosa darah pada kondisi hiperglikemia berat.", ref:"SIKI I.03089 · Manajemen Hiperglikemia"};}
+            },
+            {
+              id:"edukasi_dm", label:"Edukasi tanda & gejala hiperglikemia/hipoglikemia",
+              evaluate:function(){return {status:"tepat", note:"Edukasi membantu pasien mengenali tanda perburukan/efek samping terapi secara mandiri.", ref:"SIKI I.03089 · Manajemen Hiperglikemia"};}
+            }
+          ]
+        },
+        {
+          nama: "Hipovolemia", dxId:"hipovolemia",
+          tools: [
+            {
+              id:"ivfd_dm", label:"Pasang IVFD", needsParam:true, paramLabel:"Jenis cairan",
+              paramOptions:[
+                {v:"NACL", t:"NaCl 0.9%"},
+                {v:"RL", t:"Ringer Laktat (RL)"},
+                {v:"D5", t:"Dekstrosa 5%"}
+              ],
+              evaluate:function(v){
+                if(v==="NACL") return {status:"tepat", note:"NaCl 0.9% adalah cairan resusitasi awal standar pada dehidrasi akibat hiperglikemia/ketoasidosis.", ref:"SLKI L.03025 · Status Cairan"};
+                if(v==="RL") return {status:"kurang", note:"RL bisa dipertimbangkan pada tahap lanjut, namun NaCl 0.9% lebih dipilih sebagai cairan resusitasi awal pada kondisi hiperglikemia berat.", ref:"SLKI L.03025 · Status Cairan"};
+                return {status:"tidak", note:"Dekstrosa 5% tidak tepat pada kondisi hiperglikemia — justru akan memperberat kadar glukosa darah.", ref:"SLKI L.03025 · Status Cairan"};
+              }
+            },
+            {
+              id:"io_dm", label:"Monitor intake-output cairan",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan intake-output membantu menilai keseimbangan cairan selama rehidrasi.", ref:"SIKI I.02048 · Pemantauan Cairan"};}
+            },
+            {
+              id:"dehidrasi_dm", label:"Monitor tanda dehidrasi (turgor, mukosa)",
+              evaluate:function(){return {status:"tepat", note:"Observasi tanda dehidrasi berkala penting untuk menilai perkembangan status cairan pasien.", ref:"SLKI L.03025 · Status Cairan"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Infeksi", dxId:"infeksi",
+          tools: [
+            {
+              id:"tandainfeksi_dm", label:"Monitor tanda-tanda infeksi (suhu, luka, area insersi infus)",
+              evaluate:function(){return {status:"tepat", note:"Pasien DM berisiko infeksi lebih tinggi — pemantauan rutin penting untuk deteksi dini.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
+            },
+            {
+              id:"aseptik_dm", label:"Jaga kebersihan & lakukan perawatan area insersi infus dengan teknik aseptik",
+              evaluate:function(){return {status:"tepat", note:"Teknik aseptik mengurangi risiko masuknya mikroorganisme melalui area invasif.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
+            },
+            {
+              id:"edukasiinfeksi_dm", label:"Edukasi pasien & keluarga tentang tanda infeksi yang perlu dilaporkan",
+              evaluate:function(){return {status:"tepat", note:"Edukasi membantu deteksi dini tanda infeksi oleh pasien/keluarga sendiri di luar jam observasi perawat.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"napasdalam_dm", label:"Ajarkan teknik relaksasi napas dalam untuk nyeri",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada keluhan nyeri akut pada kasus ini — napas cepat & dalam di sini adalah kompensasi metabolik (kussmaul), bukan respons nyeri.", ref:"—"};}
+            },
+            {
+              id:"o2_dm", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Masalah utama kasus ini bersifat metabolik, bukan gangguan oksigenasi — belum ada indikasi pemberian oksigen.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    apendiktomi: {
+      label: "Post-Op Apendiktomi",
+      patient: {
+        name: "Tn. A", age: "27 tahun",
+        keluhan: "Pasien post operasi apendiktomi hari ke-1. Mengatakan nyeri di area luka operasi skala 6/10, terutama saat bergerak. Tampak meringis saat mengubah posisi dan membatasi gerak tubuh bagian perut. Luka operasi tertutup kassa bersih tanpa rembesan. Dibantu penuh keluarga untuk ke kamar mandi.",
+        vitals: [
+          {label:"Suhu", val:"37.2°C", flag:false},
+          {label:"Nadi", val:"92x/mnt", flag:false},
+          {label:"RR", val:"20x/mnt", flag:false},
+          {label:"Skala Nyeri", val:"6/10", flag:true}
+        ]
+      },
+      dataKlinis: [
+        {id:"dk1", text:"Pasien mengatakan nyeri di luka operasi skala 6/10, terutama saat bergerak", type:"DS", note:"Kata 'mengatakan' & skala nyeri adalah laporan persepsi pasien sendiri — data subjektif."},
+        {id:"dk2", text:"Tampak meringis saat mengubah posisi", type:"DO", note:"Kata 'tampak' menandakan hasil observasi ekspresi wajah oleh perawat — objektif."},
+        {id:"dk3", text:"Luka operasi tertutup kassa bersih, tidak ada tanda rembesan", type:"DO", note:"Temuan inspeksi langsung terhadap kondisi luka — data objektif."},
+        {id:"dk4", text:"Pasien dibantu penuh keluarga untuk ke kamar mandi", type:"DO", note:"Ini fakta yang teramati tentang tingkat ketergantungan pasien — data objektif."},
+        {id:"dk5", text:"Pasien mengatakan khawatir bergerak karena takut luka terbuka", type:"DS", note:"Ungkapan perasaan/kekhawatiran pasien — data subjektif."},
+        {id:"dk6", text:"Pasien tampak membatasi gerak tubuh bagian perut", type:"DO", note:"Pola gerak yang diamati langsung oleh perawat — data objektif."}
+      ],
+      diagnosaTampil: ["defisitperawatan","nyeri","infeksi"],
+      diagnosa: {
+        nyeri: {
+          kode:"D.0077", label:"Nyeri Akut", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Nyeri skala 6/10 disertai meringis & pembatasan gerak menunjukkan nyeri pasca operasi yang sedang dirasakan aktif saat ini.",
+          rasionalPrioritas:"Nyeri aktual yang mengganggu kenyamanan & mobilisasi selalu ditangani lebih dulu agar pemulihan berjalan optimal.",
+          luaran:{ kode:"L.08066", label:"Tingkat Nyeri", kriteria:[
+            "Keluhan nyeri menurun",
+            "Meringis menurun",
+            "Pasien mampu bergerak lebih leluasa"
+          ]}
+        },
+        infeksi: {
+          kode:"D.0142", label:"Risiko Infeksi", tipe:"Risiko", prioritasBenar:2,
+          rasional:"Adanya luka operasi terbuka merupakan port de entry mikroorganisme yang berisiko menyebabkan infeksi.",
+          rasionalPrioritas:"Risiko yang harus terus diawasi selama masa pemulihan luka — ditangani setelah nyeri akut mulai terkendali.",
+          luaran:{ kode:"L.14137", label:"Tingkat Infeksi", kriteria:[
+            "Tidak ada tanda infeksi pada luka (kemerahan, bengkak, pus)",
+            "Suhu tubuh dalam batas normal",
+            "Luka tetap kering & bersih"
+          ]}
+        },
+        defisitperawatan: {
+          kode:"D.0109", label:"Defisit Perawatan Diri", tipe:"Aktual", prioritasBenar:3,
+          rasional:"Nyeri & ketakutan bergerak membuat pasien masih bergantung penuh pada keluarga untuk aktivitas perawatan diri.",
+          rasionalPrioritas:"Berkaitan dengan pemulihan fungsional jangka menengah — ditangani setelah nyeri terkendali agar mobilisasi lebih mudah dilatih.",
+          luaran:{ kode:"L.11103", label:"Perawatan Diri", kriteria:[
+            "Mampu melakukan perawatan diri secara bertahap mandiri",
+            "Kemampuan mobilisasi meningkat",
+            "Pasien tidak lagi sepenuhnya bergantung pada keluarga"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Nyeri Akut", dxId:"nyeri",
+          tools: [
+            {
+              id:"kajinyeri_apen", label:"Kaji skala nyeri secara berkala (PQRST)",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian nyeri terstruktur & berkala penting untuk menilai efektivitas manajemen nyeri.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"relaksasi_apen", label:"Ajarkan teknik relaksasi napas dalam/distraksi",
+              evaluate:function(){return {status:"tepat", note:"Teknik nonfarmakologis membantu menurunkan persepsi nyeri sebagai pelengkap terapi analgesik.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"analgesik_apen", label:"Kolaborasi pemberian analgesik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Analgesik sesuai program medis adalah tindakan utama untuk mengendalikan nyeri pasca operasi.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Infeksi", dxId:"infeksi",
+          tools: [
+            {
+              id:"rawatluka_apen", label:"Rawat luka operasi dengan teknik aseptik",
+              evaluate:function(){return {status:"tepat", note:"Perawatan luka aseptik adalah tindakan utama pencegahan infeksi pada luka operasi.", ref:"SIKI I.14564 · Perawatan Luka"};}
+            },
+            {
+              id:"tandainfeksi_apen", label:"Monitor tanda-tanda infeksi pada luka (kemerahan, bengkak, pus, suhu)",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan rutin membantu deteksi dini tanda infeksi pada luka operasi.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
+            },
+            {
+              id:"antibiotik_apen", label:"Kolaborasi pemberian antibiotik sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Antibiotik profilaksis/terapeutik sesuai program membantu mencegah/mengatasi infeksi pasca bedah.", ref:"SIKI I.14537 · Pencegahan Infeksi"};}
+            }
+          ]
+        },
+        {
+          nama: "Defisit Perawatan Diri", dxId:"defisitperawatan",
+          tools: [
+            {
+              id:"bantutahap_apen", label:"Bantu pasien secara bertahap dalam aktivitas perawatan diri",
+              evaluate:function(){return {status:"tepat", note:"Bantuan bertahap sesuai kemampuan mendorong kemandirian pasien tanpa memperberat nyeri.", ref:"SIKI I.11348 · Dukungan Perawatan Diri"};}
+            },
+            {
+              id:"dorongmandiri_apen", label:"Dorong kemandirian pasien sesuai kemampuan & toleransi nyeri",
+              evaluate:function(){return {status:"tepat", note:"Mendorong kemandirian bertahap membantu pemulihan fungsional tanpa mengabaikan batas toleransi nyeri.", ref:"SIKI I.11348 · Dukungan Perawatan Diri"};}
+            },
+            {
+              id:"mobilisasi_apen", label:"Latih mobilisasi dini secara bertahap (duduk, berdiri, jalan pendek)",
+              evaluate:function(){return {status:"tepat", note:"Mobilisasi dini bertahap mempercepat pemulihan fungsi & mencegah komplikasi imobilisasi pasca operasi.", ref:"SLKI L.05040 · Mobilitas Fisik"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"o2_apen", label:"Pasang oksigen nasal kanul",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada indikasi gangguan oksigenasi pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"oralit_apen", label:"Ajarkan penggunaan oralit",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada keluhan diare/dehidrasi pada kasus ini — tidak relevan.", ref:"—"};}
+            }
+          ]
+        }
+      ]
+    },
+
+    gastritis: {
+      label: "Gastritis",
+      patient: {
+        name: "Ny. D", age: "35 tahun",
+        keluhan: "Mengeluh nyeri ulu hati seperti perih ditusuk sejak 3 hari, memberat saat telat makan. Disertai mual dan sempat muntah 1x pagi ini. Nafsu makan menurun. Mengatakan sering telat makan karena kesibukan kerja.",
+        vitals: [
+          {label:"Suhu", val:"36.6°C", flag:false},
+          {label:"Nadi", val:"88x/mnt", flag:false},
+          {label:"RR", val:"20x/mnt", flag:false},
+          {label:"Bising Usus", val:"14x/mnt", flag:true}
+        ]
+      },
+      dataKlinis: [
+        {id:"dk1", text:"Pasien mengatakan nyeri ulu hati seperti perih ditusuk sejak 3 hari", type:"DS", note:"Kata 'mengatakan' menandakan keluhan yang disampaikan sendiri oleh pasien — data subjektif."},
+        {id:"dk2", text:"Pasien mengatakan mual dan sempat muntah 1x pagi ini", type:"DS", note:"Laporan gejala yang dirasakan pasien sendiri — data subjektif."},
+        {id:"dk3", text:"Pasien tampak memegangi area ulu hati", type:"DO", note:"Kata 'tampak' menandakan hasil observasi perilaku oleh perawat — objektif."},
+        {id:"dk4", text:"Pasien mengatakan sering telat makan karena kesibukan kerja", type:"DS", note:"Ini riwayat kebiasaan yang disampaikan sendiri oleh pasien — data subjektif."},
+        {id:"dk5", text:"Porsi makan yang dihabiskan hanya setengah dari porsi biasa", type:"DO", note:"Hasil penghitungan/observasi perawat terhadap sisa makanan — data objektif."},
+        {id:"dk6", text:"Bising usus 14x/menit (hiperaktif) pada auskultasi", type:"DO", note:"Hasil pemeriksaan fisik (auskultasi) — data objektif."}
+      ],
+      diagnosaTampil: ["nutrisi","nausea","nyeri"],
+      diagnosa: {
+        nyeri: {
+          kode:"D.0077", label:"Nyeri Akut", tipe:"Aktual", prioritasBenar:1,
+          rasional:"Nyeri ulu hati yang dirasakan aktif sejak 3 hari, sampai memegangi perut, menunjukkan masalah yang sedang berlangsung dan butuh penanganan segera.",
+          rasionalPrioritas:"Keluhan nyeri aktual paling mengganggu kenyamanan pasien saat ini — ditangani lebih dulu sebelum masalah lain yang bersifat penyerta.",
+          luaran:{ kode:"L.08066", label:"Tingkat Nyeri", kriteria:[
+            "Keluhan nyeri ulu hati menurun",
+            "Pasien tampak rileks, tidak lagi memegangi perut",
+            "Skala nyeri menurun"
+          ]}
+        },
+        nausea: {
+          kode:"D.0076", label:"Nausea", tipe:"Aktual", prioritasBenar:2,
+          rasional:"Mual disertai satu kali muntah sedang berlangsung dan menghambat pasien untuk makan dengan baik.",
+          rasionalPrioritas:"Mual aktual menghalangi upaya perbaikan nutrisi — ditangani segera setelah nyeri mulai terkendali.",
+          luaran:{ kode:"L.08065", label:"Tingkat Nausea", kriteria:[
+            "Keluhan mual menurun",
+            "Tidak ada muntah",
+            "Nafsu makan mulai membaik"
+          ]}
+        },
+        nutrisi: {
+          kode:"D.0032", label:"Risiko Defisit Nutrisi", tipe:"Risiko", prioritasBenar:3,
+          rasional:"Nafsu makan menurun & pola makan tidak teratur membuat pasien berisiko mengalami defisit nutrisi bila berlanjut.",
+          rasionalPrioritas:"Dampaknya bersifat jangka lebih panjang — ditangani setelah nyeri & mual mereda agar asupan bisa membaik secara nyata.",
+          luaran:{ kode:"L.03027", label:"Status Nutrisi", kriteria:[
+            "Nafsu makan meningkat",
+            "Porsi makan yang dihabiskan meningkat",
+            "Tidak terjadi penurunan berat badan lebih lanjut"
+          ]}
+        }
+      },
+      kategori: [
+        {
+          nama: "Nyeri Akut", dxId:"nyeri",
+          tools: [
+            {
+              id:"kajinyeri_gas", label:"Kaji karakteristik nyeri (lokasi, skala, faktor pemicu)",
+              evaluate:function(){return {status:"tepat", note:"Pengkajian karakteristik nyeri membantu menentukan intervensi & pemicu yang perlu dihindari.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"relaksasi_gas", label:"Ajarkan teknik relaksasi/napas dalam untuk mengurangi nyeri",
+              evaluate:function(){return {status:"tepat", note:"Teknik relaksasi membantu menurunkan persepsi nyeri sebagai pelengkap terapi farmakologis.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            },
+            {
+              id:"antasida_gas", label:"Kolaborasi pemberian antasida/obat lambung sesuai program",
+              evaluate:function(){return {status:"tepat", note:"Obat lambung sesuai program membantu menetralkan asam lambung penyebab nyeri.", ref:"SIKI I.08238 · Manajemen Nyeri"};}
+            }
+          ]
+        },
+        {
+          nama: "Nausea", dxId:"nausea",
+          tools: [
+            {
+              id:"pemicu_gas", label:"Identifikasi faktor penyebab mual (mis. telat makan, makanan pedas/asam)",
+              evaluate:function(){return {status:"tepat", note:"Mengenali pemicu membantu menyusun strategi pola makan yang lebih sesuai bagi pasien.", ref:"SIKI I.08239 · Manajemen Nausea"};}
+            },
+            {
+              id:"porsi_gas", label:"Anjurkan makan sedikit tapi sering, hindari makanan pemicu",
+              evaluate:function(){return {status:"tepat", note:"Porsi kecil & teratur mengurangi rangsangan asam lambung berlebih yang memicu mual.", ref:"SIKI I.08239 · Manajemen Nausea"};}
+            },
+            {
+              id:"antiemetik_gas", label:"Kolaborasi pemberian antiemetik bila diperlukan",
+              evaluate:function(){return {status:"tepat", note:"Antiemetik membantu mengendalikan mual sehingga asupan makan dapat membaik.", ref:"SIKI I.08239 · Manajemen Nausea"};}
+            }
+          ]
+        },
+        {
+          nama: "Risiko Defisit Nutrisi", dxId:"nutrisi",
+          tools: [
+            {
+              id:"monitorasupan_gas", label:"Monitor asupan makan & porsi yang dihabiskan",
+              evaluate:function(){return {status:"tepat", note:"Pemantauan asupan membantu menilai apakah status nutrisi pasien membaik.", ref:"SIKI I.03119 · Manajemen Nutrisi"};}
+            },
+            {
+              id:"edukasipola_gas", label:"Edukasi pola makan teratur & pentingnya sarapan",
+              evaluate:function(){return {status:"tepat", note:"Edukasi pola makan teratur membantu mencegah kekambuhan gastritis akibat telat makan.", ref:"SIKI I.12383 · Edukasi Kesehatan"};}
+            },
+            {
+              id:"bb_gas", label:"Timbang berat badan secara berkala",
+              evaluate:function(){return {status:"tepat", note:"Penimbangan berkala membantu memantau perkembangan status nutrisi pasien dari waktu ke waktu.", ref:"SLKI L.03027 · Status Nutrisi"};}
+            }
+          ]
+        },
+        {
+          nama: "Tidak Terkait Kasus Ini", dxId:null,
+          tools: [
+            {
+              id:"ivfd_gas", label:"Pasang IVFD RL",
+              evaluate:function(){return {status:"tidak", note:"Tidak ada tanda dehidrasi/kehilangan cairan bermakna pada kasus ini.", ref:"—"};}
+            },
+            {
+              id:"menyusui_gas", label:"Ajarkan cara menyusui yang benar",
+              evaluate:function(){return {status:"tidak", note:"Tidak relevan — kasus ini bukan kasus menyusui.", ref:"—"};}
             }
           ]
         }
