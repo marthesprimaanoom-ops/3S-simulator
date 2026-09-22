@@ -344,59 +344,198 @@
 
   footer{color:var(--ink-muted);font-size:12px;line-height:1.6;text-align:center;padding-top:6px;}
   footer b{color:var(--ink);}
+
+  .status-banner.bad{background:var(--bad-bg);border-color:var(--bad-border);}
+  .status-banner.bad .dot{background:var(--bad);}
+  .status-banner.bad .t{color:var(--bad);}
+
+  .tpm-formula-box{
+    background:var(--surface-2);border-radius:12px;padding:14px 16px;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);line-height:1.7;
+  }
+  .tpm-formula-box .lbl{color:var(--ink-muted);font-family:'Inter',sans-serif;font-size:12px;}
+
+  .tpm-soal-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);
+    text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:block;
+  }
+  .tpm-soal-text{font-size:14.5px;line-height:1.65;margin:0 0 16px;max-width:64ch;}
+
+  .field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field label{font-size:11.5px;color:var(--ink-muted);font-weight:600;}
+  .field.grow{flex:1;min-width:140px;}
+  input.tpm-input, select.tpm-input{
+    font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;
+    background:var(--surface);color:var(--ink);border:1.5px solid var(--border);
+    border-radius:9px;padding:9px 11px;width:100%;min-width:90px;
+  }
+  input.tpm-input:focus, select.tpm-input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .tpm-unit{font-size:12px;color:var(--ink-muted);align-self:center;padding-top:20px;}
+
+  .tpm-feedback{margin-top:14px;}
+  .tpm-feedback .step-title{
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:12.5px;margin:14px 0 6px;color:var(--ink);
+  }
+
+  .tpm-result{
+    margin-top:16px;padding:16px 18px;background:var(--accent-soft);border-radius:14px;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .tpm-result .out-label{font-size:11.5px;color:var(--ink-muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+  .tpm-result .out-val{font-family:'Lexend',sans-serif;font-weight:700;font-size:26px;color:var(--accent);}
+  .tpm-result .out-formula{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-muted);margin-top:4px;}
+
+  .tpm-mode-toggle{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .tpm-mode-btn{
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:12.5px;
+    padding:8px 14px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface);color:var(--ink-muted);cursor:pointer;
+  }
+  .tpm-mode-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+
+  .tpm-ref-note{font-size:12px;color:var(--ink-muted);line-height:1.5;padding:10px 12px;background:var(--surface-2);border-radius:10px;margin-top:14px;}
+
+  .formula-list{display:flex;flex-direction:column;gap:10px;}
+  .formula-item{
+    border:1px solid var(--border);background:var(--surface-2);border-radius:12px;
+    padding:12px 14px;
+  }
+  .formula-item .f-no{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;flex-shrink:0;margin-right:8px;
+  }
+  .formula-item .f-title{font-family:'Lexend',sans-serif;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;}
+  .formula-item .f-formula{
+    font-family:'IBM Plex Mono',monospace;font-size:14.5px;font-weight:600;color:var(--accent);
+    margin-top:8px;padding-left:28px;
+  }
+  .formula-item .f-note{font-size:12px;color:var(--ink-muted);line-height:1.5;margin-top:5px;padding-left:28px;}
+
+  .faktor-table{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+  .faktor-row{
+    display:flex;justify-content:space-between;gap:10px;font-size:12.5px;
+    padding:8px 12px;background:var(--surface-2);border-radius:9px;
+  }
+  .faktor-row b{font-family:'IBM Plex Mono',monospace;color:var(--accent);}
 </style>
 
 <div class="app">
   <header class="top">
     <span class="eyebrow">Prototipe &middot; Lab Keperawatan SMK</span>
-    <h1>Simulator Kasus Askep</h1>
-    <p class="sub">Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.</p>
+    <h1 id="mainTitle">Simulator Kasus Askep</h1>
+    <p class="sub" id="mainSub">Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.</p>
   </header>
 
-  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="tabs" id="modeTabs" role="tablist"></div>
 
-  <div class="card" id="caseCard"></div>
+  <div id="askepMode">
+    <div class="tabs" id="tabs" role="tablist"></div>
 
-  <div class="card">
-    <div class="section-title">Pilah Data: Subjektif (DS) vs Objektif (DO) <span class="count" id="dsdoCount"></span></div>
-    <p class="dx-intro">Dari cerita kasus di atas, tentukan tiap data ini termasuk <b>DS</b> (data subjektif &mdash; dirasakan/diungkapkan pasien) atau <b>DO</b> (data objektif &mdash; diukur/diamati langsung oleh perawat).</p>
-    <div class="dsdo-grid" id="dsdoGrid"></div>
-    <p class="dsdo-hint">Catatan: semua tanda vital (suhu, nadi, TD, dst) selalu tergolong <b>DO</b> karena bisa diukur langsung dengan alat.</p>
-    <div class="actions">
-      <button class="primary" id="checkDsdoBtn">Cek Jawaban DS/DO</button>
+    <div class="card" id="caseCard"></div>
+
+    <div class="card">
+      <div class="section-title">Pilah Data: Subjektif (DS) vs Objektif (DO) <span class="count" id="dsdoCount"></span></div>
+      <p class="dx-intro">Dari cerita kasus di atas, tentukan tiap data ini termasuk <b>DS</b> (data subjektif &mdash; dirasakan/diungkapkan pasien) atau <b>DO</b> (data objektif &mdash; diukur/diamati langsung oleh perawat).</p>
+      <div class="dsdo-grid" id="dsdoGrid"></div>
+      <p class="dsdo-hint">Catatan: semua tanda vital (suhu, nadi, TD, dst) selalu tergolong <b>DO</b> karena bisa diukur langsung dengan alat.</p>
+      <div class="actions">
+        <button class="primary" id="checkDsdoBtn">Cek Jawaban DS/DO</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Diagnosa Keperawatan &amp; Prioritas</div>
+      <p class="dx-intro">Ini semua diagnosa yang teridentifikasi dari data pasien di atas (urutan acak, bukan urutan prioritas). Tentukan nomor prioritas masing-masing &mdash; <b>1 = paling mendesak</b> ditangani lebih dulu.</p>
+      <div class="dx-grid" id="dxGrid"></div>
+      <div class="actions">
+        <button class="primary" id="checkPrioBtn">Cek Urutan Prioritas</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Bank Tindakan <span class="count" id="toolCount"></span></div>
+      <div id="toolBank"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Rencana Tindakan Saya <span class="count" id="trayCount">0 dipilih</span></div>
+      <div class="tray" id="tray"></div>
+      <div class="actions">
+        <button class="primary" id="checkBtn" disabled>Cek Tindakan</button>
+        <button class="ghost" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="card" id="resultCard" hidden>
+      <div class="section-title">Hasil Evaluasi</div>
+      <div id="statusBanner"></div>
+      <div id="evalList"></div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="section-title">Diagnosa Keperawatan &amp; Prioritas</div>
-    <p class="dx-intro">Ini semua diagnosa yang teridentifikasi dari data pasien di atas (urutan acak, bukan urutan prioritas). Tentukan nomor prioritas masing-masing &mdash; <b>1 = paling mendesak</b> ditangani lebih dulu.</p>
-    <div class="dx-grid" id="dxGrid"></div>
-    <div class="actions">
-      <button class="primary" id="checkPrioBtn">Cek Urutan Prioritas</button>
+  <div id="tpmMode" hidden>
+    <div class="card">
+      <div class="section-title">Rumus &amp; Reminder Sebelum Mulai</div>
+      <p class="dx-intro">Hafalkan &amp; pahami dulu rumus-rumus ini sebelum masuk ke soal &mdash; semua soal di bawah bisa diselesaikan pakai salah satu dari rumus ini.</p>
+      <div class="formula-list">
+        <div class="formula-item">
+          <span class="f-no">1</span><span class="f-title">Rumus Umum TPM</span>
+          <div class="f-formula">TPM = (Volume (ml) &times; Faktor tetes) &divide; Lama pemberian (menit)</div>
+          <div class="f-note">Berlaku untuk semua jenis infus set. Kalau waktu masih dalam jam, ubah dulu ke menit (Jam &times; 60).</div>
+        </div>
+        <div class="formula-item">
+          <span class="f-no">2</span><span class="f-title">Rumus Cepat &middot; Infus Makro 20 tetes/ml</span>
+          <div class="f-formula">TPM = Volume (ml) &divide; (Jam &times; 3)</div>
+          <div class="f-note">Jalan pintas kalau infus set-nya makro standar (20 tetes/ml) &amp; waktu sudah dalam satuan jam &mdash; hasilnya sama persis dengan rumus umum.</div>
+        </div>
+        <div class="formula-item">
+          <span class="f-no">3</span><span class="f-title">Rumus Cepat &middot; Infus Mikro 60 tetes/ml</span>
+          <div class="f-formula">TPM = Volume (ml) &divide; Jam</div>
+          <div class="f-note">Jalan pintas untuk infus set mikro (60 tetes/ml), biasa dipakai pada anak atau obat presisi &mdash; angka TPM = angka ml/jam.</div>
+        </div>
+        <div class="formula-item">
+          <span class="f-no">4</span><span class="f-title">Mencari Lama Infus Habis (kebalikan rumus TPM)</span>
+          <div class="f-formula">Waktu (menit) = (Volume (ml) &times; Faktor tetes) &divide; TPM</div>
+          <div class="f-note">Dipakai untuk memperkirakan jam berapa botol infus akan habis dari tetesan yang sedang berjalan.</div>
+        </div>
+      </div>
+      <div class="faktor-table">
+        <div class="faktor-row"><span>Makro &mdash; standar dewasa</span><b>20 tetes/ml</b></div>
+        <div class="faktor-row"><span>Makro &mdash; set transfusi/tertentu</span><b>15 tetes/ml</b></div>
+        <div class="faktor-row"><span>Mikro &mdash; anak / obat presisi</span><b>60 tetes/ml</b></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Latihan Soal <span class="count" id="tpmSoalCount"></span></div>
+      <span class="tpm-soal-tag" id="tpmSoalTag"></span>
+      <p class="tpm-soal-text" id="tpmSoalText"></p>
+      <div id="tpmSoalInputs"></div>
+      <div class="actions">
+        <button class="primary" id="tpmCheckBtn">Cek Jawaban</button>
+        <button class="ghost" id="tpmNextBtn">Soal Berikutnya</button>
+      </div>
+      <div id="tpmFeedback"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Kalkulator Bebas</div>
+      <p class="dx-intro">Coba kerjakan dulu pakai rumus di atas secara manual. Kalkulator ini buat cek-ulang jawabanmu, bukan jalan pintas ya &mdash; jangan dibuka duluan sebelum coba sendiri! 😉</p>
+      <div class="actions" style="margin-top:0;margin-bottom:4px;">
+        <button class="ghost" id="tpmCalcToggleBtn">Tampilkan Kalkulator</button>
+      </div>
+      <div id="tpmCalcBody" hidden>
+        <div class="tpm-mode-toggle" id="tpmCalcModeToggle"></div>
+        <div id="tpmCalcFields"></div>
+        <div id="tpmCalcResult"></div>
+        <p class="tpm-ref-note">Hasil TPM di lapangan selalu dibulatkan ke bilangan bulat terdekat karena tidak mungkin mengatur tetesan pecahan &mdash; kalkulator ini menampilkan hasil sebelum &amp; sesudah pembulatan.</p>
+      </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="section-title">Bank Tindakan <span class="count" id="toolCount"></span></div>
-    <div id="toolBank"></div>
-  </div>
-
-  <div class="card">
-    <div class="section-title">Rencana Tindakan Saya <span class="count" id="trayCount">0 dipilih</span></div>
-    <div class="tray" id="tray"></div>
-    <div class="actions">
-      <button class="primary" id="checkBtn" disabled>Cek Tindakan</button>
-      <button class="ghost" id="resetBtn">Reset</button>
-    </div>
-  </div>
-
-  <div class="card" id="resultCard" hidden>
-    <div class="section-title">Hasil Evaluasi</div>
-    <div id="statusBanner"></div>
-    <div id="evalList"></div>
-  </div>
-
-  <footer>
+  <footer id="mainFooter">
     Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
     Prototipe pembelajaran &middot; 15 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
   </footer>
@@ -2337,8 +2476,82 @@
     }
   };
 
+  // ---------- TPM SOAL BANK ----------
+  var TPM_SOAL = [
+    {
+      id:"t1", type:"tpm",
+      tag:"TPM · Makro · Dewasa",
+      narasi:"Pasien dewasa akan diberikan infus RL <b>500 ml</b> dalam waktu <b>8 jam</b> menggunakan infus set makro (1 ml = <b>20 tetes</b>). Berapa TPM yang harus diatur?",
+      volume:500, menit:8*60, faktor:20
+    },
+    {
+      id:"t2", type:"tpm",
+      tag:"TPM · Mikro · Anak",
+      narasi:"An. D usia 3 tahun mendapat terapi cairan rumatan <b>300 ml</b> dalam <b>6 jam</b> menggunakan infus set mikro (1 ml = <b>60 tetes</b>) karena volumenya kecil. Berapa TPM yang harus diatur?",
+      volume:300, menit:6*60, faktor:60
+    },
+    {
+      id:"t3", type:"tpm",
+      tag:"TPM · Makro · Dewasa",
+      narasi:"Infus NaCl 0.9% <b>1000 ml</b> diberikan dalam <b>24 jam</b> untuk pasien rawat inap, memakai infus set makro (1 ml = <b>20 tetes</b>). Berapa TPM-nya?",
+      volume:1000, menit:24*60, faktor:20
+    },
+    {
+      id:"t4", type:"tpm",
+      tag:"TPM · Makro 15 · Set Transfusi",
+      narasi:"RS memakai set transfusi dengan faktor tetes <b>15 tetes/ml</b>. Produk darah (PRC) <b>250 ml</b> diberikan dalam <b>4 jam</b>. Berapa TPM yang diatur?",
+      volume:250, menit:4*60, faktor:15
+    },
+    {
+      id:"t5", type:"tpm",
+      tag:"TPM · Mikro · Anak",
+      narasi:"An. G usia 5 tahun butuh cairan rumatan <b>720 ml</b> selama <b>24 jam</b> menggunakan infus set mikro (1 ml = <b>60 tetes</b>). Berapa TPM yang diatur?",
+      volume:720, menit:24*60, faktor:60
+    },
+    {
+      id:"t6", type:"waktu",
+      tag:"Lama Infus · Makro · Dewasa",
+      narasi:"Infus RL terpasang dengan tetesan <b>20 TPM</b> menggunakan infus set makro (1 ml = <b>20 tetes</b>), sisa volume di botol <b>500 ml</b>. Perkiraan berapa lama infus ini akan habis?",
+      volume:500, tpm:20, faktor:20
+    },
+    {
+      id:"t7", type:"waktu",
+      tag:"Lama Infus · Mikro · Anak",
+      narasi:"Infus mikro (1 ml = <b>60 tetes</b>) berjalan pada <b>30 TPM</b>, volume total di botol <b>300 ml</b>. Perkiraan berapa lama infus ini akan habis?",
+      volume:300, tpm:30, faktor:60
+    },
+    {
+      id:"t8", type:"waktu",
+      tag:"Lama Infus · Makro · Dewasa",
+      narasi:"Pasien terpasang infus dengan tetesan <b>28 TPM</b> (infus set makro, 1 ml = <b>20 tetes</b>), sisa volume di botol <b>350 ml</b>. Berapa lama lagi infus akan habis?",
+      volume:350, tpm:28, faktor:20
+    },
+    {
+      id:"t9", type:"tpm",
+      tag:"TPM · Makro · Dewasa",
+      narasi:"Infus D5% <b>250 ml</b> diberikan dalam <b>2 jam</b> memakai infus set makro (1 ml = <b>15 tetes</b>). Berapa TPM yang diatur?",
+      volume:250, menit:2*60, faktor:15
+    },
+    {
+      id:"t10", type:"waktu",
+      tag:"Lama Infus · Makro · Dewasa",
+      narasi:"Infus D5% dengan faktor tetes makro <b>20 tetes/ml</b> berjalan pada <b>25 TPM</b>. Sisa cairan di botol <b>400 ml</b>. Perkiraan waktu habis?",
+      volume:400, tpm:25, faktor:20
+    }
+  ];
+
+  function tpmCalc(volume, menit, faktor){ return (volume * faktor) / menit; }
+  function tpmWaktuMenit(volume, tpm, faktor){ return (volume * faktor) / tpm; }
+  function menitToJamMenit(totalMenit){
+    var j = Math.floor(totalMenit / 60);
+    var m = Math.round(totalMenit - j*60);
+    if(m === 60){ j++; m = 0; }
+    return {jam:j, menit:m};
+  }
+
   // ---------- STATE ----------
-  var state = { caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false };
+  var state = { mode:"askep", caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false,
+    tpmOrder: [], tpmIdx: 0, tpmChecked:false, tpmCalcMode:"tpm" };
   // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3" | dsdo[itemId] = "DS"/"DO"
 
   var tabsEl = document.getElementById("tabs");
@@ -2357,6 +2570,24 @@
   var resultCard = document.getElementById("resultCard");
   var statusBanner = document.getElementById("statusBanner");
   var evalList = document.getElementById("evalList");
+
+  var modeTabsEl = document.getElementById("modeTabs");
+  var askepModeEl = document.getElementById("askepMode");
+  var tpmModeEl = document.getElementById("tpmMode");
+  var mainTitleEl = document.getElementById("mainTitle");
+  var mainSubEl = document.getElementById("mainSub");
+  var tpmSoalCountEl = document.getElementById("tpmSoalCount");
+  var tpmSoalTagEl = document.getElementById("tpmSoalTag");
+  var tpmSoalTextEl = document.getElementById("tpmSoalText");
+  var tpmSoalInputsEl = document.getElementById("tpmSoalInputs");
+  var tpmCheckBtn = document.getElementById("tpmCheckBtn");
+  var tpmNextBtn = document.getElementById("tpmNextBtn");
+  var tpmFeedbackEl = document.getElementById("tpmFeedback");
+  var tpmCalcModeToggleEl = document.getElementById("tpmCalcModeToggle");
+  var tpmCalcFieldsEl = document.getElementById("tpmCalcFields");
+  var tpmCalcResultEl = document.getElementById("tpmCalcResult");
+  var tpmCalcBodyEl = document.getElementById("tpmCalcBody");
+  var tpmCalcToggleBtn = document.getElementById("tpmCalcToggleBtn");
 
   function esc(s){ return String(s).replace(/[&<>]/g, function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];}); }
 
@@ -2776,7 +3007,255 @@
     resultCard.hidden = true;
   }
 
+  // ---------- MODE SWITCH (Simulator Askep <-> Kalkulator TPM) ----------
+  var MODES = [
+    {id:"askep", label:"Simulator Kasus Askep"},
+    {id:"tpm", label:"Kalkulator TPM"}
+  ];
+
+  function renderModeTabs(){
+    modeTabsEl.innerHTML = "";
+    MODES.forEach(function(m){
+      var btn = document.createElement("button");
+      btn.className = "tab";
+      btn.setAttribute("role","tab");
+      btn.setAttribute("aria-selected", m.id===state.mode ? "true":"false");
+      btn.textContent = m.label;
+      btn.addEventListener("click", function(){
+        if(state.mode === m.id) return;
+        state.mode = m.id;
+        applyMode();
+      });
+      modeTabsEl.appendChild(btn);
+    });
+  }
+
+  function applyMode(){
+    renderModeTabs();
+    if(state.mode === "askep"){
+      askepModeEl.hidden = false;
+      tpmModeEl.hidden = true;
+      mainTitleEl.textContent = "Simulator Kasus Askep";
+      mainSubEl.textContent = "Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.";
+    } else {
+      askepModeEl.hidden = true;
+      tpmModeEl.hidden = false;
+      mainTitleEl.textContent = "Kalkulator & Latihan TPM";
+      mainSubEl.textContent = "Latih hitungan tetes per menit (TPM) infus, lengkap dengan soal kasus & kalkulator cek-ulang — skill wajib sebelum PKL di RSUD.";
+    }
+  }
+
+  // ---------- TPM: LATIHAN SOAL ----------
+  function shuffledIndices(n){
+    var arr = [];
+    for(var i=0;i<n;i++) arr.push(i);
+    for(var i2=arr.length-1;i2>0;i2--){
+      var j = Math.floor(Math.random()*(i2+1));
+      var tmp = arr[i2]; arr[i2]=arr[j]; arr[j]=tmp;
+    }
+    return arr;
+  }
+
+  function currentSoal(){
+    return TPM_SOAL[state.tpmOrder[state.tpmIdx]];
+  }
+
+  function renderTpmSoal(){
+    var s = currentSoal();
+    tpmSoalCountEl.textContent = "Soal " + (state.tpmIdx+1) + " / " + TPM_SOAL.length;
+    tpmSoalTagEl.textContent = s.tag;
+    tpmSoalTextEl.innerHTML = s.narasi;
+    state.tpmChecked = false;
+    tpmFeedbackEl.innerHTML = "";
+
+    if(s.type === "tpm"){
+      tpmSoalInputsEl.innerHTML =
+        '<div class="field-row">'+
+          '<div class="field">'+
+            '<label>Jawaban TPM</label>'+
+            '<input type="number" class="tpm-input" id="tpmAnswerInput" placeholder="cth. 21" min="0" style="width:120px">'+
+          '</div>'+
+          '<div class="tpm-unit">tetes/menit</div>'+
+        '</div>';
+    } else {
+      tpmSoalInputsEl.innerHTML =
+        '<div class="field-row">'+
+          '<div class="field">'+
+            '<label>Jam</label>'+
+            '<input type="number" class="tpm-input" id="tpmAnswerJam" placeholder="0" min="0" style="width:90px">'+
+          '</div>'+
+          '<div class="field">'+
+            '<label>Menit</label>'+
+            '<input type="number" class="tpm-input" id="tpmAnswerMenit" placeholder="0" min="0" max="59" style="width:90px">'+
+          '</div>'+
+        '</div>';
+    }
+  }
+
+  function checkTpmSoal(){
+    var s = currentSoal();
+    var ok, userText, correctExact, correctRounded, formula, stepText;
+
+    if(s.type === "tpm"){
+      var inputEl = document.getElementById("tpmAnswerInput");
+      var val = parseFloat(inputEl.value);
+      correctExact = tpmCalc(s.volume, s.menit, s.faktor);
+      correctRounded = Math.round(correctExact);
+      ok = !isNaN(val) && Math.abs(val - correctRounded) <= 1;
+      userText = isNaN(val) ? "(belum diisi)" : val + " tetes/menit";
+      formula = "TPM = (" + s.volume + " ml &times; " + s.faktor + " tetes/ml) &divide; " + s.menit + " menit = " + correctExact.toFixed(2) + " &asymp; <b>" + correctRounded + " tetes/menit</b>";
+    } else {
+      var jamEl = document.getElementById("tpmAnswerJam");
+      var menitEl = document.getElementById("tpmAnswerMenit");
+      var jam = parseFloat(jamEl.value) || 0;
+      var men = parseFloat(menitEl.value) || 0;
+      var totalUser = jam*60 + men;
+      correctExact = tpmWaktuMenit(s.volume, s.tpm, s.faktor);
+      var jm = menitToJamMenit(correctExact);
+      ok = (jamEl.value !== "" || menitEl.value !== "") && Math.abs(totalUser - correctExact) <= 5;
+      userText = (jamEl.value==="" && menitEl.value==="") ? "(belum diisi)" : (jam + " jam " + men + " menit");
+      formula = "Waktu = (" + s.volume + " ml &times; " + s.faktor + " tetes/ml) &divide; " + s.tpm + " tetes/menit = " + correctExact.toFixed(1) + " menit &asymp; <b>" + jm.jam + " jam " + jm.menit + " menit</b>";
+    }
+
+    state.tpmChecked = true;
+    var bannerClass = ok ? "ok" : "bad";
+    var title = ok ? "Jawaban kamu tepat!" : "Belum tepat, cek langkahnya di bawah";
+    tpmFeedbackEl.innerHTML =
+      '<div class="tpm-feedback">'+
+        '<div class="status-banner ' + bannerClass + '">'+
+          '<div class="dot"></div>'+
+          '<div><div class="t">'+title+'</div><div class="d">Jawaban kamu: '+userText+'</div></div>'+
+        '</div>'+
+        '<div class="step-title">Langkah Penyelesaian</div>'+
+        '<div class="tpm-formula-box">'+formula+'</div>'+
+      '</div>';
+  }
+
+  function nextTpmSoal(){
+    state.tpmIdx++;
+    if(state.tpmIdx >= state.tpmOrder.length){
+      state.tpmOrder = shuffledIndices(TPM_SOAL.length);
+      state.tpmIdx = 0;
+    }
+    renderTpmSoal();
+  }
+
+  tpmCheckBtn.addEventListener("click", checkTpmSoal);
+  tpmNextBtn.addEventListener("click", nextTpmSoal);
+
+  // ---------- TPM: KALKULATOR BEBAS ----------
+  var TPM_CALC_MODES = [
+    {id:"tpm", label:"Hitung TPM"},
+    {id:"waktu", label:"Hitung Lama Infus"}
+  ];
+
+  function renderTpmCalcModeToggle(){
+    tpmCalcModeToggleEl.innerHTML = "";
+    TPM_CALC_MODES.forEach(function(m){
+      var btn = document.createElement("button");
+      btn.className = "tpm-mode-btn";
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", m.id===state.tpmCalcMode ? "true":"false");
+      btn.textContent = m.label;
+      btn.addEventListener("click", function(){
+        if(state.tpmCalcMode === m.id) return;
+        state.tpmCalcMode = m.id;
+        renderTpmCalcModeToggle();
+        renderTpmCalcFields();
+      });
+      tpmCalcModeToggleEl.appendChild(btn);
+    });
+  }
+
+  function faktorOptionsHtml(){
+    return '<option value="20">Makro &middot; 20 tetes/ml (standar dewasa)</option>'+
+           '<option value="15">Makro &middot; 15 tetes/ml (set transfusi)</option>'+
+           '<option value="60">Mikro &middot; 60 tetes/ml (anak/presisi)</option>';
+  }
+
+  function renderTpmCalcFields(){
+    if(state.tpmCalcMode === "tpm"){
+      tpmCalcFieldsEl.innerHTML =
+        '<div class="field-row">'+
+          '<div class="field grow"><label>Volume cairan (ml)</label><input type="number" class="tpm-input" id="calcVolume" placeholder="cth. 500" min="0"></div>'+
+          '<div class="field"><label>Waktu: Jam</label><input type="number" class="tpm-input" id="calcJam" placeholder="0" min="0" style="width:90px"></div>'+
+          '<div class="field"><label>Menit</label><input type="number" class="tpm-input" id="calcMenit" placeholder="0" min="0" max="59" style="width:90px"></div>'+
+          '<div class="field grow"><label>Faktor tetes</label><select class="tpm-input" id="calcFaktor">'+faktorOptionsHtml()+'</select></div>'+
+        '</div>';
+      ["calcVolume","calcJam","calcMenit","calcFaktor"].forEach(function(id){
+        document.getElementById(id).addEventListener("input", computeTpmCalc);
+        document.getElementById(id).addEventListener("change", computeTpmCalc);
+      });
+    } else {
+      tpmCalcFieldsEl.innerHTML =
+        '<div class="field-row">'+
+          '<div class="field grow"><label>Volume cairan (ml)</label><input type="number" class="tpm-input" id="calcVolume2" placeholder="cth. 500" min="0"></div>'+
+          '<div class="field"><label>Tetesan (TPM)</label><input type="number" class="tpm-input" id="calcTpm" placeholder="cth. 20" min="0" style="width:110px"></div>'+
+          '<div class="field grow"><label>Faktor tetes</label><select class="tpm-input" id="calcFaktor2">'+faktorOptionsHtml()+'</select></div>'+
+        '</div>';
+      ["calcVolume2","calcTpm","calcFaktor2"].forEach(function(id){
+        document.getElementById(id).addEventListener("input", computeTpmCalc);
+        document.getElementById(id).addEventListener("change", computeTpmCalc);
+      });
+    }
+    computeTpmCalc();
+  }
+
+  function computeTpmCalc(){
+    if(state.tpmCalcMode === "tpm"){
+      var volume = parseFloat(document.getElementById("calcVolume").value);
+      var jam = parseFloat(document.getElementById("calcJam").value) || 0;
+      var men = parseFloat(document.getElementById("calcMenit").value) || 0;
+      var faktor = parseFloat(document.getElementById("calcFaktor").value);
+      var totalMenit = jam*60 + men;
+      if(!volume || !totalMenit){
+        tpmCalcResultEl.innerHTML = '<div class="tpm-ref-note">Isi volume &amp; waktu untuk melihat hasil TPM.</div>';
+        return;
+      }
+      var exact = tpmCalc(volume, totalMenit, faktor);
+      var rounded = Math.round(exact);
+      tpmCalcResultEl.innerHTML =
+        '<div class="tpm-result">'+
+          '<span class="out-label">Hasil TPM</span>'+
+          '<span class="out-val">'+rounded+' tetes/menit</span>'+
+          '<span class="out-formula">Sebelum dibulatkan: '+exact.toFixed(2)+' tetes/menit &middot; (' + volume + ' ml &times; ' + faktor + ') &divide; ' + totalMenit + ' menit</span>'+
+        '</div>';
+    } else {
+      var volume2 = parseFloat(document.getElementById("calcVolume2").value);
+      var tpmVal = parseFloat(document.getElementById("calcTpm").value);
+      var faktor2 = parseFloat(document.getElementById("calcFaktor2").value);
+      if(!volume2 || !tpmVal){
+        tpmCalcResultEl.innerHTML = '<div class="tpm-ref-note">Isi volume &amp; tetesan (TPM) untuk melihat perkiraan lama infus.</div>';
+        return;
+      }
+      var menitExact = tpmWaktuMenit(volume2, tpmVal, faktor2);
+      var jm2 = menitToJamMenit(menitExact);
+      tpmCalcResultEl.innerHTML =
+        '<div class="tpm-result">'+
+          '<span class="out-label">Perkiraan Lama Infus Habis</span>'+
+          '<span class="out-val">'+jm2.jam+' jam '+jm2.menit+' menit</span>'+
+          '<span class="out-formula">Total: '+menitExact.toFixed(1)+' menit &middot; (' + volume2 + ' ml &times; ' + faktor2 + ') &divide; ' + tpmVal + ' tetes/menit</span>'+
+        '</div>';
+    }
+  }
+
+  tpmCalcToggleBtn.addEventListener("click", function(){
+    var isHidden = tpmCalcBodyEl.hidden;
+    tpmCalcBodyEl.hidden = !isHidden;
+    tpmCalcToggleBtn.textContent = isHidden ? "Sembunyikan Kalkulator" : "Tampilkan Kalkulator";
+  });
+
+  function initTpmMode(){
+    state.tpmOrder = shuffledIndices(TPM_SOAL.length);
+    state.tpmIdx = 0;
+    renderTpmSoal();
+    renderTpmCalcModeToggle();
+    renderTpmCalcFields();
+  }
+
   renderAll();
+  initTpmMode();
+  applyMode();
 
 })();
 </script>
