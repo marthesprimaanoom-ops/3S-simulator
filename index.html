@@ -23,6 +23,8 @@
     --bad:#AD4530;
     --bad-bg:#FAE8E2;
     --bad-border:#EFC5B6;
+    --blood-deo:#2E63C7;
+    --blood-o2:#C43B3B;
     --shadow: 0 1px 2px rgba(18,38,34,.06), 0 8px 24px -12px rgba(18,38,34,.18);
   }
   @media (prefers-color-scheme: dark){
@@ -45,6 +47,8 @@
       --bad:#E08469;
       --bad-bg:#3A2119;
       --bad-border:#63382A;
+      --blood-deo:#6FA3FF;
+      --blood-o2:#FF8A75;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
     }
   }
@@ -67,6 +71,8 @@
     --bad:#E08469;
     --bad-bg:#3A2119;
     --bad-border:#63382A;
+    --blood-deo:#6FA3FF;
+    --blood-o2:#FF8A75;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
   }
 
@@ -419,6 +425,113 @@
     padding:8px 12px;background:var(--surface-2);border-radius:9px;
   }
   .faktor-row b{font-family:'IBM Plex Mono',monospace;color:var(--accent);}
+
+  .step-list{display:flex;flex-direction:column;gap:10px;}
+  .step-item{
+    display:flex;align-items:flex-start;gap:10px;
+    border:1px solid var(--border);background:var(--surface-2);
+    border-radius:12px;padding:10px 14px;
+  }
+  .step-no{
+    display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+    width:22px;height:22px;border-radius:50%;margin-top:1px;
+    background:var(--accent);color:var(--accent-ink);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;
+  }
+  .step-text{font-size:13px;line-height:1.6;color:var(--ink-muted);}
+  .step-text b{color:var(--ink);}
+
+  /* ---------- Heart / circulation diagram ---------- */
+  .heart-figure{margin:0;}
+  .heart-figure svg{width:100%;max-width:560px;height:auto;display:block;margin:0 auto;}
+  .heart-figure figcaption{margin-top:12px;}
+
+  .organ-box{fill:var(--surface-2);stroke:var(--border);stroke-width:1.5;}
+  .organ-title{font-family:'Lexend',sans-serif;font-weight:600;font-size:14px;fill:var(--ink);}
+  .organ-sub{font-family:'Inter',sans-serif;font-size:10px;fill:var(--ink-muted);}
+  .lung-lobe{fill:var(--ink-muted);opacity:.35;}
+
+  .flow-path{fill:none;stroke-width:4;stroke-linecap:round;}
+  .flow-path.flow-deo{stroke:var(--blood-deo);}
+  .flow-path.flow-o2{stroke:var(--blood-o2);}
+  .path-label{font-family:'IBM Plex Mono',monospace;font-size:9.5px;fill:var(--ink-muted);}
+
+  .chamber{stroke:var(--surface);stroke-width:2;transform-box:fill-box;transform-origin:center;}
+  .chamber-deo{fill:var(--blood-deo);}
+  .chamber-o2{fill:var(--blood-o2);}
+  .septum{stroke:var(--surface);stroke-width:3;}
+  .chamber-label{font-family:'Lexend',sans-serif;font-weight:700;font-size:15px;fill:#fff;}
+  .chamber-sub{font-family:'Inter',sans-serif;font-size:9px;fill:rgba(255,255,255,.85);}
+  .valve-label{font-family:'Inter',sans-serif;font-size:8px;fill:var(--ink-muted);}
+
+  .flow-dot{transform-box:fill-box;}
+  .flow-dot.dot-deo{fill:var(--blood-deo);}
+  .flow-dot.dot-o2{fill:var(--blood-o2);}
+
+  @keyframes atrialBeat{
+    0%,15%{transform:scale(1);}
+    22%{transform:scale(.88);}
+    32%,100%{transform:scale(1);}
+  }
+  @keyframes ventricleBeat{
+    0%,28%{transform:scale(1);}
+    40%{transform:scale(.8);}
+    58%,100%{transform:scale(1);}
+  }
+  @keyframes flowMove{
+    from{offset-distance:0%;}
+    to{offset-distance:100%;}
+  }
+  .atrial-beat{animation:atrialBeat 1s ease-in-out infinite;}
+  .ventricle-beat{animation:ventricleBeat 1s ease-in-out infinite;}
+  .flow-dot{animation:flowMove 2.4s linear infinite;}
+
+  @media (prefers-reduced-motion: reduce){
+    .atrial-beat, .ventricle-beat, .flow-dot{animation:none;}
+  }
+
+  /* ---------- EKG diagrams ---------- */
+  .ekg-wave-label{font-family:'Lexend',sans-serif;font-weight:700;font-size:15px;fill:#1A1A2E;}
+  .ekg-point-line{stroke:#1A1A2E;stroke-width:1;opacity:.5;}
+  .ekg-seg-label{font-family:'Inter',sans-serif;font-size:10.5px;fill:#5B4A50;}
+  .ekg-bracket{stroke:#5B4A50;stroke-width:1.2;}
+  .ekg-rr-tick{stroke:#5B4A50;stroke-width:1.2;}
+
+  .ekg-strip-wrap{
+    width:100%;height:150px;overflow:hidden;border-radius:12px;
+    border:1px solid var(--border);box-shadow:var(--shadow);margin-top:4px;
+  }
+  .ekg-strip-svg{display:block;height:150px;}
+
+  .ekg-info-box{
+    margin-top:14px;padding:14px 16px;background:var(--accent-soft);border-radius:12px;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .ekg-info-box .ekg-hr{font-family:'Lexend',sans-serif;font-weight:700;font-size:20px;color:var(--accent);}
+  .ekg-info-box .ekg-desc{font-size:13px;color:var(--ink-muted);line-height:1.55;}
+  .ekg-info-box .ekg-calc{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-muted);margin-top:4px;}
+
+  /* ---------- Golongan Obat ---------- */
+  .obat-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:10px;
+  }
+  .obat-card{
+    border:1px solid var(--border);background:var(--surface-2);border-radius:12px;
+    padding:12px 14px;display:flex;flex-direction:column;gap:4px;
+  }
+  .obat-card .oc-name{font-family:'Lexend',sans-serif;font-weight:600;font-size:13.5px;color:var(--ink);}
+  .obat-card .oc-desc{font-size:12px;color:var(--ink-muted);line-height:1.5;}
+
+  .obat-quiz-grid{display:flex;flex-direction:column;gap:10px;}
+  .obat-quiz-card{
+    border:1px solid var(--border);background:var(--surface-2);border-radius:12px;
+    padding:12px 14px;display:flex;flex-direction:column;gap:10px;
+  }
+  .obat-quiz-situasi{font-size:13px;line-height:1.55;}
+  .obat-quiz-situasi b{color:var(--ink);}
+  .obat-quiz-fields{display:flex;gap:10px;flex-wrap:wrap;}
+  .obat-quiz-fields .field{flex:1;min-width:160px;}
+  .obat-quiz-fields select.tpm-input{width:100%;}
 </style>
 
 <div class="app">
@@ -531,6 +644,211 @@
         <div id="tpmCalcFields"></div>
         <div id="tpmCalcResult"></div>
         <p class="tpm-ref-note">Hasil TPM di lapangan selalu dibulatkan ke bilangan bulat terdekat karena tidak mungkin mengatur tetesan pecahan &mdash; kalkulator ini menampilkan hasil sebelum &amp; sesudah pembulatan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="anatomiMode" hidden>
+    <div class="card">
+      <div class="section-title">Jantung Berdenyut &amp; Sirkulasi Ganda</div>
+      <p class="dx-intro">Perhatikan 4 ruang jantung berdenyut &amp; titik darah yang mengalir. Ada dua sirkuit: <b>sirkulasi pulmonal</b> (jantung kanan &rarr; paru-paru &rarr; jantung kiri) dan <b>sirkulasi sistemik</b> (jantung kiri &rarr; seluruh tubuh &rarr; jantung kanan).</p>
+
+      <figure class="heart-figure">
+        <svg viewBox="0 0 640 500" role="img" aria-label="Diagram sirkulasi ganda: darah rendah oksigen dari tubuh masuk ke serambi &amp; bilik kanan jantung, dipompa ke paru-paru untuk oksigenasi, kembali ke serambi &amp; bilik kiri jantung, lalu dipompa ke seluruh tubuh melalui aorta, dan siklus berulang.">
+          <defs>
+            <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--blood-deo)"></path>
+            </marker>
+            <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--blood-o2)"></path>
+            </marker>
+          </defs>
+
+          <!-- Paru-paru -->
+          <rect x="210" y="25" width="180" height="85" rx="16" class="organ-box lungs-box"></rect>
+          <text x="300" y="58" text-anchor="middle" class="organ-title">PARU-PARU</text>
+          <text x="300" y="76" text-anchor="middle" class="organ-sub">Oksigenasi: CO&#8322; keluar, O&#8322; masuk</text>
+          <circle cx="265" cy="93" r="4.5" class="lung-lobe"></circle>
+          <circle cx="335" cy="93" r="4.5" class="lung-lobe"></circle>
+
+          <!-- Seluruh tubuh -->
+          <rect x="210" y="395" width="180" height="85" rx="16" class="organ-box body-box"></rect>
+          <text x="300" y="428" text-anchor="middle" class="organ-title">SELURUH TUBUH</text>
+          <text x="300" y="446" text-anchor="middle" class="organ-sub">Konsumsi O&#8322;, hasilkan CO&#8322;</text>
+
+          <!-- Jalur aliran darah -->
+          <path d="M185,320 C80,300 80,140 250,110" class="flow-path flow-deo" marker-end="url(#arrowBlue)"></path>
+          <path d="M350,110 C430,130 430,170 375,190" class="flow-path flow-o2" marker-end="url(#arrowRed)"></path>
+          <path d="M415,340 C530,350 530,410 350,395" class="flow-path flow-o2" marker-end="url(#arrowRed)"></path>
+          <path d="M250,395 C150,390 150,270 185,250" class="flow-path flow-deo" marker-end="url(#arrowBlue)"></path>
+
+          <text x="98" y="215" text-anchor="middle" class="path-label">Arteri Pulmonalis</text>
+          <text x="470" y="155" text-anchor="middle" class="path-label">Vena Pulmonalis</text>
+          <text x="565" y="375" text-anchor="middle" class="path-label">Aorta</text>
+          <text x="140" y="325" text-anchor="middle" class="path-label">Vena Kava</text>
+
+          <!-- Titik darah bergerak -->
+          <circle r="5" class="flow-dot dot-deo" style="offset-path:path('M185,320 C80,300 80,140 250,110'); animation-delay:-0s;"></circle>
+          <circle r="5" class="flow-dot dot-deo" style="offset-path:path('M185,320 C80,300 80,140 250,110'); animation-delay:-1.2s;"></circle>
+          <circle r="5" class="flow-dot dot-o2" style="offset-path:path('M350,110 C430,130 430,170 375,190'); animation-delay:-0.6s;"></circle>
+          <circle r="5" class="flow-dot dot-o2" style="offset-path:path('M415,340 C530,350 530,410 350,395'); animation-delay:-0s;"></circle>
+          <circle r="5" class="flow-dot dot-o2" style="offset-path:path('M415,340 C530,350 530,410 350,395'); animation-delay:-1.2s;"></circle>
+          <circle r="5" class="flow-dot dot-deo" style="offset-path:path('M250,395 C150,390 150,270 185,250'); animation-delay:-0.6s;"></circle>
+
+          <!-- Ruang jantung -->
+          <rect x="185" y="190" width="105" height="80" rx="10" class="chamber chamber-deo atrial-beat"></rect>
+          <rect x="310" y="190" width="105" height="80" rx="10" class="chamber chamber-o2 atrial-beat"></rect>
+          <rect x="185" y="280" width="105" height="80" rx="10" class="chamber chamber-deo ventricle-beat"></rect>
+          <rect x="310" y="280" width="105" height="80" rx="10" class="chamber chamber-o2 ventricle-beat"></rect>
+          <line x1="297.5" y1="190" x2="297.5" y2="360" class="septum"></line>
+
+          <text x="237" y="235" text-anchor="middle" class="chamber-label">RA</text>
+          <text x="237" y="250" text-anchor="middle" class="chamber-sub">Serambi Kanan</text>
+          <text x="362" y="235" text-anchor="middle" class="chamber-label">LA</text>
+          <text x="362" y="250" text-anchor="middle" class="chamber-sub">Serambi Kiri</text>
+          <text x="237" y="325" text-anchor="middle" class="chamber-label">RV</text>
+          <text x="237" y="340" text-anchor="middle" class="chamber-sub">Bilik Kanan</text>
+          <text x="362" y="325" text-anchor="middle" class="chamber-label">LV</text>
+          <text x="362" y="340" text-anchor="middle" class="chamber-sub">Bilik Kiri</text>
+
+          <text x="237" y="277" text-anchor="middle" class="valve-label">Katup Trikuspid</text>
+          <text x="362" y="277" text-anchor="middle" class="valve-label">Katup Mitral</text>
+        </svg>
+        <figcaption class="dsdo-hint">Biru = darah rendah oksigen (menuju paru-paru) &middot; Merah = darah kaya oksigen (menuju tubuh). Serambi berdenyut sesaat sebelum bilik, meniru urutan kontraksi jantung sesungguhnya.</figcaption>
+      </figure>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Urutan Sirkulasi, Langkah demi Langkah</div>
+      <div class="step-list">
+        <div class="step-item"><span class="step-no">1</span><span class="step-text">Darah rendah oksigen dari seluruh tubuh masuk ke <b>Serambi Kanan (RA)</b> melalui vena kava.</span></div>
+        <div class="step-item"><span class="step-no">2</span><span class="step-text">RA memompa darah ke <b>Bilik Kanan (RV)</b> melalui katup trikuspid.</span></div>
+        <div class="step-item"><span class="step-no">3</span><span class="step-text">RV memompa darah ke <b>paru-paru</b> lewat arteri pulmonalis untuk mengambil O&#8322; &amp; membuang CO&#8322;.</span></div>
+        <div class="step-item"><span class="step-no">4</span><span class="step-text">Darah kaya oksigen dari paru-paru masuk ke <b>Serambi Kiri (LA)</b> lewat vena pulmonalis.</span></div>
+        <div class="step-item"><span class="step-no">5</span><span class="step-text">LA memompa darah ke <b>Bilik Kiri (LV)</b> melalui katup mitral.</span></div>
+        <div class="step-item"><span class="step-no">6</span><span class="step-text">LV memompa darah kaya oksigen ke <b>seluruh tubuh</b> lewat aorta &mdash; bilik kiri berdinding paling tebal karena memompa paling kuat &amp; paling jauh.</span></div>
+      </div>
+      <p class="tpm-ref-note">Kaitan klinis: saat <b>curah jantung menurun</b> (D.0008) atau <b>perfusi tidak efektif</b> (D.0009/D.0017), salah satu titik di siklus ini terganggu &mdash; makanya kasus <i>Gagal Jantung</i> &amp; <i>Lansia Pasca Stroke</i> di tab Simulator Kasus fokus memantau tanda-tanda sirkulasi seperti akral, nadi, &amp; kesadaran.</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Anatomi Satu Gelombang EKG (PQRST)</div>
+      <p class="dx-intro">Ini bentuk dasar 1 siklus detak jantung di kertas EKG. Kenali dulu tiap gelombangnya sebelum baca rekaman yang bergerak di bawah.</p>
+      <figure class="heart-figure">
+        <svg viewBox="0 0 420 190" role="img" aria-label="Satu gelombang EKG dengan gelombang P, kompleks QRS, dan gelombang T ditandai, beserta jarak R-R yang menunjukkan satu siklus detak jantung.">
+          <defs>
+            <pattern id="pqrstSmallGrid" width="6" height="6" patternUnits="userSpaceOnUse">
+              <path d="M6,0 L0,0 0,6" fill="none" stroke="#F3C1CC" stroke-width="0.5"></path>
+            </pattern>
+            <pattern id="pqrstBigGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <rect width="30" height="30" fill="url(#pqrstSmallGrid)"></rect>
+              <path d="M30,0 L0,0 0,30" fill="none" stroke="#E8859C" stroke-width="1"></path>
+            </pattern>
+          </defs>
+          <rect x="0" y="0" width="420" height="190" fill="#FFF9FA"></rect>
+          <rect x="0" y="0" width="420" height="190" fill="url(#pqrstBigGrid)"></rect>
+
+          <line x1="10" y1="110" x2="410" y2="110" stroke="#1A1A2E" stroke-width="1" stroke-dasharray="2 3" opacity=".4"></line>
+          <path d="M40,110 L75,110 L95,96 L115,110 L145,110 L153,124 L162,40 L171,132 L180,110 L215,110 L245,84 L275,110 L310,110 L345,110 L353,124 L362,40 L371,132 L380,110" fill="none" stroke="#1A1A2E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+
+          <text x="95" y="80" text-anchor="middle" class="ekg-wave-label">P</text>
+          <line x1="95" y1="84" x2="95" y2="94" class="ekg-point-line"></line>
+          <text x="162" y="30" text-anchor="middle" class="ekg-wave-label">R</text>
+          <line x1="162" y1="34" x2="162" y2="38" class="ekg-point-line"></line>
+          <text x="153" y="146" text-anchor="middle" class="ekg-wave-label">Q</text>
+          <text x="171" y="152" text-anchor="middle" class="ekg-wave-label">S</text>
+          <text x="245" y="70" text-anchor="middle" class="ekg-wave-label">T</text>
+          <line x1="245" y1="74" x2="245" y2="82" class="ekg-point-line"></line>
+
+          <text x="162" y="164" text-anchor="middle" class="ekg-seg-label">Kompleks QRS</text>
+          <line x1="145" y1="150" x2="180" y2="150" class="ekg-bracket"></line>
+
+          <line x1="162" y1="168" x2="162" y2="176" class="ekg-rr-tick"></line>
+          <line x1="362" y1="168" x2="362" y2="176" class="ekg-rr-tick"></line>
+          <line x1="162" y1="172" x2="362" y2="172" class="ekg-bracket"></line>
+          <text x="262" y="186" text-anchor="middle" class="ekg-seg-label">Jarak R&ndash;R = 1 siklus detak jantung</text>
+        </svg>
+        <figcaption class="dsdo-hint">
+          <b>P</b> = depolarisasi atrium (serambi berkontraksi) &middot; <b>Kompleks QRS</b> = depolarisasi ventrikel (bilik berkontraksi, paling tajam &amp; tinggi) &middot; <b>T</b> = repolarisasi ventrikel (bilik &ldquo;reset&rdquo; listrik sebelum detak berikutnya).
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Cara Hitung HR &amp; Regularitas dari EKG</div>
+      <div class="formula-list">
+        <div class="formula-item">
+          <span class="f-no">1</span><span class="f-title">Metode Kotak Besar (cepat, di kepala)</span>
+          <div class="f-formula">HR = 300 &divide; jumlah kotak besar antar 2 gelombang R</div>
+          <div class="f-note">Hitung berapa kotak besar (garis tebal) dari satu puncak R ke puncak R berikutnya, lalu bagi 300. Paling sering dipakai di lapangan karena cepat.</div>
+        </div>
+        <div class="formula-item">
+          <span class="f-no">2</span><span class="f-title">Metode Kotak Kecil (lebih presisi)</span>
+          <div class="f-formula">HR = 1500 &divide; jumlah kotak kecil antar 2 gelombang R</div>
+          <div class="f-note">Dipakai kalau jarak R-R tidak pas di garis kotak besar &mdash; hitung kotak kecil (garis tipis) untuk hasil lebih akurat.</div>
+        </div>
+        <div class="formula-item">
+          <span class="f-no">3</span><span class="f-title">Cek Regularitas (Teratur / Tidak)</span>
+          <div class="f-formula">Bandingkan jarak R&ndash;R di beberapa siklus berturut-turut</div>
+          <div class="f-note">Jarak sama terus di tiap siklus &rarr; <b>reguler</b> (teratur). Jarak berubah-ubah &rarr; <b>ireguler</b> (tidak teratur) &mdash; perlu dilaporkan &amp; dipantau lebih ketat.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Rekaman EKG Berjalan &mdash; Coba Baca Sendiri</div>
+      <p class="dx-intro">Pilih jenis irama, amati jarak R-R nya, lalu cocokkan dengan perkiraan HR di bawah strip.</p>
+      <div class="tpm-mode-toggle" id="ekgModeToggle"></div>
+      <div class="ekg-strip-wrap">
+        <svg id="ekgSvg" class="ekg-strip-svg" viewBox="0 0 640 150" width="640" height="150" role="img" aria-label="Rekaman EKG bergerak menampilkan irama jantung yang dipilih">
+          <defs>
+            <pattern id="ekgSmallGrid" width="6" height="6" patternUnits="userSpaceOnUse">
+              <path d="M6,0 L0,0 0,6" fill="none" stroke="#F3C1CC" stroke-width="0.5"></path>
+            </pattern>
+            <pattern id="ekgBigGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <rect width="30" height="30" fill="url(#ekgSmallGrid)"></rect>
+              <path d="M30,0 L0,0 0,30" fill="none" stroke="#E8859C" stroke-width="1"></path>
+            </pattern>
+          </defs>
+          <rect id="ekgBgRect" x="0" y="0" width="640" height="150" fill="#FFF9FA"></rect>
+          <rect id="ekgGridRect" x="0" y="0" width="640" height="150" fill="url(#ekgBigGrid)"></rect>
+          <g transform="translate(0,75)">
+            <g id="ekgTraceGroup">
+              <path id="ekgTracePath" d="" fill="none" stroke="#1A1A2E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div id="ekgInfo"></div>
+    </div>
+  </div>
+
+  <div id="obatMode" hidden>
+    <div class="card">
+      <div class="section-title">Golongan Obat Berdasarkan Cara Pemberian (Rute)</div>
+      <p class="dx-intro">Ini bukan soal merk dagang &mdash; yang penting anak-anak paham <b>rute</b> pemberian obat &amp; kenapa rute itu dipilih.</p>
+      <div class="obat-grid" id="ruteGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Golongan Obat Berdasarkan Fungsi (Kelas Farmakologi)</div>
+      <p class="dx-intro">Kenali obat dari <b>fungsinya</b>, bukan nama dagangnya &mdash; satu fungsi bisa punya banyak nama produk berbeda.</p>
+      <div class="obat-grid" id="fungsiGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Aturan Waktu Minum Obat &amp; Alasannya</div>
+      <p class="dx-intro">Waktu minum obat bukan asal aturan &mdash; selalu ada alasan klinis di baliknya, biasanya soal penyerapan atau efek samping.</p>
+      <div class="step-list" id="waktuList"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Latihan: Pasangkan Obat dengan Rute &amp; Waktu yang Tepat <span class="count" id="obatCount"></span></div>
+      <p class="dx-intro">Baca tiap situasi klinisnya, lalu pilih <b>rute pemberian</b> &amp; <b>waktu minum</b> yang paling tepat.</p>
+      <div class="obat-quiz-grid" id="obatQuizGrid"></div>
+      <div class="actions">
+        <button class="primary" id="checkObatBtn">Cek Semua Jawaban</button>
+        <button class="ghost" id="resetObatBtn">Reset</button>
       </div>
     </div>
   </div>
@@ -2551,7 +2869,8 @@
 
   // ---------- STATE ----------
   var state = { mode:"askep", caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false,
-    tpmOrder: [], tpmIdx: 0, tpmChecked:false, tpmCalcMode:"tpm" };
+    tpmOrder: [], tpmIdx: 0, tpmChecked:false, tpmCalcMode:"tpm",
+    obatAnswers: {}, obatChecked: false };
   // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3" | dsdo[itemId] = "DS"/"DO"
 
   var tabsEl = document.getElementById("tabs");
@@ -2574,6 +2893,8 @@
   var modeTabsEl = document.getElementById("modeTabs");
   var askepModeEl = document.getElementById("askepMode");
   var tpmModeEl = document.getElementById("tpmMode");
+  var anatomiModeEl = document.getElementById("anatomiMode");
+  var obatModeEl = document.getElementById("obatMode");
   var mainTitleEl = document.getElementById("mainTitle");
   var mainSubEl = document.getElementById("mainSub");
   var tpmSoalCountEl = document.getElementById("tpmSoalCount");
@@ -3007,10 +3328,12 @@
     resultCard.hidden = true;
   }
 
-  // ---------- MODE SWITCH (Simulator Askep <-> Kalkulator TPM) ----------
+  // ---------- MODE SWITCH (Simulator Askep <-> Kalkulator TPM <-> Anatomi) ----------
   var MODES = [
     {id:"askep", label:"Simulator Kasus Askep"},
-    {id:"tpm", label:"Kalkulator TPM"}
+    {id:"tpm", label:"Kalkulator TPM"},
+    {id:"anatomi", label:"Anatomi & Animasi"},
+    {id:"obat", label:"Golongan Obat"}
   ];
 
   function renderModeTabs(){
@@ -3032,16 +3355,23 @@
 
   function applyMode(){
     renderModeTabs();
+    askepModeEl.hidden = state.mode !== "askep";
+    tpmModeEl.hidden = state.mode !== "tpm";
+    anatomiModeEl.hidden = state.mode !== "anatomi";
+    obatModeEl.hidden = state.mode !== "obat";
     if(state.mode === "askep"){
-      askepModeEl.hidden = false;
-      tpmModeEl.hidden = true;
       mainTitleEl.textContent = "Simulator Kasus Askep";
       mainSubEl.textContent = "Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.";
-    } else {
-      askepModeEl.hidden = true;
-      tpmModeEl.hidden = false;
+    } else if(state.mode === "tpm"){
       mainTitleEl.textContent = "Kalkulator & Latihan TPM";
       mainSubEl.textContent = "Latih hitungan tetes per menit (TPM) infus, lengkap dengan soal kasus & kalkulator cek-ulang — skill wajib sebelum PKL di RSUD.";
+    } else if(state.mode === "anatomi"){
+      mainTitleEl.textContent = "Anatomi & Animasi Sirkulasi";
+      mainSubEl.textContent = "Lihat bagaimana jantung memompa darah ke paru-paru (sirkulasi pulmonal) dan ke seluruh tubuh (sirkulasi sistemik) — dasar untuk memahami diagnosa perfusi & curah jantung.";
+      if(typeof renderEkg === "function") renderEkg();
+    } else {
+      mainTitleEl.textContent = "Golongan Obat & Aturan Pakai";
+      mainSubEl.textContent = "Fokus ke golongan obat berdasarkan rute pemberian & fungsinya, bukan nama dagang — plus alasan klinis di balik aturan waktu minum obat.";
     }
   }
 
@@ -3253,8 +3583,355 @@
     renderTpmCalcFields();
   }
 
+  // ---------- EKG: rekaman berjalan ----------
+  var BIG_BOX_PX = 30;
+  // satu kompleks P-QRS-T (offset x relatif dari awal siklus, y relatif baseline)
+  var EKG_BEAT_SHAPE = [
+    [0,0], [5,0], [9,-6], [13,0], [19,0], [21,3], [24,-32], [27,7], [30,0], [38,0], [47,-9], [56,0]
+  ];
+  var EKG_ACTIVE_WIDTH = 56;
+
+  var EKG_RHYTHMS = {
+    normal: {
+      label:"Normal (Sinus Rhythm)", hr:"±75x/menit", rrBoxes:4,
+      desc:"Teratur, tiap gelombang P-QRS-T muncul lengkap & berurutan, HR di rentang normal 60&ndash;100x/menit."
+    },
+    bradikardia: {
+      label:"Bradikardia", hr:"±50x/menit", rrBoxes:6,
+      desc:"Bentuk gelombang tetap normal, tapi jarak R-R lebih lebar (lebih lambat) &mdash; HR di bawah 60x/menit."
+    },
+    takikardia: {
+      label:"Takikardia", hr:"±120x/menit", rrBoxes:2.5,
+      desc:"Bentuk gelombang tetap normal, tapi jarak R-R lebih sempit (lebih cepat) &mdash; HR di atas 100x/menit."
+    },
+    ireguler: {
+      label:"Ireguler", hr:"Bervariasi tiap siklus", rrBoxesSeq:[3,5,2.5,4.5],
+      desc:"Jarak R-R tidak konsisten tiap siklus &mdash; tidak bisa dihitung pakai rumus cepat 300&divide;kotak, harus diukur & dilaporkan sebagai irama tidak teratur."
+    }
+  };
+
+  var ekgAnim = null;
+  var ekgSvgEl = document.getElementById("ekgSvg");
+  var ekgStripWrapEl = document.querySelector(".ekg-strip-wrap");
+  var ekgTraceGroupEl = document.getElementById("ekgTraceGroup");
+  var ekgTracePathEl = document.getElementById("ekgTracePath");
+  var ekgInfoEl = document.getElementById("ekgInfo");
+  var ekgModeToggleEl = document.getElementById("ekgModeToggle");
+
+  // Bangun path sepanjang minTotalWidth (window terlihat + 1 periode ekstra buat loop mulus)
+  function buildEkgPath(rrPxSeq, minTotalWidth){
+    var periodWidth = rrPxSeq.reduce(function(a,b){return a+b;}, 0);
+    var d = "M0,0";
+    var x = 0;
+    while(x < minTotalWidth){
+      rrPxSeq.forEach(function(rr){
+        EKG_BEAT_SHAPE.forEach(function(p, idx){
+          if(idx === 0) return;
+          d += " L" + (x + p[0]) + "," + p[1];
+        });
+        x += rr;
+        d += " L" + x + ",0";
+      });
+    }
+    return { d: d, periodWidth: periodWidth };
+  }
+
+  function renderEkgModeToggle(){
+    ekgModeToggleEl.innerHTML = "";
+    Object.keys(EKG_RHYTHMS).forEach(function(id){
+      var btn = document.createElement("button");
+      btn.className = "tpm-mode-btn";
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", id===state.ekgRhythm ? "true":"false");
+      btn.textContent = EKG_RHYTHMS[id].label;
+      btn.addEventListener("click", function(){
+        if(state.ekgRhythm === id) return;
+        state.ekgRhythm = id;
+        renderEkgModeToggle();
+        renderEkg();
+      });
+      ekgModeToggleEl.appendChild(btn);
+    });
+  }
+
+  function renderEkg(){
+    var winW = Math.max(320, Math.round(ekgStripWrapEl.clientWidth || 640));
+    ekgSvgEl.setAttribute("viewBox", "0 0 " + winW + " 150");
+    ekgSvgEl.setAttribute("width", winW);
+    document.getElementById("ekgBgRect").setAttribute("width", winW);
+    document.getElementById("ekgGridRect").setAttribute("width", winW);
+
+    var r = EKG_RHYTHMS[state.ekgRhythm];
+    var rrBoxesSeq = r.rrBoxesSeq || [r.rrBoxes, r.rrBoxes, r.rrBoxes, r.rrBoxes];
+    var rrPxSeq = rrBoxesSeq.map(function(b){ return b * BIG_BOX_PX; });
+    var periodWidth = rrPxSeq.reduce(function(a,b){return a+b;}, 0);
+    var built = buildEkgPath(rrPxSeq, winW + periodWidth);
+    ekgTracePathEl.setAttribute("d", built.d);
+
+    if(ekgAnim){ ekgAnim.cancel(); }
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!reduceMotion){
+      var pxPerSecond = 90; // kecepatan gulir strip
+      var durationMs = (built.periodWidth / pxPerSecond) * 1000;
+      ekgAnim = ekgTraceGroupEl.animate(
+        [{ transform:"translateX(0px)" }, { transform:"translateX(-" + built.periodWidth + "px)" }],
+        { duration: durationMs, iterations: Infinity, easing: "linear" }
+      );
+    }
+
+    var calcHtml;
+    if(r.rrBoxesSeq){
+      calcHtml = "Jarak R&ndash;R berubah-ubah (&asymp;" + r.rrBoxesSeq.join(", ") + " kotak besar) &mdash; tidak reguler.";
+    } else {
+      calcHtml = "Jarak R&ndash;R &asymp; " + r.rrBoxes + " kotak besar &rarr; HR = 300 &divide; " + r.rrBoxes + " = <b>" + Math.round(300 / r.rrBoxes) + "x/menit</b>.";
+    }
+
+    ekgInfoEl.innerHTML =
+      '<div class="ekg-info-box">'+
+        '<span class="ekg-hr">'+r.label+' &middot; '+r.hr+'</span>'+
+        '<span class="ekg-desc">'+r.desc+'</span>'+
+        '<span class="ekg-calc">'+calcHtml+'</span>'+
+      '</div>';
+  }
+
+  function initEkg(){
+    state.ekgRhythm = "normal";
+    renderEkgModeToggle();
+    renderEkg();
+  }
+
+  var ekgResizeTimer = null;
+  window.addEventListener("resize", function(){
+    if(state.mode !== "anatomi") return;
+    clearTimeout(ekgResizeTimer);
+    ekgResizeTimer = setTimeout(renderEkg, 150);
+  });
+
+  // ---------- GOLONGAN OBAT ----------
+  var RUTE_INFO = [
+    {name:"Oral", desc:"Diminum lewat mulut (tablet, kapsul, sirup, puyer). Paling umum & praktis, tapi diserap lebih lambat & bisa dipengaruhi makanan/asam lambung."},
+    {name:"Sublingual", desc:"Diletakkan di bawah lidah, larut & diserap langsung ke pembuluh darah. Kerja sangat cepat — dipakai untuk kondisi mendadak seperti nyeri dada."},
+    {name:"Topikal", desc:"Dioles di kulit/area lokal (salep, krim, gel). Bekerja lokal di area yang diolesi, minim efek ke seluruh tubuh."},
+    {name:"Supositoria", desc:"Dimasukkan lewat anus (rektal) atau vagina. Pilihan saat pasien tidak bisa menelan atau muntah terus, terutama pada anak."},
+    {name:"Injeksi", desc:"Disuntikkan (IV/IM/SC). Kerja cepat & kadar obat pasti, dipakai saat butuh efek segera atau pasien tidak bisa minum obat oral."},
+    {name:"Inhalasi", desc:"Dihirup lewat mulut/hidung (inhaler, nebulizer). Bekerja langsung di saluran napas, dosis kecil tapi efektif untuk asma/sesak."},
+    {name:"Tetes", desc:"Diteteskan ke mata, telinga, atau hidung. Bekerja lokal langsung di area yang bermasalah, minim efek sistemik."},
+    {name:"Transdermal", desc:"Ditempel di kulit (patch). Obat diserap perlahan & terus-menerus, efeknya bertahan lama tanpa perlu diminum berkali-kali."}
+  ];
+
+  var FUNGSI_INFO = [
+    {name:"Analgetik", desc:"Pereda nyeri — sakit kepala, nyeri otot, nyeri luka."},
+    {name:"Antipiretik", desc:"Penurun demam — sering satu obat sekaligus analgetik & antipiretik."},
+    {name:"Antiinflamasi (NSAID)", desc:"Meredakan peradangan & nyeri, tapi berisiko mengiritasi lambung."},
+    {name:"Antibiotik", desc:"Membunuh/menghambat bakteri — harus dihabiskan sesuai resep meski gejala sudah membaik."},
+    {name:"Antihistamin", desc:"Meredakan reaksi alergi (gatal, bersin, ruam); generasi lama bikin mengantuk."},
+    {name:"Antihipertensi", desc:"Menurunkan tekanan darah tinggi; beberapa golongan (diuretik) meningkatkan produksi urin."},
+    {name:"Diuretik", desc:"Meningkatkan produksi urin — dipakai untuk hipertensi, edema, atau kelebihan cairan."},
+    {name:"Antiemetik", desc:"Meredakan mual & muntah."},
+    {name:"Bronkodilator", desc:"Melebarkan saluran napas — dipakai untuk asma/sesak napas."},
+    {name:"Antasida", desc:"Menetralkan asam lambung, meredakan nyeri ulu hati."},
+    {name:"Kortikosteroid", desc:"Meredakan peradangan berat/reaksi alergi berat; mengikuti ritme hormon kortisol tubuh."},
+    {name:"Antidiabetik Oral", desc:"Menurunkan kadar gula darah pada diabetes tipe 2."}
+  ];
+
+  var WAKTU_INFO = [
+    {title:"Sebelum Makan (Ante Cibum)", desc:"Lambung kosong membantu obat diserap lebih optimal, atau obat perlu bekerja duluan sebelum makanan masuk — misalnya insulin kerja cepat atau obat yang perlu mencegah mual saat makan."},
+    {title:"Sesudah Makan (Post Cibum)", desc:"Makanan melindungi lambung dari iritasi obat (mis. NSAID, kortikosteroid) atau membantu penyerapannya."},
+    {title:"Pagi Hari", desc:"Cocok untuk obat yang efek sampingnya mengganggu kalau diminum malam — misalnya diuretik/antihipertensi yang bikin sering BAK, supaya tidak mengganggu tidur malam."},
+    {title:"Malam Hari", desc:"Cocok untuk obat yang bikin mengantuk (antihistamin generasi lama) atau yang bekerja mengikuti ritme tubuh malam hari, misalnya statin — karena produksi kolesterol tubuh meningkat malam hari."},
+    {title:"Rutin / Sesuai Jadwal", desc:"Obat yang perlu kadar stabil dalam darah, misalnya antibiotik — harus tepat waktu & dihabiskan meski gejala sudah membaik, supaya bakteri tidak resisten."},
+    {title:"Saat Diperlukan (PRN)", desc:"Obat pereda gejala akut yang dipakai saat gejala muncul saja, misalnya pereda nyeri ringan atau inhaler pelega sesak."}
+  ];
+
+  var WAKTU_LABEL = {
+    sebelum_makan:"Sebelum Makan", sesudah_makan:"Sesudah Makan",
+    pagi:"Pagi Hari", malam:"Malam Hari", rutin:"Rutin / Sesuai Jadwal", prn:"Saat Diperlukan (PRN)"
+  };
+  var RUTE_LABEL = {
+    oral:"Oral", sublingual:"Sublingual", topikal:"Topikal", supositoria:"Supositoria",
+    injeksi:"Injeksi", inhalasi:"Inhalasi", tetes:"Tetes", transdermal:"Transdermal"
+  };
+
+  var OBAT_QUIZ = [
+    {
+      id:"q1", golongan:"Antiinflamasi (NSAID)",
+      situasi:"Pasien dewasa nyeri sendi kronis, akan diberi obat antiinflamasi golongan NSAID rutin tiap hari.",
+      rute:"oral", waktu:"sesudah_makan",
+      expl:"NSAID mengiritasi mukosa lambung — diminum <b>sesudah makan</b> supaya ada makanan yang melapisi lambung, mengurangi risiko gastritis/tukak."
+    },
+    {
+      id:"q2", golongan:"Antihipertensi Golongan Diuretik",
+      situasi:"Pasien hipertensi mendapat obat antihipertensi golongan diuretik (meningkatkan produksi urin) untuk diminum tiap hari.",
+      rute:"oral", waktu:"pagi",
+      expl:"Efek diuretik bikin lebih sering BAK — diminum <b>pagi hari</b> supaya efeknya habis sebelum malam, tidak mengganggu jam tidur."
+    },
+    {
+      id:"q3", golongan:"Antihistamin Generasi Lama (Sedatif)",
+      situasi:"Pasien gatal-gatal alergi, diberi antihistamin generasi lama yang punya efek samping mengantuk.",
+      rute:"oral", waktu:"malam",
+      expl:"Efek sampingnya mengantuk (sedasi) — lebih aman diminum <b>malam hari</b> supaya tidak mengganggu aktivitas siang, sekalian membantu tidur."
+    },
+    {
+      id:"q4", golongan:"Statin (Penurun Kolesterol)",
+      situasi:"Pasien kolesterol tinggi mendapat obat golongan statin untuk diminum rutin tiap hari.",
+      rute:"oral", waktu:"malam",
+      expl:"Tubuh memproduksi kolesterol paling aktif saat <b>malam hari</b> — statin lebih efektif menghambat produksi itu kalau diminum malam."
+    },
+    {
+      id:"q5", golongan:"Antibiotik Oral",
+      situasi:"Pasien infeksi bakteri diberi antibiotik oral 3x sehari selama 7 hari.",
+      rute:"oral", waktu:"rutin",
+      expl:"Kadar obat dalam darah harus stabil — diminum <b>rutin sesuai jadwal</b> & harus dihabiskan meski gejala sudah membaik, supaya bakteri tidak resisten."
+    },
+    {
+      id:"q6", golongan:"Bronkodilator Pelega Cepat (Reliever)",
+      situasi:"Pasien asma tiba-tiba sesak napas, butuh obat pelega cepat untuk melebarkan saluran napas.",
+      rute:"inhalasi", waktu:"prn",
+      expl:"Rute <b>inhalasi</b> bekerja langsung di saluran napas dengan onset cepat & dosis kecil. Dipakai <b>saat diperlukan (PRN)</b>, yaitu saat serangan sesak muncul."
+    },
+    {
+      id:"q7", golongan:"Insulin Kerja Cepat",
+      situasi:"Pasien diabetes tipe 1 perlu insulin kerja cepat untuk mengontrol lonjakan gula darah dari makanan.",
+      rute:"injeksi", waktu:"sebelum_makan",
+      expl:"Insulin disuntikkan (<b>injeksi</b>) karena rusak jika diminum oral. Diberikan <b>sebelum makan</b> supaya puncak kerjanya bertepatan dengan naiknya gula darah setelah makan."
+    },
+    {
+      id:"q8", golongan:"Obat Demam Bentuk Supositoria",
+      situasi:"Anak demam tinggi tapi muntah terus-menerus & tidak bisa menelan obat oral.",
+      rute:"supositoria", waktu:"prn",
+      expl:"Karena anak tidak bisa menelan/muntah terus, obat diberikan lewat <b>supositoria (rektal)</b> — tetap diserap efektif. Dipakai <b>saat diperlukan</b>, yaitu saat demam tinggi."
+    },
+    {
+      id:"q9", golongan:"Nitrat (Pelebar Pembuluh Darah)",
+      situasi:"Pasien tiba-tiba nyeri dada mendadak (angina), butuh obat yang bekerja sangat cepat.",
+      rute:"sublingual", waktu:"prn",
+      expl:"Rute <b>sublingual</b> (di bawah lidah) diserap sangat cepat langsung ke pembuluh darah — penting untuk kondisi darurat. Dipakai <b>saat nyeri muncul</b>."
+    },
+    {
+      id:"q10", golongan:"Kortikosteroid Topikal",
+      situasi:"Pasien ada ruam & gatal di kulit lengan, diberi salep kortikosteroid 2x sehari.",
+      rute:"topikal", waktu:"rutin",
+      expl:"Dioles langsung di kulit yang bermasalah (<b>topikal</b>), kerja lokal & minim efek ke seluruh tubuh. Dipakai <b>rutin sesuai jadwal</b> (2x sehari) supaya efeknya konsisten."
+    },
+    {
+      id:"q11", golongan:"Antibiotik Tetes Mata",
+      situasi:"Pasien mata merah & berair karena infeksi bakteri (konjungtivitis), diberi obat tetes mata antibiotik.",
+      rute:"tetes", waktu:"rutin",
+      expl:"Rute <b>tetes mata</b> bekerja lokal langsung di area infeksi. Diberikan <b>rutin sesuai jadwal</b> (mis. tiap 4-6 jam) supaya kadar obat di mata tetap stabil sampai infeksi tuntas."
+    }
+  ];
+
+  var obatGridEl = document.getElementById("ruteGrid");
+  var fungsiGridEl = document.getElementById("fungsiGrid");
+  var waktuListEl = document.getElementById("waktuList");
+  var obatQuizGridEl = document.getElementById("obatQuizGrid");
+  var obatCountEl = document.getElementById("obatCount");
+  var checkObatBtn = document.getElementById("checkObatBtn");
+  var resetObatBtn = document.getElementById("resetObatBtn");
+
+  function renderObatMateri(){
+    obatGridEl.innerHTML = RUTE_INFO.map(function(r){
+      return '<div class="obat-card"><span class="oc-name">'+r.name+'</span><span class="oc-desc">'+r.desc+'</span></div>';
+    }).join("");
+
+    fungsiGridEl.innerHTML = FUNGSI_INFO.map(function(f){
+      return '<div class="obat-card"><span class="oc-name">'+f.name+'</span><span class="oc-desc">'+f.desc+'</span></div>';
+    }).join("");
+
+    waktuListEl.innerHTML = WAKTU_INFO.map(function(w, i){
+      return '<div class="step-item"><span class="step-no">'+(i+1)+'</span><span class="step-text"><b>'+w.title+'.</b> '+w.desc+'</span></div>';
+    }).join("");
+  }
+
+  function optionsHtml(labelMap, selected, placeholder){
+    var html = '<option value="">'+placeholder+'</option>';
+    Object.keys(labelMap).forEach(function(k){
+      html += '<option value="'+k+'"'+(selected===k?' selected':'')+'>'+labelMap[k]+'</option>';
+    });
+    return html;
+  }
+
+  function renderObatQuiz(){
+    obatCountEl.textContent = OBAT_QUIZ.length + " situasi";
+    obatQuizGridEl.innerHTML = "";
+    OBAT_QUIZ.forEach(function(item){
+      var ans = state.obatAnswers[item.id] || {};
+      var card = document.createElement("div");
+      card.className = "obat-quiz-card";
+
+      var html =
+        '<div class="obat-quiz-situasi"><b>'+item.golongan+'.</b> '+item.situasi+'</div>'+
+        '<div class="obat-quiz-fields">'+
+          '<div class="field grow">'+
+            '<label>Rute Pemberian</label>'+
+            '<select class="tpm-input" data-item="'+item.id+'" data-field="rute">'+optionsHtml(RUTE_LABEL, ans.rute, "Pilih rute...")+'</select>'+
+          '</div>'+
+          '<div class="field grow">'+
+            '<label>Waktu Minum</label>'+
+            '<select class="tpm-input" data-item="'+item.id+'" data-field="waktu">'+optionsHtml(WAKTU_LABEL, ans.waktu, "Pilih waktu...")+'</select>'+
+          '</div>'+
+        '</div>';
+
+      if(state.obatChecked && ans.rute && ans.waktu){
+        var ruteOk = ans.rute === item.rute;
+        var waktuOk = ans.waktu === item.waktu;
+        var allOk = ruteOk && waktuOk;
+        html +=
+          '<div class="dsdo-feedback">'+
+            '<div class="fb-badge '+(allOk?"tepat":"kurang")+'">'+(allOk?"✓":"!")+'</div>'+
+            '<div class="fb-text">'+
+              '<b>'+(allOk?"Tepat!":"Ada yang kurang tepat.")+'</b> '+
+              'Rute yang benar: <b>'+RUTE_LABEL[item.rute]+'</b>'+(ruteOk?" (jawabanmu sudah tepat)":" (jawabanmu: "+(RUTE_LABEL[ans.rute]||"-")+")")+'. '+
+              'Waktu yang benar: <b>'+WAKTU_LABEL[item.waktu]+'</b>'+(waktuOk?" (jawabanmu sudah tepat)":" (jawabanmu: "+(WAKTU_LABEL[ans.waktu]||"-")+")")+'.<br>'+
+              item.expl+
+            '</div>'+
+          '</div>';
+      }
+
+      card.innerHTML = html;
+      obatQuizGridEl.appendChild(card);
+    });
+
+    obatQuizGridEl.querySelectorAll("select").forEach(function(sel){
+      sel.addEventListener("change", function(){
+        var id = sel.getAttribute("data-item");
+        var field = sel.getAttribute("data-field");
+        if(!state.obatAnswers[id]) state.obatAnswers[id] = {};
+        state.obatAnswers[id][field] = sel.value;
+        state.obatChecked = false;
+        renderObatQuiz();
+      });
+    });
+  }
+
+  checkObatBtn.addEventListener("click", function(){
+    var missing = OBAT_QUIZ.some(function(item){
+      var ans = state.obatAnswers[item.id];
+      return !ans || !ans.rute || !ans.waktu;
+    });
+    if(missing){
+      alert("Lengkapi dulu semua pilihan rute & waktu sebelum dicek ya.");
+      return;
+    }
+    state.obatChecked = true;
+    renderObatQuiz();
+  });
+
+  resetObatBtn.addEventListener("click", function(){
+    state.obatAnswers = {};
+    state.obatChecked = false;
+    renderObatQuiz();
+  });
+
+  function initObat(){
+    renderObatMateri();
+    renderObatQuiz();
+  }
+
   renderAll();
   initTpmMode();
+  initEkg();
+  initObat();
   applyMode();
 
 })();
