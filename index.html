@@ -853,6 +853,74 @@
     </div>
   </div>
 
+  <div id="vitalMode" hidden>
+    <div class="card">
+      <div class="section-title">Pilih Tanda Vital</div>
+      <p class="dx-intro">Semua tanda vital dasar dibahas dengan pendekatan yang sama: rentang normal secukupnya, prinsip "angka itu relatif", lalu latihan kasus.</p>
+      <div class="tpm-mode-toggle" id="vitalSubToggle"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title" id="vitalRangeTitle">Rentang Normal</div>
+      <p class="dx-intro" id="vitalRangeIntro"></p>
+      <div class="obat-grid" id="vitalRangeGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title" id="vitalPrinsipTitle">Prinsip: Angka Itu Nilai yang Relatif</div>
+      <p class="dx-intro" id="vitalPrinsipIntro"></p>
+      <div class="step-list" id="vitalPrinsipList"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title" id="vitalQuizTitle">Latihan: Aman atau Perlu Perhatian? <span class="count" id="vitalCount"></span></div>
+      <p class="dx-intro" id="vitalQuizIntro"></p>
+      <div class="dsdo-grid" id="vitalQuizGrid"></div>
+      <div class="actions">
+        <button class="primary" id="checkVitalBtn">Cek Semua Jawaban</button>
+        <button class="ghost" id="resetVitalBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="safetyMode" hidden>
+    <div class="card">
+      <div class="section-title">Kebersihan Tangan: 6 Langkah &amp; 5 Momen Penting</div>
+      <p class="dx-intro">Kebersihan tangan itu tindakan pencegahan infeksi paling sederhana tapi paling sering dilewatkan &mdash; ini yang paling pertama dicek CI/pembimbing lapangan.</p>
+      <div class="step-list" id="handStepsList"></div>
+      <div class="step-list" id="handMomentsList" style="margin-top:10px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">6 Sasaran Keselamatan Pasien (SKP)</div>
+      <p class="dx-intro">Standar keselamatan pasien yang dipakai di semua rumah sakit di Indonesia &mdash; wajib dipahami sebelum PKL, bukan cuma dihafal buat ujian.</p>
+      <div class="obat-grid" id="skpGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Komunikasi SBAR: Cara Lapor yang Jelas</div>
+      <p class="dx-intro">Dipakai saat lapor kondisi pasien ke perawat senior/dokter, supaya laporan runtut, gak bolak-balik ditanya, dan gak ada info penting yang kelewat.</p>
+      <div class="obat-grid" id="sbarGrid"></div>
+      <div class="dx-intro" id="sbarExample" style="margin-top:12px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Etika Profesional Hari Pertama PKL</div>
+      <p class="dx-intro">Bukan cuma soal skill klinis &mdash; sikap & etika ini yang sering jadi penilaian pertama dari CI/pembimbing ruangan.</p>
+      <div class="step-list" id="etiketList"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Latihan: Tepat atau Kurang Tepat? <span class="count" id="safetyCount"></span></div>
+      <p class="dx-intro">Baca tiap situasinya, lalu nilai apakah tindakan siswa PKL di situ sudah sesuai prinsip keselamatan & etika atau belum.</p>
+      <div class="dsdo-grid" id="safetyQuizGrid"></div>
+      <div class="actions">
+        <button class="primary" id="checkSafetyBtn">Cek Semua Jawaban</button>
+        <button class="ghost" id="resetSafetyBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+
   <footer id="mainFooter">
     Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
     Prototipe pembelajaran &middot; 15 kasus contoh &middot; bisa dikembangkan dengan kasus tambahan.
@@ -2870,7 +2938,9 @@
   // ---------- STATE ----------
   var state = { mode:"askep", caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false,
     tpmOrder: [], tpmIdx: 0, tpmChecked:false, tpmCalcMode:"tpm",
-    obatAnswers: {}, obatChecked: false };
+    obatAnswers: {}, obatChecked: false,
+    vitalSub: "td", vitalAnswers: {}, vitalChecked: {},
+    safetyAnswers: {}, safetyChecked: false };
   // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3" | dsdo[itemId] = "DS"/"DO"
 
   var tabsEl = document.getElementById("tabs");
@@ -2895,6 +2965,8 @@
   var tpmModeEl = document.getElementById("tpmMode");
   var anatomiModeEl = document.getElementById("anatomiMode");
   var obatModeEl = document.getElementById("obatMode");
+  var vitalModeEl = document.getElementById("vitalMode");
+  var safetyModeEl = document.getElementById("safetyMode");
   var mainTitleEl = document.getElementById("mainTitle");
   var mainSubEl = document.getElementById("mainSub");
   var tpmSoalCountEl = document.getElementById("tpmSoalCount");
@@ -3333,7 +3405,9 @@
     {id:"askep", label:"Simulator Kasus Askep"},
     {id:"tpm", label:"Kalkulator TPM"},
     {id:"anatomi", label:"Anatomi & Animasi"},
-    {id:"obat", label:"Golongan Obat"}
+    {id:"obat", label:"Golongan Obat"},
+    {id:"vital", label:"Tanda Vital"},
+    {id:"safety", label:"Safety & Etiket"}
   ];
 
   function renderModeTabs(){
@@ -3359,6 +3433,8 @@
     tpmModeEl.hidden = state.mode !== "tpm";
     anatomiModeEl.hidden = state.mode !== "anatomi";
     obatModeEl.hidden = state.mode !== "obat";
+    vitalModeEl.hidden = state.mode !== "vital";
+    safetyModeEl.hidden = state.mode !== "safety";
     if(state.mode === "askep"){
       mainTitleEl.textContent = "Simulator Kasus Askep";
       mainSubEl.textContent = "Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.";
@@ -3369,9 +3445,15 @@
       mainTitleEl.textContent = "Anatomi & Animasi Sirkulasi";
       mainSubEl.textContent = "Lihat bagaimana jantung memompa darah ke paru-paru (sirkulasi pulmonal) dan ke seluruh tubuh (sirkulasi sistemik) — dasar untuk memahami diagnosa perfusi & curah jantung.";
       if(typeof renderEkg === "function") renderEkg();
-    } else {
+    } else if(state.mode === "obat"){
       mainTitleEl.textContent = "Golongan Obat & Aturan Pakai";
       mainSubEl.textContent = "Fokus ke golongan obat berdasarkan rute pemberian & fungsinya, bukan nama dagang — plus alasan klinis di balik aturan waktu minum obat.";
+    } else if(state.mode === "vital"){
+      mainTitleEl.textContent = "Tanda Vital: Angka Itu Relatif";
+      mainSubEl.textContent = "Tekanan darah, nadi, RR & saturasi, suhu — rentang normal di buku itu rerata, bukan nilai mutlak. Semua harus dibaca bareng keluhan & konteks pasien, bukan angkanya doang.";
+    } else {
+      mainTitleEl.textContent = "Safety & Etiket PKL";
+      mainSubEl.textContent = "Kebersihan tangan, 6 Sasaran Keselamatan Pasien, komunikasi SBAR, dan etika profesional hari pertama — bekal wajib sebelum turun ke ruangan RSUD.";
     }
   }
 
@@ -3928,10 +4010,467 @@
     renderObatQuiz();
   }
 
+  // ---------- TANDA VITAL: "ANGKA ITU RELATIF" (TD, Nadi, RR+Saturasi, Suhu) ----------
+  var VITAL_DATA = {
+    td: {
+      label:"Tekanan Darah",
+      rangeIntro:"Angka di buku itu <b>rerata populasi</b>, bukan nilai mutlak seperti rumus matematika — tetap jadi patokan awal, tapi bukan vonis akhir.",
+      range:[
+        {name:"Bayi (0-1 th)", desc:"± 70-100 / 50-65 mmHg. Nilai lebih rendah dari dewasa itu normal, bukan tanda syok."},
+        {name:"Anak (1-12 th)", desc:"± 90-110 / 55-75 mmHg, naik bertahap sesuai usia & berat badan."},
+        {name:"Remaja (12-18 th)", desc:"± 110-120 / 70-80 mmHg, mulai mendekati rentang dewasa."},
+        {name:"Dewasa", desc:"± 120/80 mmHg jadi rerata acuan. Rentang normal luas: 90-120 / 60-80 mmHg."},
+        {name:"Lansia", desc:"Cenderung sedikit lebih tinggi dari dewasa muda, tapi tetap harus dibaca bareng gejala & riwayat, bukan dianggap \"wajar tua\" begitu saja."}
+      ],
+      prinsipIntro:"Dalam keperawatan, satu angka tekanan darah <b>tidak bisa berdiri sendiri</b>. Yang menentukan tindak lanjut bukan cuma angkanya, tapi angkanya digabung sama keluhan, konteks, dan baseline pasien itu sendiri.",
+      prinsip:[
+        "Angka di buku itu <b>rerata populasi</b>, dikumpulkan dari banyak orang — bukan patokan mutlak yang berlaku sama persis untuk satu individu.",
+        "Yang menentukan tindak lanjut bukan cuma angkanya, tapi <b>angka + keluhan</b>. TD 135/80 tanpa keluhan bisa \"aman diobservasi\", sementara TD 120/80 dengan keluhan kunang-kunang tetap perlu diperhatikan.",
+        "Perhatikan juga <b>konteks</b> saat pengukuran — habis olahraga, sedang haid, gugup/cemas (white coat), posisi tubuh — semua bisa menggeser angka sesaat tanpa berarti ada masalah.",
+        "Bandingkan dengan <b>baseline pasien itu sendiri</b> kalau datanya ada — perubahan signifikan dari baseline pribadi pasien seringkali lebih bermakna daripada sekadar di atas/di bawah angka buku.",
+        "Prinsipnya: angka adalah <b>titik awal untuk bertanya</b>, bukan kesimpulan akhir. Selalu gabungkan dengan observasi klinis sebelum memutuskan."
+      ],
+      quizIntro:"Baca angka TD-nya <b>sekaligus</b> konteks/keluhan pasiennya, baru putuskan — jangan cuma lihat angkanya doang.",
+      quiz:[
+        {id:"t1", text:"Siswi 16 tahun, TD 135/80 mmHg, tidak ada keluhan apapun, aktivitas normal.", type:"Aman",
+         note:"Sedikit di atas rerata buku untuk remaja, tapi tanpa keluhan. Tetap dicatat & dipantau ulang di kesempatan berikutnya — bukan langsung dianggap darurat."},
+        {id:"t2", text:"Siswi 16 tahun, TD 120/80 mmHg (persis \"normal buku\"), tapi mengeluh kunang-kunang saat sedang haid.", type:"Perlu Perhatian",
+         note:"Angkanya normal secara buku, tapi ada keluhan nyata. Saat haid, volume darah bisa berkurang sehingga muncul gejala meski TD masih dalam rentang normal — angka gak bisa dipisah dari keluhannya."},
+        {id:"t3", text:"Remaja atlet, TD 90/60 mmHg, tanpa keluhan, rutin latihan fisik berat.", type:"Aman",
+         note:"TD cenderung rendah sering ditemukan pada orang dengan kebugaran tinggi (efek latihan kardio rutin). Selama tanpa keluhan, ini variasi normal, bukan hipotensi bermasalah."},
+        {id:"t4", text:"Lansia, TD 90/60 mmHg, mendadak tampak lemas & sedikit bingung dibanding biasanya.", type:"Perlu Perhatian",
+         note:"Pada lansia, penurunan TD disertai perubahan kesadaran/kewaspadaan adalah tanda hipoperfusi (aliran darah ke otak berkurang) — harus segera dilaporkan meski angkanya tidak ekstrem."},
+        {id:"t5", text:"Pasien baru pertama ke faskes, gugup, TD 140/90 mmHg saat diukur pertama kali.", type:"Aman",
+         note:"Kecemasan/gugup bisa menaikkan TD sesaat (white coat effect). Sebaiknya tenangkan pasien dulu lalu ukur ulang setelah beberapa menit sebelum menyimpulkan ada hipertensi."},
+        {id:"t6", text:"Pasien riwayat hipertensi, TD 150/95 mmHg, mengeluh nyeri kepala hebat & pandangan kabur.", type:"Perlu Perhatian",
+         note:"Kombinasi TD tinggi dengan gejala neurologis (nyeri kepala hebat, gangguan penglihatan) mengarah ke kondisi hipertensi yang butuh tindak lanjut segera, bukan sekadar dicatat."},
+        {id:"t7", text:"Ibu hamil trimester 3, TD 100/70 mmHg tanpa keluhan — dan di setiap kunjungan sebelumnya angkanya memang selalu di kisaran itu.", type:"Aman",
+         note:"Karena ini baseline pribadi pasien yang konsisten di tiap kunjungan dan tanpa keluhan, angka ini normal untuk dirinya sendiri — meski sedikit di bawah rerata umum dewasa."},
+        {id:"t8", text:"Ibu hamil trimester 3, TD 100/70 mmHg (turun cukup jauh dari 130/85 di awal kehamilan), disertai bengkak di wajah & tangan.", type:"Perlu Perhatian",
+         note:"Perubahan signifikan dari baseline pasien sendiri, ditambah tanda lain (edema wajah/tangan), patut dicurigai komplikasi kehamilan — perubahan & konteksnya yang jadi sinyal, bukan angka absolutnya."},
+        {id:"t9", text:"Laki-laki dewasa muda, TD 128/82 mmHg, diukur 10 menit setelah olahraga berat.", type:"Aman",
+         note:"TD wajar naik sementara setelah aktivitas fisik berat. Sebaiknya ukur ulang setelah pasien istirahat cukup sebelum menilai sebagai temuan bermakna."},
+        {id:"t10", text:"Anak usia 8 tahun, TD 118/76 mmHg, terlihat baik-baik saja.", type:"Perlu Perhatian",
+         note:"Kalau dibandingkan standar dewasa angka ini terlihat \"normal\", tapi rentang normal anak usia 8 tahun jauh lebih rendah. Menilai TD anak harus pakai rentang sesuai usianya, bukan standar dewasa — ini justru cenderung tinggi untuk usianya dan perlu dipantau lebih lanjut."}
+      ]
+    },
+    nadi: {
+      label:"Nadi",
+      rangeIntro:"Rentang nadi istirahat normal juga bergeser sesuai usia & tingkat kebugaran — bukan satu angka tunggal buat semua orang.",
+      range:[
+        {name:"Bayi (0-1 th)", desc:"± 100-160 x/menit. Jantung bayi wajar berdetak jauh lebih cepat dari dewasa."},
+        {name:"Anak (1-12 th)", desc:"± 70-120 x/menit, makin besar usianya makin mendekati rentang dewasa."},
+        {name:"Remaja & Dewasa", desc:"± 60-100 x/menit jadi rerata acuan istirahat."},
+        {name:"Lansia", desc:"Umumnya di rentang dewasa, tapi banyak yang minum obat penurun nadi (mis. beta blocker) — baseline personalnya penting diketahui."},
+        {name:"Atlet Terlatih", desc:"Bisa 40-60 x/menit saat istirahat (bradikardi fisiologis) karena jantung sudah terlatih memompa lebih efisien."}
+      ],
+      prinsipIntro:"Nadi cepat atau lambat harus dibaca bareng kekuatan, keteraturan, dan pemicunya — bukan cuma angka per menitnya.",
+      prinsip:[
+        "Angka buku itu rerata untuk orang kebanyakan — atlet terlatih bisa punya nadi istirahat jauh lebih rendah tanpa itu jadi masalah.",
+        "Nadi harus dinilai dari 3 hal sekaligus: <b>frekuensi</b> (berapa x/menit), <b>keteraturan</b> (teratur/tidak), dan <b>kekuatan</b> (kuat/lemah) — bukan angka saja.",
+        "Konteks seperti demam, nyeri, cemas, atau habis beraktivitas fisik wajar menaikkan nadi sesaat tanpa berarti ada gangguan jantung.",
+        "Obat-obat tertentu (mis. beta blocker untuk jantung/hipertensi) sengaja menurunkan nadi — pasien yang rutin minum obat ini punya \"nadi normal\" yang berbeda dari orang tanpa obat tersebut.",
+        "Prinsipnya: nadi cepat/lambat baru bermakna kalau digabung dengan gejala penyerta (pusing, lemas, sesak, berdebar) — bukan disimpulkan dari angka sendirian."
+      ],
+      quizIntro:"Baca angka nadinya sekaligus konteks & gejala penyertanya sebelum memutuskan.",
+      quiz:[
+        {id:"n1", text:"Atlet dewasa muda, nadi istirahat 48x/menit, tanpa keluhan, rutin lari jarak jauh.", type:"Aman",
+         note:"Bradikardi fisiologis khas atlet terlatih — jantungnya sudah terbiasa memompa lebih efisien. Tanpa keluhan, ini bukan masalah."},
+        {id:"n2", text:"Lansia rutin minum obat beta blocker untuk jantung, nadi 55x/menit, tanpa keluhan, sesuai kondisi biasanya.", type:"Aman",
+         note:"Efek obat memang menurunkan nadi, dan ini sesuai baseline pasien yang sudah dikenal — bukan tanda kegawatan baru."},
+        {id:"n3", text:"Anak demam tinggi 39°C, nadi 130x/menit, tetap aktif merespons.", type:"Aman",
+         note:"Nadi wajar naik mengikuti kenaikan suhu tubuh (setiap 1°C demam nadi bisa naik ±10-15x/menit) — respons fisiologis, tetap dipantau tapi bukan kegawatan tersendiri."},
+        {id:"n4", text:"Dewasa muda, nadi 110x/menit saat istirahat tanpa demam/aktivitas, disertai berdebar-debar & sesak.", type:"Perlu Perhatian",
+         note:"Takikardia tanpa pemicu jelas ditambah gejala jantung (berdebar, sesak) patut dicurigai gangguan irama jantung — perlu tindak lanjut, bukan diabaikan."},
+        {id:"n5", text:"Pasien nadi 100x/menit (masih di ambang atas normal buku), tapi teraba lemah & tidak teratur.", type:"Perlu Perhatian",
+         note:"Kekuatan & keteraturan nadi sama pentingnya dengan angkanya. Nadi lemah dan ireguler mengarah ke gangguan sirkulasi/irama jantung meski angkanya belum ekstrem."},
+        {id:"n6", text:"Remaja, nadi 58x/menit, tanpa keluhan, rutin latihan renang kompetitif.", type:"Aman",
+         note:"Sama seperti atlet dewasa, remaja dengan latihan fisik rutin & intens wajar punya nadi istirahat rendah tanpa itu jadi masalah."},
+        {id:"n7", text:"Lansia, nadi 45x/menit, mendadak lemas & pusing, tidak ada riwayat minum obat penurun nadi.", type:"Perlu Perhatian",
+         note:"Bradikardia bermakna disertai gejala (lemas, pusing) dan tanpa penjelasan (bukan efek obat) mengarah ke gangguan konduksi jantung — perlu tindak lanjut segera."},
+        {id:"n8", text:"Pasien pasca operasi, nadi 118x/menit, mengeluh nyeri di area luka skala 7/10.", type:"Aman",
+         note:"Nadi naik wajar sebagai respons tubuh terhadap nyeri hebat. Fokus utamanya kelola nyerinya dulu, lalu nilai ulang nadi setelah nyeri terkontrol — bukan tanda kegawatan jantung tersendiri."}
+      ]
+    },
+    rr: {
+      label:"RR & Saturasi O2",
+      rangeIntro:"RR (frekuensi napas) dan saturasi oksigen (SpO2) saling melengkapi — keduanya dinilai bersama, bukan sendiri-sendiri.",
+      range:[
+        {name:"Bayi (0-1 th)", desc:"RR ± 30-60 x/menit, SpO2 ≥ 95%. Napas bayi wajar jauh lebih cepat dari dewasa."},
+        {name:"Anak (1-12 th)", desc:"RR ± 20-30 x/menit, SpO2 ≥ 95%, melambat bertahap sesuai usia."},
+        {name:"Remaja & Dewasa", desc:"RR ± 12-20 x/menit jadi rerata acuan, SpO2 normal 95-100%."},
+        {name:"Lansia", desc:"RR bisa sedikit lebih cepat dari dewasa muda; SpO2 tetap idealnya ≥ 95%, tapi pasien dengan penyakit paru kronis punya baseline sendiri yang perlu dibandingkan."}
+      ],
+      prinsipIntro:"RR normal tidak otomatis berarti oksigenasi cukup, begitu juga sebaliknya — keduanya harus dibaca bersama tampilan klinis pasien.",
+      prinsip:[
+        "RR & saturasi saling melengkapi — RR yang normal tapi saturasi rendah tetap tanda bahaya (hipoksia tersembunyi), dan sebaliknya.",
+        "Pola napas — dalam/dangkal, teratur/tidak, pakai otot bantu napas (retraksi) atau tidak — sama pentingnya dengan angka RR itu sendiri.",
+        "Pasien dengan penyakit paru kronis (mis. PPOK) bisa punya saturasi \"normal untuk dirinya\" yang lebih rendah dari standar umum — harus dibandingkan dengan riwayat/baseline pasien.",
+        "Aktivitas fisik, cemas, nyeri, atau posisi tubuh bisa mengubah RR sesaat tanpa berarti ada gangguan pernapasan yang serius.",
+        "Prinsipnya: RR & saturasi yang berubah harus dibaca bareng tampilan klinis (sesak, warna bibir/kulit, tingkat kesadaran) sebelum disimpulkan darurat atau tidaknya."
+      ],
+      quizIntro:"Baca RR dan saturasinya bersamaan, plus tampilan klinis pasiennya, sebelum memutuskan.",
+      quiz:[
+        {id:"r1", text:"Anak RR 26x/menit, SpO2 98%, tanpa keluhan, baru saja main aktif.", type:"Aman",
+         note:"RR anak wajar lebih cepat dari dewasa, masih dalam rentang normal usianya, dan saturasi baik. Habis main aktif juga wajar menaikkan RR sesaat."},
+        {id:"r2", text:"Dewasa RR 18x/menit (dalam rentang normal buku), SpO2 90%, tampak sesak & bibir kebiruan.", type:"Perlu Perhatian",
+         note:"RR normal tidak menjamin oksigenasi cukup. Saturasi rendah disertai sianosis (bibir kebiruan) adalah tanda hipoksia nyata — harus segera ditindaklanjuti."},
+        {id:"r3", text:"Pasien PPOK (penyakit paru kronis), SpO2 92%, tanpa keluhan tambahan, sesuai kondisi baseline biasanya.", type:"Aman",
+         note:"Pada pasien PPOK, saturasi sedikit di bawah standar umum bisa jadi baseline normal untuk dirinya sendiri, bukan tanda perburukan akut."},
+        {id:"r4", text:"Pasien PPOK yang sama, SpO2 turun dari baseline biasanya 92% menjadi 85%, makin sesak & gelisah.", type:"Perlu Perhatian",
+         note:"Penurunan signifikan dari baseline pasien sendiri, ditambah gejala tambahan (makin sesak, gelisah), menandakan perburukan akut — bukan sekadar variasi biasa."},
+        {id:"r5", text:"Remaja RR 24x/menit, SpO2 99%, baru selesai lari sprint.", type:"Aman",
+         note:"RR wajar naik sementara pasca aktivitas fisik berat, saturasi tetap baik. RR akan turun lagi setelah pasien istirahat."},
+        {id:"r6", text:"Lansia RR 14x/menit, SpO2 96%, terlihat mengantuk berat & sulit dibangunkan.", type:"Perlu Perhatian",
+         note:"Meski angka RR & saturasi terlihat \"normal\", penurunan kesadaran tetap tanda bahaya — bisa jadi awal depresi napas (misal efek obat), perlu dievaluasi segera meski angkanya belum ekstrem."},
+        {id:"r7", text:"Bayi RR 45x/menit, SpO2 97%, tenang & menyusu aktif.", type:"Aman",
+         note:"RR bayi wajar lebih cepat dari dewasa dan masih dalam rentang normal usianya, saturasi baik, bayi tampak nyaman."},
+        {id:"r8", text:"Dewasa RR 28x/menit, SpO2 94%, mengeluh sesak mendadak & terlihat memakai otot bantu napas di leher.", type:"Perlu Perhatian",
+         note:"RR tinggi, saturasi turun, dan pola napas berat (retraksi/otot bantu napas) bersama-sama menunjukkan distres napas nyata — butuh tindak lanjut segera."}
+      ]
+    },
+    suhu: {
+      label:"Suhu Tubuh",
+      rangeIntro:"Suhu tubuh normal juga punya rentang, bukan satu angka pas — dan berbeda sedikit tergantung usia & cara mengukurnya.",
+      range:[
+        {name:"Rentang Normal Umum", desc:"± 36.5-37.5°C. Suhu axilla (ketiak) biasanya sedikit lebih rendah dari oral/rektal."},
+        {name:"Bayi & Anak", desc:"Regulasi suhu tubuh belum sematang dewasa, jadi lebih mudah naik-turun mengikuti lingkungan atau infeksi ringan."},
+        {name:"Lansia", desc:"Baseline suhu tubuh cenderung sedikit lebih rendah, dan respons demam terhadap infeksi bisa \"tumpul\" — infeksi berat belum tentu bikin suhu setinggi orang muda."},
+        {name:"Klasifikasi Umum", desc:"Demam ringan 37.6-38.5°C, demam tinggi >38.5°C, hipotermia <36°C — tetap dibaca bersama gejala penyerta."}
+      ],
+      prinsipIntro:"Suhu tubuh wajar berfluktuasi dan dipengaruhi banyak faktor — angka saja belum tentu mencerminkan tingkat keparahan kondisi pasien.",
+      prinsip:[
+        "Suhu tubuh berfluktuasi wajar sepanjang hari mengikuti irama sirkadian — cenderung lebih rendah pagi hari, lebih tinggi sore/malam.",
+        "Pada lansia, respons demam terhadap infeksi berat bisa tumpul — suhu yang terlihat \"normal\" pada lansia yang tampak sakit berat tetap harus diwaspadai, bukan otomatis dianggap aman.",
+        "Metode pengukuran (axilla, oral, rektal, telinga) punya selisih nilai masing-masing — sebisa mungkin bandingkan hasil dengan metode yang sama tiap kali follow-up.",
+        "Menggigil (chills) yang muncul sebelum suhu naik adalah tanda tubuh sedang menaikkan set-point-nya — perhatikan gejala penyerta, bukan cuma angka di termometer saat itu.",
+        "Prinsipnya: suhu harus dibaca bersama usia, kondisi imun pasien (mis. sedang kemoterapi/imunosupresi), dan gejala penyerta — bukan disamaratakan pakai satu ambang batas untuk semua orang."
+      ],
+      quizIntro:"Baca suhunya sekaligus kondisi & gejala penyerta pasien, baru putuskan.",
+      quiz:[
+        {id:"s1", text:"Anak suhu 37.8°C, aktif bermain, habis pakai baju tebal saat cuaca panas.", type:"Aman",
+         note:"Suhu anak mudah terpengaruh lingkungan & pakaian. Sebaiknya ukur ulang setelah baju dilepas & di ruangan sejuk sebelum menyimpulkan demam."},
+        {id:"s2", text:"Lansia suhu 37.2°C (\"normal buku\"), tampak lemas berat, bingung, dan ada luka bernanah di kaki.", type:"Perlu Perhatian",
+         note:"Respons demam pada lansia bisa tumpul. Suhu normal tidak menyingkirkan infeksi berat, apalagi dengan gejala & tanda infeksi yang jelas — tetap perlu tindak lanjut segera."},
+        {id:"s3", text:"Pasien pasca vaksinasi, suhu 38°C, badan pegal ringan, tanpa gejala berat lain.", type:"Aman",
+         note:"Respons imun yang wajar setelah vaksinasi, biasanya membaik sendiri dalam 1-2 hari. Tetap dipantau tapi bukan tanda bahaya."},
+        {id:"s4", text:"Pasien sedang kemoterapi (daya tahan tubuh rendah), suhu 38.1°C.", type:"Perlu Perhatian",
+         note:"Pada pasien dengan imun rendah, demam meski \"hanya\" 38.1°C bisa jadi tanda infeksi serius yang harus segera ditangani — ambang kewaspadaannya lebih rendah dari orang biasa."},
+        {id:"s5", text:"Bayi baru lahir, suhu 36.3°C, di ruangan ber-AC dingin, cepat kembali normal setelah diselimuti & dihangatkan.", type:"Aman",
+         note:"Bayi mudah kehilangan panas karena rasio luas permukaan tubuhnya besar. Respons baik setelah dihangatkan menunjukkan ini bukan tanda kegawatan."},
+        {id:"s6", text:"Anak suhu 39.5°C disertai kejang.", type:"Perlu Perhatian",
+         note:"Demam tinggi disertai kejang adalah kondisi yang butuh penanganan segera — jangan ditunggu turun sendiri."},
+        {id:"s7", text:"Dewasa suhu 37.6°C, diukur sore hari setelah aktivitas fisik berat & cuaca panas, tanpa keluhan.", type:"Aman",
+         note:"Suhu tubuh wajar sedikit naik di sore hari (irama sirkadian) dan setelah aktivitas fisik/cuaca panas. Tanpa gejala penyerta, ini bukan tanda infeksi."},
+        {id:"s8", text:"Dewasa suhu 35.5°C, ditemukan di luar ruangan saat cuaca dingin, bicara mulai melantur & menggigil hebat.", type:"Perlu Perhatian",
+         note:"Hipotermia disertai perubahan kesadaran (bicara melantur) adalah kondisi darurat — harus segera ditangani, bukan sekadar diselimuti dan ditunggu."}
+      ]
+    }
+  };
+
+  var VITAL_SUB_ORDER = ["td","nadi","rr","suhu"];
+
+  var vitalSubToggleEl = document.getElementById("vitalSubToggle");
+  var vitalRangeTitleEl = document.getElementById("vitalRangeTitle");
+  var vitalRangeIntroEl = document.getElementById("vitalRangeIntro");
+  var vitalRangeGridEl = document.getElementById("vitalRangeGrid");
+  var vitalPrinsipIntroEl = document.getElementById("vitalPrinsipIntro");
+  var vitalPrinsipListEl = document.getElementById("vitalPrinsipList");
+  var vitalQuizIntroEl = document.getElementById("vitalQuizIntro");
+  var vitalQuizGridEl = document.getElementById("vitalQuizGrid");
+  var vitalCountEl = document.getElementById("vitalCount");
+  var checkVitalBtn = document.getElementById("checkVitalBtn");
+  var resetVitalBtn = document.getElementById("resetVitalBtn");
+
+  function renderVitalSubToggle(){
+    vitalSubToggleEl.innerHTML = "";
+    VITAL_SUB_ORDER.forEach(function(id){
+      var btn = document.createElement("button");
+      btn.className = "tpm-mode-btn";
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", id===state.vitalSub ? "true":"false");
+      btn.textContent = VITAL_DATA[id].label;
+      btn.addEventListener("click", function(){
+        if(state.vitalSub === id) return;
+        state.vitalSub = id;
+        renderVitalSubToggle();
+        renderVitalSection();
+      });
+      vitalSubToggleEl.appendChild(btn);
+    });
+  }
+
+  function renderVitalSection(){
+    var d = VITAL_DATA[state.vitalSub];
+
+    vitalRangeTitleEl.textContent = "Rentang " + d.label + " Normal (Rerata Buku)";
+    vitalRangeIntroEl.innerHTML = d.rangeIntro;
+    vitalRangeGridEl.innerHTML = d.range.map(function(r){
+      return '<div class="obat-card"><span class="oc-name">'+r.name+'</span><span class="oc-desc">'+r.desc+'</span></div>';
+    }).join("");
+
+    vitalPrinsipIntroEl.innerHTML = d.prinsipIntro;
+    vitalPrinsipListEl.innerHTML = d.prinsip.map(function(p, i){
+      return '<div class="step-item"><span class="step-no">'+(i+1)+'</span><span class="step-text">'+p+'</span></div>';
+    }).join("");
+
+    vitalQuizIntroEl.innerHTML = d.quizIntro;
+    renderVitalQuiz();
+  }
+
+  function renderVitalQuiz(){
+    var d = VITAL_DATA[state.vitalSub];
+    var answers = state.vitalAnswers[state.vitalSub] || (state.vitalAnswers[state.vitalSub] = {});
+    var checked = !!state.vitalChecked[state.vitalSub];
+
+    vitalCountEl.textContent = d.quiz.length + " kasus";
+    vitalQuizGridEl.innerHTML = "";
+    d.quiz.forEach(function(item){
+      var card = document.createElement("div");
+      card.className = "dsdo-card";
+
+      var picked = answers[item.id];
+      var row = document.createElement("div");
+      row.className = "dsdo-row";
+      var textEl = document.createElement("div");
+      textEl.className = "dsdo-text";
+      textEl.textContent = item.text;
+      var toggle = document.createElement("div");
+      toggle.className = "dsdo-toggle";
+      ["Aman","Perlu Perhatian"].forEach(function(opt){
+        var b = document.createElement("button");
+        b.className = "dsdo-btn";
+        b.type = "button";
+        b.textContent = opt;
+        b.setAttribute("aria-pressed", picked===opt ? "true":"false");
+        b.addEventListener("click", function(){
+          answers[item.id] = opt;
+          state.vitalChecked[state.vitalSub] = false;
+          renderVitalQuiz();
+        });
+        toggle.appendChild(b);
+      });
+      row.appendChild(textEl);
+      row.appendChild(toggle);
+      card.appendChild(row);
+
+      if(checked && picked){
+        var correct = picked === item.type;
+        var fb = document.createElement("div");
+        fb.className = "dsdo-feedback";
+        fb.innerHTML =
+          '<div class="fb-badge '+(correct?"tepat":"kurang")+'">'+(correct?"✓":"!")+'</div>'+
+          '<div class="fb-text">'+
+            (correct ? '<b>Tepat, ini '+item.type+'.</b> ' : '<b>Kurang tepat — ini '+item.type+'.</b> ')+
+            item.note+
+          '</div>';
+        card.appendChild(fb);
+      }
+
+      vitalQuizGridEl.appendChild(card);
+    });
+  }
+
+  checkVitalBtn.addEventListener("click", function(){
+    var d = VITAL_DATA[state.vitalSub];
+    var answers = state.vitalAnswers[state.vitalSub] || {};
+    var missing = d.quiz.some(function(it){ return !answers[it.id]; });
+    if(missing){
+      alert("Putuskan dulu semua kasus (Aman / Perlu Perhatian) sebelum dicek ya.");
+      return;
+    }
+    state.vitalChecked[state.vitalSub] = true;
+    renderVitalQuiz();
+  });
+
+  resetVitalBtn.addEventListener("click", function(){
+    state.vitalAnswers[state.vitalSub] = {};
+    state.vitalChecked[state.vitalSub] = false;
+    renderVitalQuiz();
+  });
+
+  function initVital(){
+    renderVitalSubToggle();
+    renderVitalSection();
+  }
+
+  // ---------- SAFETY & ETIKET ----------
+  var HAND_STEPS = [
+    "Telapak dengan telapak &mdash; gosok kedua telapak tangan bersama.",
+    "Telapak kanan di atas punggung kiri (& sebaliknya) &mdash; jari saling menyilang.",
+    "Telapak dengan telapak, jari saling menyilang &mdash; gosok sela-sela jari.",
+    "Punggung jari pada telapak berlawanan &mdash; jari saling mengunci.",
+    "Gosok ibu jari secara memutar dalam genggaman tangan berlawanan.",
+    "Gosok ujung jari pada telapak tangan berlawanan secara memutar."
+  ];
+
+  var HAND_MOMENTS = [
+    "<b>Sebelum kontak dengan pasien</b> &mdash; mencegah kuman dari tangan berpindah ke pasien.",
+    "<b>Sebelum tindakan aseptik</b> (mis. menyuntik, ganti balutan) &mdash; mencegah kuman masuk ke tubuh pasien.",
+    "<b>Setelah terpapar cairan tubuh pasien</b> (darah, luka, dll) &mdash; melindungi diri sendiri.",
+    "<b>Setelah kontak dengan pasien</b> &mdash; mencegah kuman dari pasien berpindah ke diri sendiri/pasien lain.",
+    "<b>Setelah menyentuh area sekitar pasien</b> (tempat tidur, alat medis) &mdash; permukaan sekitar pasien juga bisa jadi sumber kuman."
+  ];
+
+  var SKP_INFO = [
+    {name:"1. Ketepatan Identifikasi Pasien", desc:"Selalu pakai minimal 2 identitas (nama lengkap + tanggal lahir/no. RM) sebelum tindakan apapun — jangan hanya pakai nomor kamar."},
+    {name:"2. Komunikasi Efektif", desc:"Laporan & instruksi lisan harus jelas & terstruktur (pakai SBAR), lalu dikonfirmasi ulang (read back) supaya tidak salah paham."},
+    {name:"3. Keamanan Obat yang Perlu Diwaspadai", desc:"Obat-obat berisiko tinggi (mis. insulin, obat jantung tertentu) perlu pengecekan ganda sebelum diberikan ke pasien."},
+    {name:"4. Kepastian Tepat Lokasi, Prosedur & Pasien Operasi", desc:"Sebelum tindakan/operasi, dipastikan ulang: benar pasiennya, benar lokasinya, benar prosedurnya."},
+    {name:"5. Pengurangan Risiko Infeksi", desc:"Kebersihan tangan & penggunaan APD yang tepat jadi langkah utama mencegah infeksi menyebar di ruangan."},
+    {name:"6. Pengurangan Risiko Pasien Jatuh", desc:"Kenali pasien berisiko jatuh (lansia, pasca operasi, gangguan kesadaran) & pasang pengaman seperti bed rails."}
+  ];
+
+  var SBAR_INFO = [
+    {name:"S — Situation", desc:"Kondisi pasien saat ini, singkat & langsung ke inti masalah."},
+    {name:"B — Background", desc:"Riwayat/latar belakang yang relevan dengan kondisi saat ini."},
+    {name:"A — Assessment", desc:"Penilaianmu terhadap kondisi tersebut berdasarkan data yang ada."},
+    {name:"R — Recommendation", desc:"Usulan tindakan atau permintaan bantuan yang kamu perlukan."}
+  ];
+
+  var SBAR_EXAMPLE = "<b>Contoh:</b> \"Selamat siang, Bu, saya izin lapor pasien kamar 5 (S: nyeri dada mendadak skala 7, TD 150/95). Riwayat hipertensi 5 tahun, rutin obat tapi 2 hari ini tidak minum (B). Menurut saya kondisinya perlu dievaluasi segera, ada tanda nyeri khas jantung (A). Mohon izin untuk dilaporkan ke dokter jaga & dipasang EKG (R).\"";
+
+  var ETIKET_STEPS = [
+    "Datang tepat waktu & perkenalkan diri ke CI/pembimbing ruangan di awal shift.",
+    "Perhatikan penampilan: seragam rapi, name tag terpasang, kuku pendek, tanpa perhiasan berlebih di tangan.",
+    "Selalu izin & validasi ke pembimbing sebelum melakukan tindakan ke pasien — jangan bertindak sendiri di luar kewenangan.",
+    "Perkenalkan diri & jelaskan tindakan ke pasien sebelum melakukannya — pasien berhak tahu apa yang akan dilakukan padanya.",
+    "Jaga kerahasiaan pasien — jangan bahas kondisi pasien tertentu di luar konteks kerja/edukasi resmi.",
+    "Kalau ragu dengan suatu tindakan atau dosis, tanya dulu ke pembimbing — jangan asal jalan karena takut dianggap tidak becus."
+  ];
+
+  var SAFETY_QUIZ = [
+    {id:"sf1", text:"Sebelum periksa TTV pasien, siswa PKL cuci tangan dulu.", type:"Tepat",
+     note:"Ini salah satu dari 5 momen wajib cuci tangan (sebelum kontak pasien) — mencegah perpindahan kuman dari tangan ke pasien."},
+    {id:"sf2", text:"Siswa langsung menuju pasien di kamar 5 & memberi tindakan tanpa konfirmasi identitas, karena \"kan udah di kamarnya\".", type:"Kurang Tepat",
+     note:"Identifikasi pasien harus pakai minimal 2 identitas (nama lengkap + tanggal lahir/no. RM), bukan cuma nomor kamar — nomor kamar bisa salah atau pasien bisa tertukar."},
+    {id:"sf3", text:"Siswa mau lapor kondisi pasien ke perawat senior, langsung bilang \"Pak, pasien kamar 3 gimana ya?\" tanpa struktur jelas.", type:"Kurang Tepat",
+     note:"Laporan sebaiknya pakai format SBAR biar runtut & jelas — situation, background, assessment, recommendation — supaya tidak bolak-balik ditanya."},
+    {id:"sf4", text:"Siswa menerima obat yang sudah disiapkan orang lain, lalu langsung diberikan ke pasien tanpa cek ulang label & identitas pasien.", type:"Kurang Tepat",
+     note:"Prinsip keamanan obat tetap harus dicek ulang siapa pun yang menyiapkan, apalagi untuk obat yang perlu diwaspadai (high-alert)."},
+    {id:"sf5", text:"Siswa memasang pengaman tempat tidur (bed rails) setelah memeriksa pasien lansia yang berisiko jatuh.", type:"Tepat",
+     note:"Bagian dari pengurangan risiko jatuh — salah satu dari 6 Sasaran Keselamatan Pasien."},
+    {id:"sf6", text:"Siswa PKL menyuntik pasien sendirian tanpa didampingi/izin pembimbing, karena \"udah pernah lihat caranya\".", type:"Kurang Tepat",
+     note:"Tindakan invasif harus dengan supervisi & izin pembimbing lapangan — siswa PKL belum berwenang bertindak mandiri, sekalipun sudah pernah melihat."},
+    {id:"sf7", text:"Siswa memperkenalkan diri & menjelaskan tindakan yang akan dilakukan sebelum memeriksa pasien.", type:"Tepat",
+     note:"Bagian dari komunikasi & etika terapeutik dasar — pasien berhak tahu apa yang akan dilakukan terhadap dirinya."},
+    {id:"sf8", text:"Siswa menceritakan kondisi kesehatan pasien tertentu ke teman di luar rumah sakit karena \"kasusnya menarik buat diceritain\".", type:"Kurang Tepat",
+     note:"Melanggar kerahasiaan pasien (konfidensialitas) — informasi pasien hanya boleh dibahas dalam konteks pelayanan/edukasi resmi."},
+    {id:"sf9", text:"Siswa ragu dengan dosis obat yang akan diberikan, lalu bertanya ke perawat penanggung jawab sebelum memberikannya ke pasien.", type:"Tepat",
+     note:"Kalau ragu wajib klarifikasi dulu — lebih baik bertanya daripada salah tindak yang bisa membahayakan pasien."},
+    {id:"sf10", text:"Siswa datang PKL dengan kuku panjang & memakai cincin karena buru-buru berangkat.", type:"Kurang Tepat",
+     note:"Kuku panjang & perhiasan di tangan jadi tempat kuman berkumpul & bisa melukai pasien saat tindakan — kebersihan tangan harus dijaga total, termasuk kuku & aksesoris."}
+  ];
+
+  var handStepsListEl = document.getElementById("handStepsList");
+  var handMomentsListEl = document.getElementById("handMomentsList");
+  var skpGridEl = document.getElementById("skpGrid");
+  var sbarGridEl = document.getElementById("sbarGrid");
+  var sbarExampleEl = document.getElementById("sbarExample");
+  var etiketListEl = document.getElementById("etiketList");
+  var safetyQuizGridEl = document.getElementById("safetyQuizGrid");
+  var safetyCountEl = document.getElementById("safetyCount");
+  var checkSafetyBtn = document.getElementById("checkSafetyBtn");
+  var resetSafetyBtn = document.getElementById("resetSafetyBtn");
+
+  function renderSafetyMateri(){
+    handStepsListEl.innerHTML = HAND_STEPS.map(function(s, i){
+      return '<div class="step-item"><span class="step-no">'+(i+1)+'</span><span class="step-text">'+s+'</span></div>';
+    }).join("");
+    handMomentsListEl.innerHTML = HAND_MOMENTS.map(function(m, i){
+      return '<div class="step-item"><span class="step-no">'+(i+1)+'</span><span class="step-text">'+m+'</span></div>';
+    }).join("");
+
+    skpGridEl.innerHTML = SKP_INFO.map(function(s){
+      return '<div class="obat-card"><span class="oc-name">'+s.name+'</span><span class="oc-desc">'+s.desc+'</span></div>';
+    }).join("");
+
+    sbarGridEl.innerHTML = SBAR_INFO.map(function(s){
+      return '<div class="obat-card"><span class="oc-name">'+s.name+'</span><span class="oc-desc">'+s.desc+'</span></div>';
+    }).join("");
+    sbarExampleEl.innerHTML = SBAR_EXAMPLE;
+
+    etiketListEl.innerHTML = ETIKET_STEPS.map(function(e, i){
+      return '<div class="step-item"><span class="step-no">'+(i+1)+'</span><span class="step-text">'+e+'</span></div>';
+    }).join("");
+  }
+
+  function renderSafetyQuiz(){
+    safetyCountEl.textContent = SAFETY_QUIZ.length + " situasi";
+    safetyQuizGridEl.innerHTML = "";
+    SAFETY_QUIZ.forEach(function(item){
+      var card = document.createElement("div");
+      card.className = "dsdo-card";
+
+      var picked = state.safetyAnswers[item.id];
+      var row = document.createElement("div");
+      row.className = "dsdo-row";
+      var textEl = document.createElement("div");
+      textEl.className = "dsdo-text";
+      textEl.textContent = item.text;
+      var toggle = document.createElement("div");
+      toggle.className = "dsdo-toggle";
+      ["Tepat","Kurang Tepat"].forEach(function(opt){
+        var b = document.createElement("button");
+        b.className = "dsdo-btn";
+        b.type = "button";
+        b.textContent = opt;
+        b.setAttribute("aria-pressed", picked===opt ? "true":"false");
+        b.addEventListener("click", function(){
+          state.safetyAnswers[item.id] = opt;
+          state.safetyChecked = false;
+          renderSafetyQuiz();
+        });
+        toggle.appendChild(b);
+      });
+      row.appendChild(textEl);
+      row.appendChild(toggle);
+      card.appendChild(row);
+
+      if(state.safetyChecked && picked){
+        var correct = picked === item.type;
+        var fb = document.createElement("div");
+        fb.className = "dsdo-feedback";
+        fb.innerHTML =
+          '<div class="fb-badge '+(correct?"tepat":"kurang")+'">'+(correct?"✓":"!")+'</div>'+
+          '<div class="fb-text">'+
+            (correct ? '<b>Tepat, ini '+item.type+'.</b> ' : '<b>Kurang tepat — ini '+item.type+'.</b> ')+
+            item.note+
+          '</div>';
+        card.appendChild(fb);
+      }
+
+      safetyQuizGridEl.appendChild(card);
+    });
+  }
+
+  checkSafetyBtn.addEventListener("click", function(){
+    var missing = SAFETY_QUIZ.some(function(it){ return !state.safetyAnswers[it.id]; });
+    if(missing){
+      alert("Nilai dulu semua situasi (Tepat / Kurang Tepat) sebelum dicek ya.");
+      return;
+    }
+    state.safetyChecked = true;
+    renderSafetyQuiz();
+  });
+
+  resetSafetyBtn.addEventListener("click", function(){
+    state.safetyAnswers = {};
+    state.safetyChecked = false;
+    renderSafetyQuiz();
+  });
+
+  function initSafety(){
+    renderSafetyMateri();
+    renderSafetyQuiz();
+  }
+
   renderAll();
   initTpmMode();
   initEkg();
   initObat();
+  initVital();
+  initSafety();
   applyMode();
 
 })();
