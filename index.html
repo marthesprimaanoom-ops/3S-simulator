@@ -26,6 +26,10 @@
     --bad-border:#EFC5B6;
     --blood-deo:#2E63C7;
     --blood-o2:#C43B3B;
+    --skin-epidermis:#E8C39E;
+    --skin-dermis:#D89B72;
+    --skin-subkutan:#F2D675;
+    --skin-otot:#B9524B;
     --shadow: 0 1px 2px rgba(18,38,34,.06), 0 8px 24px -12px rgba(18,38,34,.18);
   }
   @media (prefers-color-scheme: dark){
@@ -50,6 +54,10 @@
       --bad-border:#63382A;
       --blood-deo:#6FA3FF;
       --blood-o2:#FF8A75;
+      --skin-epidermis:#C9986C;
+      --skin-dermis:#A8703F;
+      --skin-subkutan:#C9A93B;
+      --skin-otot:#A24A44;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
     }
   }
@@ -74,6 +82,10 @@
     --bad-border:#63382A;
     --blood-deo:#6FA3FF;
     --blood-o2:#FF8A75;
+    --skin-epidermis:#C9986C;
+    --skin-dermis:#A8703F;
+    --skin-subkutan:#C9A93B;
+    --skin-otot:#A24A44;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
   }
 
@@ -491,6 +503,38 @@
     .atrial-beat, .ventricle-beat, .flow-dot{animation:none;}
   }
 
+  /* ---------- Skin layers & injection site diagrams ---------- */
+  .diagram-figure{margin:0;}
+  .diagram-figure svg{width:100%;max-width:560px;height:auto;display:block;margin:0 auto;}
+  .diagram-figure figcaption{margin-top:12px;}
+  .diagram-row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;justify-content:center;}
+  .diagram-row .diagram-figure{flex:1;min-width:220px;max-width:320px;}
+  .diagram-row .diagram-figure svg{max-width:280px;}
+
+  .skin-layer{stroke:var(--surface);stroke-width:1.5;}
+  .skin-epidermis{fill:var(--skin-epidermis);}
+  .skin-dermis{fill:var(--skin-dermis);}
+  .skin-subkutan{fill:var(--skin-subkutan);}
+  .skin-otot{fill:var(--skin-otot);}
+  .skin-label{font-family:'Lexend',sans-serif;font-weight:600;font-size:12.5px;fill:var(--ink);}
+  .skin-fat-cell{fill:var(--surface);opacity:.4;}
+  .skin-vessel{fill:none;stroke:var(--blood-o2);stroke-width:2;stroke-linecap:round;}
+  .skin-hair{fill:none;stroke:var(--ink-muted);stroke-width:1.5;}
+  .wound-wedge{fill:var(--bg);stroke:var(--ink-muted);stroke-width:1.3;stroke-dasharray:3 3;}
+  .depth-line{stroke:var(--ink-muted);stroke-width:1;stroke-dasharray:4 3;opacity:.7;}
+  .depth-label{font-family:'IBM Plex Mono',monospace;font-size:9.5px;fill:var(--ink-muted);}
+
+  .body-outline{fill:var(--surface-2);stroke:var(--border);stroke-width:1.5;}
+  .site-dot{fill:var(--accent);stroke:var(--surface);stroke-width:2;}
+  .site-dot.warn-dot{fill:var(--bad);}
+  .site-line{stroke:var(--ink-muted);stroke-width:1;opacity:.7;}
+  .site-label{font-family:'Inter',sans-serif;font-weight:600;font-size:10px;fill:var(--ink);}
+  .site-label.warn-label{fill:var(--bad);}
+  .hip-zone{stroke-width:1.5;}
+  .hip-zone.good-zone{fill:var(--good-bg);stroke:var(--good);}
+  .hip-zone.bad-zone{fill:var(--bad-bg);stroke:var(--bad);}
+  .sciatic-line{fill:none;stroke:var(--bad);stroke-width:1.5;stroke-dasharray:2 3;opacity:.8;}
+
   /* ---------- EKG diagrams ---------- */
   .ekg-wave-label{font-family:'Lexend',sans-serif;font-weight:700;font-size:15px;fill:#1A1A2E;}
   .ekg-point-line{stroke:#1A1A2E;stroke-width:1;opacity:.5;}
@@ -687,6 +731,13 @@
 
   <div id="anatomiMode" hidden>
     <div class="card">
+      <div class="section-title">Pilih Topik Anatomi</div>
+      <p class="dx-intro">Setiap topik nyambung ke tindakan keperawatan yang berbeda &mdash; pilih salah satu buat mulai.</p>
+      <div class="tpm-mode-toggle" id="anatomiSubToggle"></div>
+    </div>
+
+    <div id="anatomiSubJantung">
+    <div class="card">
       <div class="section-title">Jantung Berdenyut &amp; Sirkulasi Ganda</div>
       <p class="dx-intro">Perhatikan 4 ruang jantung berdenyut &amp; titik darah yang mengalir. Ada dua sirkuit: <b>sirkulasi pulmonal</b> (jantung kanan &rarr; paru-paru &rarr; jantung kiri) dan <b>sirkulasi sistemik</b> (jantung kiri &rarr; seluruh tubuh &rarr; jantung kanan).</p>
 
@@ -767,7 +818,9 @@
       </div>
       <p class="tpm-ref-note">Kaitan klinis: saat <b>curah jantung menurun</b> (D.0008) atau <b>perfusi tidak efektif</b> (D.0009/D.0017), salah satu titik di siklus ini terganggu &mdash; makanya kasus <i>Gagal Jantung</i> &amp; <i>Lansia Pasca Stroke</i> di tab Simulator Kasus fokus memantau tanda-tanda sirkulasi seperti akral, nadi, &amp; kesadaran.</p>
     </div>
+    </div>
 
+    <div id="anatomiSubEkg">
     <div class="card">
       <div class="section-title">Anatomi Satu Gelombang EKG (PQRST)</div>
       <p class="dx-intro">Ini bentuk dasar 1 siklus detak jantung di kertas EKG. Kenali dulu tiap gelombangnya sebelum baca rekaman yang bergerak di bawah.</p>
@@ -857,6 +910,128 @@
         </svg>
       </div>
       <div id="ekgInfo"></div>
+    </div>
+    </div>
+
+    <div id="anatomiSubKulit">
+    <div class="card">
+      <div class="section-title">Lapisan Kulit (Sistem Integumen) &amp; Debridemen</div>
+      <p class="dx-intro">Kedalaman luka menentukan lapisan kulit mana yang terkena &mdash; dan itu yang menentukan jenis <b>debridemen</b> (pengangkatan jaringan mati) yang paling tepat dipakai.</p>
+
+      <figure class="diagram-figure">
+        <svg viewBox="0 0 660 300" role="img" aria-label="Diagram lapisan kulit: epidermis, dermis, hipodermis/subkutan, dan otot, dengan luka yang menembus sampai kedalaman tertentu">
+          <rect x="60" y="20" width="300" height="30" rx="3" class="skin-layer skin-epidermis"></rect>
+          <rect x="60" y="50" width="300" height="85" rx="3" class="skin-layer skin-dermis"></rect>
+          <rect x="60" y="135" width="300" height="65" rx="3" class="skin-layer skin-subkutan"></rect>
+          <rect x="60" y="200" width="300" height="55" rx="3" class="skin-layer skin-otot"></rect>
+
+          <!-- folikel rambut -->
+          <path d="M245,5 C240,25 250,40 243,58" class="skin-hair"></path>
+          <circle cx="243" cy="60" r="5" class="skin-hair" fill="var(--ink-muted)" stroke="none"></circle>
+          <!-- pembuluh darah -->
+          <path d="M280,60 C295,75 270,90 290,105 C305,118 280,125 295,132" class="skin-vessel"></path>
+          <!-- sel lemak -->
+          <circle cx="110" cy="155" r="9" class="skin-fat-cell"></circle>
+          <circle cx="140" cy="175" r="9" class="skin-fat-cell"></circle>
+          <circle cx="115" cy="185" r="9" class="skin-fat-cell"></circle>
+          <circle cx="150" cy="150" r="9" class="skin-fat-cell"></circle>
+
+          <!-- luka (wound wedge) -->
+          <path d="M175,20 L215,20 L195,255 Z" class="wound-wedge"></path>
+          <line x1="150" y1="50" x2="500" y2="50" class="depth-line"></line>
+          <line x1="150" y1="135" x2="500" y2="135" class="depth-line"></line>
+          <line x1="150" y1="200" x2="500" y2="200" class="depth-line"></line>
+          <text x="505" y="52" class="depth-label">Superfisial</text>
+          <text x="505" y="137" class="depth-label">Partial Thickness</text>
+          <text x="505" y="202" class="depth-label">Full Thickness</text>
+
+          <text x="370" y="40" class="skin-label">Epidermis</text>
+          <text x="370" y="97" class="skin-label">Dermis</text>
+          <text x="370" y="172" class="skin-label">Hipodermis</text>
+          <text x="370" y="232" class="skin-label">Otot &amp; Fascia</text>
+        </svg>
+        <figcaption class="dsdo-hint">Semakin dalam jaringan mati/nekrotik pada luka, semakin agresif metode debridemen yang biasanya diperlukan.</figcaption>
+      </figure>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Jenis-jenis Debridemen</div>
+      <div class="obat-grid" id="debridemenGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Latihan: Pilih Jenis Debridemen yang Tepat <span class="count" id="debridemenCount"></span></div>
+      <p class="dx-intro">Baca situasi lukanya, lalu pilih jenis debridemen yang paling sesuai.</p>
+      <div class="obat-quiz-grid" id="debridemenQuizGrid"></div>
+      <div class="actions">
+        <button class="primary" id="checkDebridemenBtn">Cek Semua Jawaban</button>
+        <button class="ghost" id="resetDebridemenBtn">Reset</button>
+      </div>
+    </div>
+    </div>
+
+    <div id="anatomiSubOtot">
+    <div class="card">
+      <div class="section-title">Sistem Muskuloskeletal &amp; Lokasi Injeksi</div>
+      <p class="dx-intro">Pemilihan rute & lokasi injeksi bergantung pada struktur otot & jaringan di baliknya &mdash; bukan asal tusuk.</p>
+
+      <div class="diagram-row">
+        <figure class="diagram-figure">
+          <svg viewBox="-150 0 530 400" role="img" aria-label="Diagram tubuh depan menunjukkan titik injeksi deltoid, abdomen, vastus lateralis, dan vena perifer">
+            <circle cx="130" cy="35" r="26" class="body-outline"></circle>
+            <rect x="98" y="65" width="64" height="145" rx="18" class="body-outline"></rect>
+            <rect x="40" y="78" width="42" height="140" rx="18" class="body-outline"></rect>
+            <rect x="178" y="78" width="42" height="140" rx="18" class="body-outline"></rect>
+            <rect x="98" y="212" width="28" height="150" rx="14" class="body-outline"></rect>
+            <rect x="134" y="212" width="28" height="150" rx="14" class="body-outline"></rect>
+
+            <circle cx="188" cy="100" r="6" class="site-dot"></circle>
+            <line x1="188" y1="100" x2="230" y2="80" class="site-line"></line>
+            <text x="234" y="78" class="site-label">Deltoid (IM)</text>
+
+            <circle cx="130" cy="150" r="6" class="site-dot"></circle>
+            <line x1="130" y1="150" x2="-40" y2="150" class="site-line"></line>
+            <text x="-44" y="147" class="site-label" text-anchor="end">Abdomen (SC)</text>
+
+            <circle cx="152" cy="270" r="6" class="site-dot"></circle>
+            <line x1="152" y1="270" x2="230" y2="280" class="site-line"></line>
+            <text x="234" y="283" class="site-label">Vastus Lateralis (IM)</text>
+
+            <circle cx="200" cy="205" r="6" class="site-dot"></circle>
+            <line x1="200" y1="205" x2="230" y2="190" class="site-line"></line>
+            <text x="234" y="188" class="site-label">Vena Perifer (IV)</text>
+          </svg>
+          <figcaption class="dsdo-hint">Tampak depan &mdash; deltoid, abdomen, vastus lateralis &amp; vena perifer.</figcaption>
+        </figure>
+
+        <figure class="diagram-figure">
+          <svg viewBox="0 0 220 260" role="img" aria-label="Diagram sisi pinggul menunjukkan lokasi ventrogluteal yang aman dan dorsogluteal yang berisiko mengenai nervus skiatikus">
+            <rect x="30" y="20" width="160" height="220" rx="40" class="body-outline"></rect>
+            <path d="M60,180 C90,140 90,200 150,220" class="sciatic-line"></path>
+            <circle cx="130" cy="90" r="26" class="hip-zone good-zone"></circle>
+            <text x="130" y="94" text-anchor="middle" class="site-label">Ventrogluteal</text>
+            <circle cx="90" cy="180" r="26" class="hip-zone bad-zone"></circle>
+            <text x="90" y="184" text-anchor="middle" class="site-label warn-label">Dorsogluteal</text>
+          </svg>
+          <figcaption class="dsdo-hint">Ventrogluteal (hijau) lebih dipilih daripada dorsogluteal (merah) karena jauh dari jalur nervus skiatikus (garis putus-putus).</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Rute Injeksi &amp; Alasan Pemilihan Lokasi</div>
+      <div class="obat-grid" id="injeksiGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Latihan: Pasangkan Rute &amp; Lokasi Injeksi yang Tepat <span class="count" id="injeksiCount"></span></div>
+      <p class="dx-intro">Baca situasinya, lalu pilih <b>rute injeksi</b> &amp; <b>lokasi/situs</b> yang paling tepat.</p>
+      <div class="obat-quiz-grid" id="injeksiQuizGrid"></div>
+      <div class="actions">
+        <button class="primary" id="checkInjeksiBtn">Cek Semua Jawaban</button>
+        <button class="ghost" id="resetInjeksiBtn">Reset</button>
+      </div>
+    </div>
     </div>
   </div>
 
@@ -2976,8 +3151,11 @@
   var state = { mode:"home", caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false,
     tpmOrder: [], tpmIdx: 0, tpmChecked:false, tpmCalcMode:"tpm",
     obatAnswers: {}, obatChecked: false,
+    anatomiSub: "jantung",
     vitalSub: "td", vitalAnswers: {}, vitalChecked: {},
-    safetyAnswers: {}, safetyChecked: false };
+    safetyAnswers: {}, safetyChecked: false,
+    debridemenAnswers: {}, debridemenChecked: false,
+    injeksiAnswers: {}, injeksiChecked: false };
   // selected[toolId] = {tool, paramValue} | prio[dxKey] = "1"/"2"/"3" | dsdo[itemId] = "DS"/"DO"
 
   var tabsEl = document.getElementById("tabs");
@@ -3001,6 +3179,43 @@
   var askepModeEl = document.getElementById("askepMode");
   var tpmModeEl = document.getElementById("tpmMode");
   var anatomiModeEl = document.getElementById("anatomiMode");
+  var anatomiSubToggleEl = document.getElementById("anatomiSubToggle");
+  var anatomiSubJantungEl = document.getElementById("anatomiSubJantung");
+  var anatomiSubEkgEl = document.getElementById("anatomiSubEkg");
+  var anatomiSubKulitEl = document.getElementById("anatomiSubKulit");
+  var anatomiSubOtotEl = document.getElementById("anatomiSubOtot");
+
+  var ANATOMI_SUBS = [
+    {id:"jantung", label:"Jantung & Sirkulasi", el:function(){ return anatomiSubJantungEl; }},
+    {id:"ekg", label:"EKG", el:function(){ return anatomiSubEkgEl; }},
+    {id:"kulit", label:"Kulit & Debridemen", el:function(){ return anatomiSubKulitEl; }},
+    {id:"otot", label:"Otot & Injeksi", el:function(){ return anatomiSubOtotEl; }}
+  ];
+
+  function renderAnatomiSubToggle(){
+    anatomiSubToggleEl.innerHTML = "";
+    ANATOMI_SUBS.forEach(function(s){
+      var btn = document.createElement("button");
+      btn.className = "tpm-mode-btn";
+      btn.type = "button";
+      btn.setAttribute("aria-pressed", s.id===state.anatomiSub ? "true":"false");
+      btn.textContent = s.label;
+      btn.addEventListener("click", function(){
+        if(state.anatomiSub === s.id) return;
+        state.anatomiSub = s.id;
+        applyAnatomiSub();
+      });
+      anatomiSubToggleEl.appendChild(btn);
+    });
+  }
+
+  function applyAnatomiSub(){
+    renderAnatomiSubToggle();
+    ANATOMI_SUBS.forEach(function(s){
+      s.el().hidden = s.id !== state.anatomiSub;
+    });
+    if(state.anatomiSub === "ekg" && typeof renderEkg === "function") renderEkg();
+  }
   var obatModeEl = document.getElementById("obatMode");
   var vitalModeEl = document.getElementById("vitalMode");
   var safetyModeEl = document.getElementById("safetyMode");
@@ -3453,8 +3668,8 @@
      icon:"💧", desc:"Rumus dasar TPM, latihan soal kasus, & kalkulator cek-ulang jawaban."},
     {id:"anatomi", label:"Anatomi & Animasi",
      title:"Anatomi & Animasi Sirkulasi",
-     sub:"Lihat bagaimana jantung memompa darah ke paru-paru (sirkulasi pulmonal) dan ke seluruh tubuh (sirkulasi sistemik) — dasar untuk memahami diagnosa perfusi & curah jantung.",
-     icon:"❤️", desc:"Animasi jantung berdenyut, alur sirkulasi darah, & dasar membaca EKG."},
+     sub:"Lihat bagaimana jantung memompa darah ke paru-paru (sirkulasi pulmonal) dan ke seluruh tubuh (sirkulasi sistemik), lapisan kulit & debridemen, sampai lokasi injeksi — dasar anatomi buat berbagai tindakan keperawatan.",
+     icon:"❤️", desc:"Animasi jantung, dasar baca EKG, lapisan kulit & debridemen, serta lokasi injeksi."},
     {id:"obat", label:"Golongan Obat",
      title:"Golongan Obat & Aturan Pakai",
      sub:"Fokus ke golongan obat berdasarkan rute pemberian & fungsinya, bukan nama dagang — plus alasan klinis di balik aturan waktu minum obat.",
@@ -3531,7 +3746,7 @@
       var m = MODE_MAP[state.mode];
       mainTitleEl.textContent = m.title;
       mainSubEl.textContent = m.sub;
-      if(state.mode === "anatomi" && typeof renderEkg === "function") renderEkg();
+      if(state.mode === "anatomi" && typeof applyAnatomiSub === "function") applyAnatomiSub();
     }
   }
 
@@ -3860,9 +4075,16 @@
     renderEkg();
   }
 
+  function initAnatomiSub(){
+    renderAnatomiSubToggle();
+    ANATOMI_SUBS.forEach(function(s){
+      s.el().hidden = s.id !== state.anatomiSub;
+    });
+  }
+
   var ekgResizeTimer = null;
   window.addEventListener("resize", function(){
-    if(state.mode !== "anatomi") return;
+    if(state.mode !== "anatomi" || state.anatomiSub !== "ekg") return;
     clearTimeout(ekgResizeTimer);
     ekgResizeTimer = setTimeout(renderEkg, 150);
   });
@@ -4543,12 +4765,262 @@
     renderSafetyQuiz();
   }
 
+  // ---------- DEBRIDEMEN (Sistem Integumen) ----------
+  var DEBRIDEMEN_INFO = [
+    {name:"Autolitik", desc:"Memanfaatkan enzim & kelembapan alami tubuh sendiri untuk melunakkan jaringan mati (dibantu balutan lembap/hidrogel). Paling lembut & minim nyeri, tapi prosesnya paling lambat."},
+    {name:"Mekanik", desc:"Jaringan mati diangkat secara fisik, mis. kasa basah-kering (wet-to-dry) atau irigasi tekanan. Lebih cepat, tapi bisa ikut mengenai jaringan sehat & terasa nyeri."},
+    {name:"Enzimatik", desc:"Salep/enzim topikal mencerna jaringan nekrotik secara kimiawi. Lebih selektif dari mekanik, non-invasif, tapi masih lebih lambat dari bedah."},
+    {name:"Bedah (Surgical/Sharp)", desc:"Dokter/tenaga terlatih memotong langsung jaringan mati pakai instrumen steril. Paling cepat & tuntas, dipakai untuk luka dalam/infeksi berat, butuh keahlian khusus."},
+    {name:"Biologis (Maggot Therapy)", desc:"Larva steril khusus dipakai untuk memakan jaringan mati saja. Sangat selektif, dipakai pada kasus luka kronis tertentu yang sulit sembuh dengan metode lain."}
+  ];
+
+  var DEBRIDEMEN_QUIZ = [
+    {id:"d1", golongan:"Debridemen Autolitik",
+     situasi:"Luka kronis dengan jaringan nekrotik tipis, pasien tidak tahan nyeri, tanpa tanda infeksi berat — direncanakan pakai balutan hidrogel & dibiarkan melunak sendiri selama beberapa hari.",
+     jenis:"autolitik",
+     expl:"Memanfaatkan proses alami tubuh — paling lembut & minim nyeri, cocok untuk luka yang belum terinfeksi berat, meski butuh waktu lebih lama."},
+    {id:"d2", golongan:"Debridemen Bedah",
+     situasi:"Luka infeksi berat dengan jaringan nekrotik luas & dalam, perlu diangkat segera oleh dokter di ruang tindakan.",
+     jenis:"bedah",
+     expl:"Debridemen bedah (surgical/sharp) paling cepat & tuntas untuk jaringan mati yang luas/dalam, tapi invasif & harus dilakukan tenaga terlatih."},
+    {id:"d3", golongan:"Debridemen Enzimatik",
+     situasi:"Perawat mengoleskan salep enzim khusus ke luka untuk mencerna jaringan mati secara bertahap, tanpa alat tajam.",
+     jenis:"enzimatik",
+     expl:"Enzim topikal bekerja secara kimiawi mencerna jaringan nekrotik — selektif & non-invasif, prosesnya lebih cepat dari autolitik."},
+    {id:"d4", golongan:"Debridemen Mekanik",
+     situasi:"Luka diberi kasa basah yang dibiarkan mengering, lalu ditarik untuk mengangkat jaringan mati yang menempel (wet-to-dry).",
+     jenis:"mekanik",
+     expl:"Cara mekanik ini cepat, tapi bisa ikut merusak jaringan sehat & terasa nyeri saat kasa ditarik dari luka."},
+    {id:"d5", golongan:"Debridemen Biologis",
+     situasi:"Larva steril khusus digunakan untuk memakan jaringan nekrotik pada luka kronis yang sulit sembuh dengan metode lain.",
+     jenis:"biologis",
+     expl:"Terapi larva (maggot therapy) sangat selektif — hanya memakan jaringan mati & membiarkan jaringan sehat, dipakai pada kasus tertentu."},
+    {id:"d6", golongan:"Debridemen Bedah",
+     situasi:"Siswa PKL diminta menyiapkan alat steril untuk tindakan pengangkatan jaringan mati yang akan dilakukan dokter, bukan melakukannya sendiri.",
+     jenis:"bedah",
+     expl:"Konteksnya adalah prosedur bedah (dilakukan dokter dengan instrumen steril) — sesuai etika PKL, siswa berperan menyiapkan alat, bukan mengeksekusi tindakan invasif."}
+  ];
+
+  var DEBRIDEMEN_LABEL = {
+    autolitik:"Autolitik", mekanik:"Mekanik", enzimatik:"Enzimatik",
+    bedah:"Bedah (Surgical/Sharp)", biologis:"Biologis (Maggot Therapy)"
+  };
+
+  var debridemenGridEl = document.getElementById("debridemenGrid");
+  var debridemenQuizGridEl = document.getElementById("debridemenQuizGrid");
+  var debridemenCountEl = document.getElementById("debridemenCount");
+  var checkDebridemenBtn = document.getElementById("checkDebridemenBtn");
+  var resetDebridemenBtn = document.getElementById("resetDebridemenBtn");
+
+  function renderDebridemenMateri(){
+    debridemenGridEl.innerHTML = DEBRIDEMEN_INFO.map(function(d){
+      return '<div class="obat-card"><span class="oc-name">'+d.name+'</span><span class="oc-desc">'+d.desc+'</span></div>';
+    }).join("");
+  }
+
+  function renderDebridemenQuiz(){
+    debridemenCountEl.textContent = DEBRIDEMEN_QUIZ.length + " situasi";
+    debridemenQuizGridEl.innerHTML = "";
+    DEBRIDEMEN_QUIZ.forEach(function(item){
+      var ans = state.debridemenAnswers[item.id] || "";
+      var card = document.createElement("div");
+      card.className = "obat-quiz-card";
+
+      var html =
+        '<div class="obat-quiz-situasi"><b>'+item.golongan+'.</b> '+item.situasi+'</div>'+
+        '<div class="obat-quiz-fields">'+
+          '<div class="field grow">'+
+            '<label>Jenis Debridemen</label>'+
+            '<select class="tpm-input" data-item="'+item.id+'">'+optionsHtml(DEBRIDEMEN_LABEL, ans, "Pilih jenis...")+'</select>'+
+          '</div>'+
+        '</div>';
+
+      if(state.debridemenChecked && ans){
+        var correct = ans === item.jenis;
+        html +=
+          '<div class="dsdo-feedback">'+
+            '<div class="fb-badge '+(correct?"tepat":"kurang")+'">'+(correct?"✓":"!")+'</div>'+
+            '<div class="fb-text">'+
+              '<b>'+(correct?"Tepat!":"Kurang tepat.")+'</b> '+
+              'Jenis yang benar: <b>'+DEBRIDEMEN_LABEL[item.jenis]+'</b>'+(correct?"":" (jawabanmu: "+(DEBRIDEMEN_LABEL[ans]||"-")+")")+'.<br>'+
+              item.expl+
+            '</div>'+
+          '</div>';
+      }
+
+      card.innerHTML = html;
+      debridemenQuizGridEl.appendChild(card);
+    });
+
+    debridemenQuizGridEl.querySelectorAll("select").forEach(function(sel){
+      sel.addEventListener("change", function(){
+        state.debridemenAnswers[sel.getAttribute("data-item")] = sel.value;
+        state.debridemenChecked = false;
+        renderDebridemenQuiz();
+      });
+    });
+  }
+
+  checkDebridemenBtn.addEventListener("click", function(){
+    var missing = DEBRIDEMEN_QUIZ.some(function(it){ return !state.debridemenAnswers[it.id]; });
+    if(missing){
+      alert("Pilih dulu jenis debridemen untuk semua situasi sebelum dicek ya.");
+      return;
+    }
+    state.debridemenChecked = true;
+    renderDebridemenQuiz();
+  });
+
+  resetDebridemenBtn.addEventListener("click", function(){
+    state.debridemenAnswers = {};
+    state.debridemenChecked = false;
+    renderDebridemenQuiz();
+  });
+
+  // ---------- INJEKSI (Sistem Muskuloskeletal) ----------
+  var INJEKSI_INFO = [
+    {name:"Intrakutan (IC)", desc:"Sudut 5-15°, sangat superfisial (ke lapisan dermis), volume sangat kecil (0.01-0.1 mL). Dipakai untuk tes alergi (skin test) karena reaksinya mudah diamati di permukaan kulit."},
+    {name:"Subkutan (SC)", desc:"Sudut 45-90° tergantung ketebalan lemak, masuk ke jaringan lemak di bawah dermis. Dipakai untuk insulin & heparin — absorpsi lebih lambat & merata."},
+    {name:"Intramuskular (IM)", desc:"Sudut 90°, masuk ke jaringan otot yang tebal & kaya pembuluh darah sehingga absorpsi lebih cepat. Dipakai untuk vaksin & obat volume lebih besar."},
+    {name:"Intravena (IV)", desc:"Langsung ke pembuluh darah lewat vena perifer. Absorpsi paling cepat/instan, dipakai untuk kondisi darurat atau kebutuhan cairan besar."}
+  ];
+
+  var INJEKSI_QUIZ = [
+    {id:"i1", golongan:"Tes Alergi Antibiotik",
+     situasi:"Pasien akan diberi antibiotik tertentu, perlu tes alergi dulu dengan volume obat sangat kecil, dibaca reaksinya di permukaan kulit.",
+     rute:"ic", lokasi:"ic_lengan",
+     expl:"Intrakutan disuntik sangat dangkal ke lapisan dermis di lengan bawah bagian dalam — khusus untuk skin test karena reaksi alergi mudah diamati di permukaan."},
+    {id:"i2", golongan:"Insulin Harian",
+     situasi:"Pasien diabetes perlu menyuntik insulin sendiri setiap hari di rumah.",
+     rute:"sc", lokasi:"sc_perut",
+     expl:"Subkutan masuk ke jaringan lemak di bawah dermis. Area perut/abdomen sering dipilih karena luas & mudah dijangkau sendiri, absorpsinya stabil."},
+    {id:"i3", golongan:"Vaksinasi Dewasa",
+     situasi:"Pasien dewasa akan diberi vaksinasi dosis kecil-sedang.",
+     rute:"im", lokasi:"im_deltoid",
+     expl:"Deltoid (lengan atas luar) cukup untuk volume kecil-sedang & lokasinya praktis — otot cukup tebal untuk penyerapan cepat lewat rute intramuskular."},
+    {id:"i4", golongan:"Injeksi IM Volume Besar",
+     situasi:"Pasien dewasa perlu suntikan intramuskular volume besar. Perawat sengaja menghindari area bokong belakang.",
+     rute:"im", lokasi:"im_ventrogluteal",
+     expl:"Ventrogluteal jadi pilihan lebih aman daripada dorsogluteal (bokong belakang) karena jauh dari nervus skiatikus — cocok untuk volume injeksi IM yang lebih besar."},
+    {id:"i5", golongan:"Vaksinasi Bayi",
+     situasi:"Bayi usia 6 bulan akan diberi vaksinasi, dipilih area paha luar karena otot deltoid & gluteal-nya belum berkembang.",
+     rute:"im", lokasi:"im_vastus",
+     expl:"Vastus lateralis (paha luar) dipilih pada bayi/anak kecil karena otot deltoid & gluteal belum cukup berkembang untuk menampung volume obat dengan aman."},
+    {id:"i6", golongan:"Kondisi Gawat Darurat",
+     situasi:"Pasien gawat darurat perlu obat bekerja secepat mungkin, dimasukkan langsung ke pembuluh darah lewat kateter.",
+     rute:"iv", lokasi:"iv_vena",
+     expl:"Intravena masuk langsung ke aliran darah lewat vena perifer — absorpsi paling cepat/instan, dipakai untuk kondisi darurat atau kebutuhan cairan besar."}
+  ];
+
+  var INJEKSI_RUTE_LABEL = {ic:"Intrakutan (IC)", sc:"Subkutan (SC)", im:"Intramuskular (IM)", iv:"Intravena (IV)"};
+  var INJEKSI_LOKASI_LABEL = {
+    ic_lengan:"Lengan Atas Bagian Dalam (Intrakutan)",
+    sc_perut:"Perut / Abdomen (Subkutan)",
+    im_deltoid:"Deltoid — Lengan Atas Luar",
+    im_ventrogluteal:"Ventrogluteal — Pinggul",
+    im_vastus:"Vastus Lateralis — Paha Luar",
+    iv_vena:"Vena Perifer — Tangan/Lengan"
+  };
+
+  var injeksiGridEl = document.getElementById("injeksiGrid");
+  var injeksiQuizGridEl = document.getElementById("injeksiQuizGrid");
+  var injeksiCountEl = document.getElementById("injeksiCount");
+  var checkInjeksiBtn = document.getElementById("checkInjeksiBtn");
+  var resetInjeksiBtn = document.getElementById("resetInjeksiBtn");
+
+  function renderInjeksiMateri(){
+    injeksiGridEl.innerHTML = INJEKSI_INFO.map(function(r){
+      return '<div class="obat-card"><span class="oc-name">'+r.name+'</span><span class="oc-desc">'+r.desc+'</span></div>';
+    }).join("");
+  }
+
+  function renderInjeksiQuiz(){
+    injeksiCountEl.textContent = INJEKSI_QUIZ.length + " situasi";
+    injeksiQuizGridEl.innerHTML = "";
+    INJEKSI_QUIZ.forEach(function(item){
+      var ans = state.injeksiAnswers[item.id] || {};
+      var card = document.createElement("div");
+      card.className = "obat-quiz-card";
+
+      var html =
+        '<div class="obat-quiz-situasi"><b>'+item.golongan+'.</b> '+item.situasi+'</div>'+
+        '<div class="obat-quiz-fields">'+
+          '<div class="field grow">'+
+            '<label>Rute Injeksi</label>'+
+            '<select class="tpm-input" data-item="'+item.id+'" data-field="rute">'+optionsHtml(INJEKSI_RUTE_LABEL, ans.rute, "Pilih rute...")+'</select>'+
+          '</div>'+
+          '<div class="field grow">'+
+            '<label>Lokasi / Situs</label>'+
+            '<select class="tpm-input" data-item="'+item.id+'" data-field="lokasi">'+optionsHtml(INJEKSI_LOKASI_LABEL, ans.lokasi, "Pilih lokasi...")+'</select>'+
+          '</div>'+
+        '</div>';
+
+      if(state.injeksiChecked && ans.rute && ans.lokasi){
+        var ruteOk = ans.rute === item.rute;
+        var lokasiOk = ans.lokasi === item.lokasi;
+        var allOk = ruteOk && lokasiOk;
+        html +=
+          '<div class="dsdo-feedback">'+
+            '<div class="fb-badge '+(allOk?"tepat":"kurang")+'">'+(allOk?"✓":"!")+'</div>'+
+            '<div class="fb-text">'+
+              '<b>'+(allOk?"Tepat!":"Ada yang kurang tepat.")+'</b> '+
+              'Rute yang benar: <b>'+INJEKSI_RUTE_LABEL[item.rute]+'</b>'+(ruteOk?" (jawabanmu sudah tepat)":" (jawabanmu: "+(INJEKSI_RUTE_LABEL[ans.rute]||"-")+")")+'. '+
+              'Lokasi yang benar: <b>'+INJEKSI_LOKASI_LABEL[item.lokasi]+'</b>'+(lokasiOk?" (jawabanmu sudah tepat)":" (jawabanmu: "+(INJEKSI_LOKASI_LABEL[ans.lokasi]||"-")+")")+'.<br>'+
+              item.expl+
+            '</div>'+
+          '</div>';
+      }
+
+      card.innerHTML = html;
+      injeksiQuizGridEl.appendChild(card);
+    });
+
+    injeksiQuizGridEl.querySelectorAll("select").forEach(function(sel){
+      sel.addEventListener("change", function(){
+        var id = sel.getAttribute("data-item");
+        var field = sel.getAttribute("data-field");
+        if(!state.injeksiAnswers[id]) state.injeksiAnswers[id] = {};
+        state.injeksiAnswers[id][field] = sel.value;
+        state.injeksiChecked = false;
+        renderInjeksiQuiz();
+      });
+    });
+  }
+
+  checkInjeksiBtn.addEventListener("click", function(){
+    var missing = INJEKSI_QUIZ.some(function(item){
+      var ans = state.injeksiAnswers[item.id];
+      return !ans || !ans.rute || !ans.lokasi;
+    });
+    if(missing){
+      alert("Lengkapi dulu semua pilihan rute & lokasi sebelum dicek ya.");
+      return;
+    }
+    state.injeksiChecked = true;
+    renderInjeksiQuiz();
+  });
+
+  resetInjeksiBtn.addEventListener("click", function(){
+    state.injeksiAnswers = {};
+    state.injeksiChecked = false;
+    renderInjeksiQuiz();
+  });
+
+  function initIntegumenMuskulo(){
+    renderDebridemenMateri();
+    renderDebridemenQuiz();
+    renderInjeksiMateri();
+    renderInjeksiQuiz();
+  }
+
   renderAll();
   initTpmMode();
   initEkg();
   initObat();
   initVital();
   initSafety();
+  initIntegumenMuskulo();
+  initAnatomiSub();
   renderHomeGrid();
   applyMode();
 
