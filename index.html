@@ -1,9 +1,10 @@
-<title>LPKC SMK BUDI UTAMA PANIMBANG</title>
+<title>LPKC SMKS BUDI UTAMA PANIMBANG</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
+  [hidden]{display:none !important;}
   :root{
     --bg:#F4F8F6;
     --surface:#FFFFFF;
@@ -532,6 +533,30 @@
   .obat-quiz-fields{display:flex;gap:10px;flex-wrap:wrap;}
   .obat-quiz-fields .field{flex:1;min-width:160px;}
   .obat-quiz-fields select.tpm-input{width:100%;}
+
+  /* ---------- Beranda ---------- */
+  .home-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(230px,1fr));gap:14px;}
+  .home-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    box-shadow:var(--shadow);padding:20px;cursor:pointer;text-align:left;
+    display:flex;flex-direction:column;gap:8px;font-family:inherit;width:100%;
+    transition:border-color .15s, transform .15s;
+  }
+  .home-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .home-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .home-card .hc-icon{font-size:26px;line-height:1;}
+  .home-card .hc-title{font-family:'Lexend',sans-serif;font-weight:700;font-size:15.5px;color:var(--ink);}
+  .home-card .hc-desc{font-size:12.5px;color:var(--ink-muted);line-height:1.5;flex:1;}
+  .home-card .hc-cta{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);}
+
+  .back-home-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Lexend',sans-serif;font-weight:600;font-size:13px;
+    padding:8px 14px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface);color:var(--ink-muted);cursor:pointer;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .back-home-btn:hover{border-color:var(--accent);color:var(--accent);}
 </style>
 
 <div class="app">
@@ -541,7 +566,19 @@
     <p class="sub" id="mainSub">Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.</p>
   </header>
 
+  <div id="backHomeRow" hidden>
+    <button class="back-home-btn" id="backHomeBtn" type="button">&larr; Beranda</button>
+  </div>
+
   <div class="tabs" id="modeTabs" role="tablist"></div>
+
+  <div id="homeMode" hidden>
+    <div class="card">
+      <div class="section-title">Pilih Menu Belajar</div>
+      <p class="dx-intro">Semua materi & latihan buat persiapan PKL ada di sini &mdash; pilih salah satu buat mulai.</p>
+      <div class="home-grid" id="homeGrid"></div>
+    </div>
+  </div>
 
   <div id="askepMode">
     <div class="tabs" id="tabs" role="tablist"></div>
@@ -923,7 +960,7 @@
 
   <footer id="mainFooter">
     Rujukan: <b>SDKI</b> (Standar Diagnosis Keperawatan Indonesia), <b>SLKI</b> (Standar Luaran Keperawatan Indonesia), <b>SIKI</b> (Standar Intervensi Keperawatan Indonesia) &ndash; PPNI, 2018/2019.<br>
-    Prototipe Digital Laboratorium LPKC SMKS Budi Utama Panimbang &middot; Materi, Simulasi dan Latihan &middot; Dikembangkan Oleh : Marthes Prima Anoom, A.Md.Kep.
+    Prototipe DigiLAB LPKC SMKS Budi Utama Panimbang &middot; Materi, Simulasi dan Latihan &middot; Dikembangkan oleh : Marthes Prima Anoom, A.Md.Kep.
   </footer>
 </div>
 
@@ -2936,7 +2973,7 @@
   }
 
   // ---------- STATE ----------
-  var state = { mode:"askep", caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false,
+  var state = { mode:"home", caseId: "diare", selected: {}, prio: {}, prioChecked: false, dsdo: {}, dsdoChecked: false,
     tpmOrder: [], tpmIdx: 0, tpmChecked:false, tpmCalcMode:"tpm",
     obatAnswers: {}, obatChecked: false,
     vitalSub: "td", vitalAnswers: {}, vitalChecked: {},
@@ -2967,6 +3004,10 @@
   var obatModeEl = document.getElementById("obatMode");
   var vitalModeEl = document.getElementById("vitalMode");
   var safetyModeEl = document.getElementById("safetyMode");
+  var homeModeEl = document.getElementById("homeMode");
+  var homeGridEl = document.getElementById("homeGrid");
+  var backHomeRowEl = document.getElementById("backHomeRow");
+  var backHomeBtn = document.getElementById("backHomeBtn");
   var mainTitleEl = document.getElementById("mainTitle");
   var mainSubEl = document.getElementById("mainSub");
   var tpmSoalCountEl = document.getElementById("tpmSoalCount");
@@ -3400,15 +3441,59 @@
     resultCard.hidden = true;
   }
 
-  // ---------- MODE SWITCH (Simulator Askep <-> Kalkulator TPM <-> Anatomi) ----------
+  // ---------- MODE SWITCH (Beranda <-> Simulator Askep <-> Kalkulator TPM <-> ...) ----------
   var MODES = [
-    {id:"askep", label:"Simulator Kasus Askep"},
-    {id:"tpm", label:"Kalkulator TPM"},
-    {id:"anatomi", label:"Anatomi & Animasi"},
-    {id:"obat", label:"Golongan Obat"},
-    {id:"vital", label:"Tanda Vital"},
-    {id:"safety", label:"Safety & Etiket"}
+    {id:"askep", label:"Simulator Kasus Askep",
+     title:"Simulator Kasus Askep",
+     sub:"Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.",
+     icon:"🩺", desc:"15 kasus keperawatan lengkap — pilah data, susun diagnosa, luaran & intervensi."},
+    {id:"tpm", label:"Kalkulator TPM",
+     title:"Kalkulator & Latihan TPM",
+     sub:"Latih hitungan tetes per menit (TPM) infus, lengkap dengan soal kasus & kalkulator cek-ulang — skill wajib sebelum PKL di RSUD.",
+     icon:"💧", desc:"Rumus dasar TPM, latihan soal kasus, & kalkulator cek-ulang jawaban."},
+    {id:"anatomi", label:"Anatomi & Animasi",
+     title:"Anatomi & Animasi Sirkulasi",
+     sub:"Lihat bagaimana jantung memompa darah ke paru-paru (sirkulasi pulmonal) dan ke seluruh tubuh (sirkulasi sistemik) — dasar untuk memahami diagnosa perfusi & curah jantung.",
+     icon:"❤️", desc:"Animasi jantung berdenyut, alur sirkulasi darah, & dasar membaca EKG."},
+    {id:"obat", label:"Golongan Obat",
+     title:"Golongan Obat & Aturan Pakai",
+     sub:"Fokus ke golongan obat berdasarkan rute pemberian & fungsinya, bukan nama dagang — plus alasan klinis di balik aturan waktu minum obat.",
+     icon:"💊", desc:"Rute pemberian, kelas farmakologi, & aturan waktu minum obat beserta alasannya."},
+    {id:"vital", label:"Tanda Vital",
+     title:"Tanda Vital: Angka Itu Relatif",
+     sub:"Tekanan darah, nadi, RR & saturasi, suhu — rentang normal di buku itu rerata, bukan nilai mutlak. Semua harus dibaca bareng keluhan & konteks pasien, bukan angkanya doang.",
+     icon:"📈", desc:"TD, nadi, RR & saturasi, suhu — rentang normal & cara membaca angka secara kontekstual."},
+    {id:"safety", label:"Safety & Etiket",
+     title:"Safety & Etiket PKL",
+     sub:"Kebersihan tangan, 6 Sasaran Keselamatan Pasien, komunikasi SBAR, dan etika profesional hari pertama — bekal wajib sebelum turun ke ruangan RSUD.",
+     icon:"🧼", desc:"Kebersihan tangan, 6 Sasaran Keselamatan Pasien, SBAR, & etika hari pertama PKL."}
   ];
+
+  var MODE_MAP = {};
+  MODES.forEach(function(m){ MODE_MAP[m.id] = m; });
+
+  function goToMode(id){
+    if(state.mode === id) return;
+    state.mode = id;
+    applyMode();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function renderHomeGrid(){
+    homeGridEl.innerHTML = "";
+    MODES.forEach(function(m){
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "home-card";
+      card.innerHTML =
+        '<span class="hc-icon">'+m.icon+'</span>'+
+        '<span class="hc-title">'+m.label+'</span>'+
+        '<span class="hc-desc">'+m.desc+'</span>'+
+        '<span class="hc-cta">Buka &rarr;</span>';
+      card.addEventListener("click", function(){ goToMode(m.id); });
+      homeGridEl.appendChild(card);
+    });
+  }
 
   function renderModeTabs(){
     modeTabsEl.innerHTML = "";
@@ -3418,42 +3503,35 @@
       btn.setAttribute("role","tab");
       btn.setAttribute("aria-selected", m.id===state.mode ? "true":"false");
       btn.textContent = m.label;
-      btn.addEventListener("click", function(){
-        if(state.mode === m.id) return;
-        state.mode = m.id;
-        applyMode();
-      });
+      btn.addEventListener("click", function(){ goToMode(m.id); });
       modeTabsEl.appendChild(btn);
     });
   }
 
+  backHomeBtn.addEventListener("click", function(){ goToMode("home"); });
+
   function applyMode(){
-    renderModeTabs();
+    var isHome = state.mode === "home";
+    homeModeEl.hidden = !isHome;
+    modeTabsEl.hidden = isHome;
+    backHomeRowEl.hidden = isHome;
+    if(!isHome) renderModeTabs();
+
     askepModeEl.hidden = state.mode !== "askep";
     tpmModeEl.hidden = state.mode !== "tpm";
     anatomiModeEl.hidden = state.mode !== "anatomi";
     obatModeEl.hidden = state.mode !== "obat";
     vitalModeEl.hidden = state.mode !== "vital";
     safetyModeEl.hidden = state.mode !== "safety";
-    if(state.mode === "askep"){
-      mainTitleEl.textContent = "Simulator Kasus Askep";
-      mainSubEl.textContent = "Tiap kasus punya beberapa diagnosa keperawatan (SDKI) sekaligus. Urutkan mana yang paling mendesak, lihat target luarannya (SLKI), lalu susun tindakan (SIKI) yang tepat.";
-    } else if(state.mode === "tpm"){
-      mainTitleEl.textContent = "Kalkulator & Latihan TPM";
-      mainSubEl.textContent = "Latih hitungan tetes per menit (TPM) infus, lengkap dengan soal kasus & kalkulator cek-ulang — skill wajib sebelum PKL di RSUD.";
-    } else if(state.mode === "anatomi"){
-      mainTitleEl.textContent = "Anatomi & Animasi Sirkulasi";
-      mainSubEl.textContent = "Lihat bagaimana jantung memompa darah ke paru-paru (sirkulasi pulmonal) dan ke seluruh tubuh (sirkulasi sistemik) — dasar untuk memahami diagnosa perfusi & curah jantung.";
-      if(typeof renderEkg === "function") renderEkg();
-    } else if(state.mode === "obat"){
-      mainTitleEl.textContent = "Golongan Obat & Aturan Pakai";
-      mainSubEl.textContent = "Fokus ke golongan obat berdasarkan rute pemberian & fungsinya, bukan nama dagang — plus alasan klinis di balik aturan waktu minum obat.";
-    } else if(state.mode === "vital"){
-      mainTitleEl.textContent = "Tanda Vital: Angka Itu Relatif";
-      mainSubEl.textContent = "Tekanan darah, nadi, RR & saturasi, suhu — rentang normal di buku itu rerata, bukan nilai mutlak. Semua harus dibaca bareng keluhan & konteks pasien, bukan angkanya doang.";
+
+    if(isHome){
+      mainTitleEl.textContent = "DigiLAB SMK BUP";
+      mainSubEl.textContent = "Lab keperawatan digital buat persiapan PKL — pilih menu di bawah buat mulai belajar.";
     } else {
-      mainTitleEl.textContent = "Safety & Etiket PKL";
-      mainSubEl.textContent = "Kebersihan tangan, 6 Sasaran Keselamatan Pasien, komunikasi SBAR, dan etika profesional hari pertama — bekal wajib sebelum turun ke ruangan RSUD.";
+      var m = MODE_MAP[state.mode];
+      mainTitleEl.textContent = m.title;
+      mainSubEl.textContent = m.sub;
+      if(state.mode === "anatomi" && typeof renderEkg === "function") renderEkg();
     }
   }
 
@@ -4471,6 +4549,7 @@
   initObat();
   initVital();
   initSafety();
+  renderHomeGrid();
   applyMode();
 
 })();
